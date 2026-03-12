@@ -1,0 +1,533 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - MetadataCategory",
+    "description": "Access properties associated with metadata categories.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "MetadataCategory",
+      "description": "Access properties associated with metadata categories."
+    }
+  ],
+  "paths": {
+    "/metadatacategory/categoryproperties": {
+      "get": {
+        "tags": [
+          "MetadataCategory"
+        ],
+        "summary": "Get properties associated with the specified metadata categories.",
+        "description": "An object's category specifies its type: Part, Assembly, Drawing, etc. Available properties depend on the object's category.",
+        "operationId": "getCategoryProperties",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ownerType",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoryIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "objectType",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "strict",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeObjectTypeDefaults",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includePartPropertiesTableOnlyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "onlyActive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "onlyObjectTypeDefaults",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTCategoryPropertyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTCategoryPropertyInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTCategoryPropertyInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTCategoryPropertyInfo": {
+        "type": "object",
+        "properties": {
+          "array": {
+            "type": "boolean"
+          },
+          "assignable": {
+            "type": "boolean"
+          },
+          "blobMimeType": {
+            "type": "string"
+          },
+          "categoryPropertyConfigInfo": {
+            "$ref": "#/components/schemas/BTCategoryPropertyConfigInfo"
+          },
+          "categorySummaryInfoList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataCategorySummaryInfo"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "editableInMicroversion": {
+            "type": "boolean"
+          },
+          "editableInVersion": {
+            "type": "boolean"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectDefName": {
+            "type": "string"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "ownerType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "uiReadonlyInMicroversion": {
+            "type": "boolean"
+          },
+          "uiReadonlyInVersion": {
+            "type": "boolean"
+          },
+          "valueType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTCategoryPropertyConfigInfo": {
+        "type": "object",
+        "properties": {
+          "computedAssemblyPropertyAggregatedPropertyId": {
+            "type": "string"
+          },
+          "computedAssemblyPropertyAggregationOperator": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "computedAssemblyPropertyConfig": {
+            "$ref": "#/components/schemas/BTComputedAssemblyPropertyConfig"
+          },
+          "computedAssemblyPropertyErrorValuePolicy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "computedAssemblyPropertyFilterInverted": {
+            "type": "boolean"
+          },
+          "computedAssemblyPropertyFilterPropertyId": {
+            "type": "string"
+          },
+          "computedAssemblyPropertyMissingValuePolicy": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "computedAssemblyPropertySecondaryPropertyId": {
+            "type": "string"
+          },
+          "computedPartPropertyConfig": {
+            "$ref": "#/components/schemas/BTComputedPartPropertyConfig"
+          },
+          "computedPropertyFunctionName": {
+            "type": "string"
+          },
+          "computedPropertyFunctionNamespace": {
+            "type": "string"
+          },
+          "computedPropertyFunctionURL": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "enumValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataEnumValue"
+            }
+          },
+          "maxCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "minCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "minLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "multiline": {
+            "type": "boolean"
+          },
+          "multivalued": {
+            "type": "boolean"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "publishState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantityType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTMetadataCategorySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "defaultObjectType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectTypes": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "ownerType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "publishState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTComputedAssemblyPropertyConfig": {
+        "type": "object",
+        "properties": {
+          "aggregatedPropertyId": {
+            "type": "string"
+          },
+          "aggregationOperator": {
+            "$ref": "#/components/schemas/BTComputedAssemblyPropertyAggregationOperator"
+          },
+          "errorValuePolicy": {
+            "$ref": "#/components/schemas/BTComputedAssemblyPropertyErrorPolicy"
+          },
+          "filterPropertyId": {
+            "type": "string"
+          },
+          "isFilterPropertyInverted": {
+            "type": "boolean"
+          },
+          "missingValuePolicy": {
+            "$ref": "#/components/schemas/BTComputedAssemblyPropertyErrorPolicy"
+          },
+          "secondaryPropertyId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTComputedPartPropertyConfig": {
+        "type": "object",
+        "properties": {
+          "computedPartPropertySpecFunction": {
+            "type": "string"
+          },
+          "computedPartPropertySpecNamespace": {
+            "type": "string"
+          },
+          "computedPropertyFunctionReturnType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "propertyFunctionDocumentId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataEnumValue": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "BTComputedAssemblyPropertyAggregationOperator": {
+        "type": "string",
+        "enum": [
+          "SUM",
+          "MINIMUM",
+          "MAXIMUM",
+          "AVERAGE",
+          "WEIGHTED_SUM",
+          "WEIGHTED_AVERAGE",
+          "ANY",
+          "ALL",
+          "NOT_ANY",
+          "NOT_ALL"
+        ]
+      },
+      "BTComputedAssemblyPropertyErrorPolicy": {
+        "type": "string",
+        "enum": [
+          "ExcludeFromComputation",
+          "TreatAsZero",
+          "TreatAsTrue",
+          "TreatAsFalse",
+          "PropagateError"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -1,0 +1,649 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Translation",
+    "description": "Import and export Onshape surfaces, parts, Part Studios, Assemblies, and subassemblies to/from other file formats (STL, PARASOLID, SOLIDWORKS, etc).",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Translation",
+      "description": "Import and export Onshape surfaces, parts, Part Studios, Assemblies, and subassemblies to/from other file formats (STL, PARASOLID, SOLIDWORKS, etc)."
+    }
+  ],
+  "paths": {
+    "/translations/d/{did}": {
+      "get": {
+        "tags": [
+          "Translation"
+        ],
+        "summary": "Get information on an in-progress or completed translation by document ID.",
+        "operationId": "getDocumentTranslations",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTTranslationRequestInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/translations/d/{did}/w/{wid}": {
+      "post": {
+        "tags": [
+          "Translation"
+        ],
+        "summary": "Import or upload a CAD file into Onshape, and translate the data into parts or assemblies.",
+        "description": "The API call may complete before the translation is finished. If `requestState = ACTIVE`, the translation can be polled until the state is either `DONE` or `FAILED`. Alternatively, a webhook callback can be registered for notification of translation completion (requires `Write` scope if `storeInDocument` is `true`). \n \nSee [API Guide: Import & Export](https://onshape-public.github.io/docs/api-adv/translation/) for examples.",
+        "operationId": "createTranslation",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "object",
+                    "description": "The file to upload."
+                  },
+                  "allowFaultyParts": {
+                    "type": "boolean",
+                    "description": "If true, and a part doesn't pass Onshape validation, it will be imported with faults."
+                  },
+                  "createComposite": {
+                    "type": "boolean",
+                    "description": "Not supported for importing into a single part studio."
+                  },
+                  "createDrawingIfPossible": {
+                    "type": "boolean"
+                  },
+                  "encodedFilename": {
+                    "type": "string",
+                    "description": "If the filename contains non-ASCII characters. Use this field to store the filename."
+                  },
+                  "extractAssemblyHierarchy": {
+                    "type": "boolean"
+                  },
+                  "flattenAssemblies": {
+                    "type": "boolean",
+                    "description": "If the file is an assembly, or contains an assembly, setting this to True will import it as a Part Studio. In this case the assembly will be flattened to a set of parts in a Part Studio. There will be duplicate parts created whenever a part is instanced more than once. If False, it will be imported as an Assembly."
+                  },
+                  "formatName": {
+                    "type": "string"
+                  },
+                  "joinAdjacentSurfaces": {
+                    "type": "boolean"
+                  },
+                  "locationElementId": {
+                    "type": "string"
+                  },
+                  "locationGroupId": {
+                    "type": "string"
+                  },
+                  "locationPosition": {
+                    "type": "integer",
+                    "format": "int32",
+                    "default": -1
+                  },
+                  "notifyUser": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "ownerId": {
+                    "type": "string"
+                  },
+                  "parentId": {
+                    "type": "string"
+                  },
+                  "projectId": {
+                    "type": "string"
+                  },
+                  "public": {
+                    "type": "boolean"
+                  },
+                  "onePartPerDoc": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "splitAssembliesIntoMultipleDocuments": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "storeInDocument": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "translate": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "unit": {
+                    "type": "string",
+                    "default": ""
+                  },
+                  "uploadId": {
+                    "type": "string"
+                  },
+                  "versionString": {
+                    "type": "string"
+                  },
+                  "importAppearances": {
+                    "type": "boolean",
+                    "description": "Face appearances defined on models will be imported.",
+                    "default": true
+                  },
+                  "importMaterialDensity": {
+                    "type": "boolean",
+                    "description": "Material density defined on models will be imported.",
+                    "default": false
+                  },
+                  "yAxisIsUp": {
+                    "type": "boolean",
+                    "description": "If the file was created in a system that orients with Y Axis Up, the models would by default be brought into Onshape (a Z Axis Up system) with a flipped coordinate system. Toggle this value to reorient the axis system to match Onshape and display the model with the coordinates you expect."
+                  },
+                  "importWithinDocument": {
+                    "type": "boolean"
+                  },
+                  "useIGESImportPostProcessing": {
+                    "type": "boolean",
+                    "description": "Try getting optimized topology from IGES model.",
+                    "default": false
+                  },
+                  "upgradeFeatureScriptVersion": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "preserveSourceIds": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "documentId": {
+                    "type": "string"
+                  },
+                  "versionId": {
+                    "type": "string"
+                  },
+                  "versionName": {
+                    "type": "string"
+                  },
+                  "versionDescription": {
+                    "type": "string"
+                  },
+                  "repointAppElementVersionRefs": {
+                    "type": "boolean",
+                    "description": "Re-point the version references in APP elements to initial version in the new document",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTranslationRequestImportInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/translations/translationformats": {
+      "get": {
+        "tags": [
+          "Translation"
+        ],
+        "summary": "Get a list of formats this translation can use.",
+        "description": "Note that we don't necessarily support both import and export for any given format. See [API Guide: Model Translation](https://onshape-public.github.io/docs/api-adv/translation/) for more details.",
+        "operationId": "getAllTranslatorFormats",
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTModelFormatFullInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/translations/{tid}": {
+      "get": {
+        "tags": [
+          "Translation"
+        ],
+        "summary": "Get information on an in-progress or completed translation by translation ID.",
+        "description": "When the translation is complete, `requestState` changes from `ACTIVE` to `DONE` or `FAILED`. See [API Guide: Model Translation](https://onshape-public.github.io/docs/api-adv/translation/) for more details. \n \nWhen polling for translations to complete, use a reasonable interval (e.g., avoid polling multiple times a second, use an exponential backoff strategy, etc.) or use [Webhooks](/docs/app-dev/webhook). See [Rate Limiting](/docs/api-adv/errors/#429) and [API Limits](/docs/auth/limits) for more information.",
+        "operationId": "getTranslation",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTranslationRequestInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "Translation"
+        ],
+        "summary": "Delete a translation request.",
+        "operationId": "deleteTranslation",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTTranslationRequestInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTTranslationRequestInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTTranslationRequestImportInfo": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "requestElementId": {
+            "type": "string"
+          },
+          "requestState": {
+            "$ref": "#/components/schemas/BTTranslationRequestState"
+          },
+          "resultDocumentId": {
+            "type": "string"
+          },
+          "resultElementIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultExternalDataIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultWorkspaceId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTModelFormatFullInfo": {
+        "type": "object",
+        "properties": {
+          "contentType": {
+            "type": "string",
+            "description": "Content-Type for this file format.",
+            "example": "text/csv"
+          },
+          "couldBeAssembly": {
+            "type": "boolean",
+            "description": "Indicates if this format could be an assembly.",
+            "example": true
+          },
+          "fileExtensions": {
+            "type": "array",
+            "description": "Supported file extensions for this format.",
+            "example": [
+              "x_t",
+              "x_b",
+              "xmt_txt",
+              "xmt_bin"
+            ],
+            "items": {
+              "type": "string",
+              "description": "Supported file extensions for this format.",
+              "example": "[\"x_t\",\"x_b\",\"xmt_txt\",\"xmt_bin\"]"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the format.",
+            "example": "STEP"
+          },
+          "translatorName": {
+            "type": "string",
+            "description": "The name of the translator for the format.",
+            "example": "step"
+          },
+          "validDestinationFormat": {
+            "type": "boolean",
+            "description": "Indicates if this format is a valid destination format for translation.",
+            "example": true
+          },
+          "validSourceFormat": {
+            "type": "boolean",
+            "description": "Indicates if this format is a valid source format for translation.",
+            "example": true
+          }
+        }
+      },
+      "BTTranslationRequestInfo": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "exportRuleFileName": {
+            "type": "string",
+            "description": "The file name after evaluating a rule for the given `formatName`. `NULL` if `evaluateExportRule=false` or if the export rule is not found."
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "requestElementId": {
+            "type": "string"
+          },
+          "requestState": {
+            "$ref": "#/components/schemas/BTTranslationRequestState"
+          },
+          "resultDocumentId": {
+            "type": "string"
+          },
+          "resultElementIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultExternalDataIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultWorkspaceId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTTranslationRequestState": {
+        "type": "string",
+        "enum": [
+          "ACTIVE",
+          "DONE",
+          "FAILED"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

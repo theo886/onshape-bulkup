@@ -1,0 +1,221 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-Frames",
+    "description": "Frame features — frame, trim, gusset, endcap, cutlist",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-Frames",
+  "modules": {
+    "cutlist.fs": {
+      "name": "cutlist",
+      "importPath": "onshape/std/cutlist.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "cutlist",
+          "kind": "function",
+          "id": "cutlist-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create a cut list from a set of frame selections."
+        },
+        {
+          "name": "cutlistEditLogic",
+          "kind": "function",
+          "id": "cutlistEditLogic-Context-Id-map-map-boolean",
+          "signature": "(context is Context, id is Id, oldDefinition is map, definition is map, isCreating is boolean)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "oldDefinition",
+              "type": "map"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "isCreating",
+              "type": "boolean"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "internal"
+        }
+      ]
+    },
+    "endcap.fs": {
+      "name": "endcap",
+      "importPath": "onshape/std/endcap.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "endcap",
+          "kind": "function",
+          "id": "endcap-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Construct a endcap."
+        }
+      ]
+    },
+    "frame.fs": {
+      "name": "frame",
+      "importPath": "onshape/std/frame.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "frame",
+          "kind": "function",
+          "id": "frame-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create frames from a profile and set of path selections."
+        }
+      ]
+    },
+    "frameTrim.fs": {
+      "name": "frameTrim",
+      "importPath": "onshape/std/frameTrim.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "frameTrim",
+          "kind": "function",
+          "id": "frameTrim-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Trim frames against faces, or perform an ordered trim of frame groups."
+        }
+      ]
+    },
+    "gusset.fs": {
+      "name": "gusset",
+      "importPath": "onshape/std/gusset.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "GussetStyleType",
+          "kind": "enum",
+          "id": "GussetStyleType",
+          "returnType": null,
+          "description": "Defines the shape of the gusset.",
+          "values": [
+            {
+              "name": "TRIANGLE",
+              "description": null
+            },
+            {
+              "name": "RECTANGLE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "GussetPosition",
+          "kind": "enum",
+          "id": "GussetPosition",
+          "returnType": null,
+          "description": "Defines the alignment of the gusset.",
+          "values": [
+            {
+              "name": "CENTERED",
+              "description": null
+            },
+            {
+              "name": "ALIGNED",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "gusset",
+          "kind": "function",
+          "id": "gusset-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create gussets based on the selected edges."
+        }
+      ]
+    }
+  }
+}

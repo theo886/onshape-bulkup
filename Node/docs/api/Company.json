@@ -1,0 +1,2289 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Company",
+    "description": "Access company information.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Company",
+      "description": "Access company information."
+    }
+  ],
+  "paths": {
+    "/companies": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get all companies to which the specified user belongs.",
+        "description": "If no user is specified, will return all companies associated with the current user.",
+        "operationId": "findCompany",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "activeOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeAll",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTCompanyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/companies/{cid}": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get company information by company ID.",
+        "operationId": "getCompany",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTCompanyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/companies/{cid}/documentsbyname": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get document by exact document name.",
+        "description": "This API can only be called by company admins. Use the `name` field for the exact document name string.",
+        "operationId": "getDocumentsByName",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTGlobalTreeNodeSummaryInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/companies/{cid}/globalpermission/{type}/{id}": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Add one or more global permissions to company user or team.",
+        "description": "List of global permissions to grant. See [Onshape Help: Global Permissions](https://cad.onshape.com/help/Content/Plans/global_permissions.htm#Assignin) for details on each of the available permissions. \n * `0`: Manage role based access control \n * `1`: Manage users, teams, and aliases \n * `2`: Enterprise administrator \n * `3`: Permanently delete \n * `4`: Analytics administrator \n * `5`: Invite guest users \n * `6`: Create projects \n * `7`: Approve releases \n * `8`: Enable link sharing \n * `9`: Create releases \n * `10`: Allow access to the App Store \n * `11`: Create documents and folders in the Enterprise root \n * `12`: Allow access to public documents \n * `17`: Manage non-geometric items \n * `18`: Manage workflows \n * `19`: Transfer documents out of Enterprise \n * `20`: Sync to Arena \n * `21`: Create tasks \n * `22`: Manage standard content metadata \n * `23`: Workspace protection permissions \n * `24`: Import files \n * `25`: Use revision tools  * `26`: Export files \n",
+        "operationId": "addGlobalPermissionsForIdentity",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "Company ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "description": "`0`: USER | `1`: TEAM",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID or Team ID, depending on `type`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTGlobalPermissionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Remove global permissions for a company user or team.",
+        "description": "Clear all or some of a user's global permissions",
+        "operationId": "clearGlobalPermissions",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "Company ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "description": "`0`: USER | `1`: TEAM",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID or Team ID, depending on `type`",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "permission",
+            "in": "query",
+            "description": "List of global permissions to grant. See [Onshape Help: Global Permissions](https://cad.onshape.com/help/Content/Plans/global_permissions.htm#Assignin) for details on each of the available permissions. \n * `0`: Manage role based access control \n * `1`: Manage users, teams, and aliases \n * `2`: Enterprise administrator \n * `3`: Permanently delete \n * `4`: Analytics administrator \n * `5`: Invite guest users \n * `6`: Create projects \n * `7`: Approve releases \n * `8`: Enable link sharing \n * `9`: Create releases \n * `10`: Allow access to the App Store \n * `11`: Create documents and folders in the Enterprise root \n * `12`: Allow access to public documents \n * `17`: Manage non-geometric items \n * `18`: Manage workflows \n * `19`: Transfer documents out of Enterprise \n * `20`: Sync to Arena \n * `21`: Create tasks \n * `22`: Manage standard content metadata \n * `23`: Workspace protection permissions \n * `24`: Import files \n * `25`: Use revision tools  * `26`: Export files \n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Delete"
+            ],
+            "BasicAuth": [
+              "OAuth2Delete"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/companies/{cid}/users": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Add a user to a company.",
+        "description": "Returns the company user info.",
+        "operationId": "addUserToCompany",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTCompanyUserParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTCompanyUserInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/companies/{cid}/users/{uid}": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Update the company's information for a user.",
+        "description": "Returns updated company user info. `globalPermissions` field is deprecated. Please use the following: \n* [addGlobalPermissionsForIdentity](#/Company/addGlobalPermissionsForIdentity) \n* [clearGlobalPermissions](#/Company/clearGlobalPermissions)",
+        "operationId": "updateCompanyUser",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "Company ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTCompanyUserParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTCompanyUserInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Remove a user from a company, company teams, and all the direct shares.",
+        "operationId": "removeUserFromCompany",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "removeFromTeams",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "removeDirectShares",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Delete"
+            ],
+            "BasicAuth": [
+              "OAuth2Delete"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTCompanyInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTCompanyInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTCompanyInfo": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/BTAddressInfo"
+          },
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "purchase": {
+            "$ref": "#/components/schemas/BTPurchaseInfo"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTGlobalTreeNodeSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "document": "#/components/schemas/BTDocumentInfo",
+            "document-summary": "#/components/schemas/BTGlobalTreeNodeSummaryInfo",
+            "document-summary-search": "#/components/schemas/BTDocumentSummarySearchInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTGlobalTreeNodeInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "anonymousAccessAllowed": {
+                "type": "boolean"
+              },
+              "anonymousAllowsExport": {
+                "type": "boolean"
+              },
+              "canUnshare": {
+                "type": "boolean"
+              },
+              "createdWithEducationPlan": {
+                "type": "boolean"
+              },
+              "defaultElementId": {
+                "type": "string"
+              },
+              "defaultVersionGraphMode": {
+                "$ref": "#/components/schemas/BTVersionGraphMode"
+              },
+              "defaultVersionGraphShowAutoVersions": {
+                "type": "boolean"
+              },
+              "defaultVersionGraphShowMerges": {
+                "type": "boolean"
+              },
+              "defaultWorkspace": {
+                "$ref": "#/components/schemas/BTWorkspaceInfo"
+              },
+              "documentLabels": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BTDocumentLabelInfo"
+                }
+              },
+              "documentType": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "elementLibrarySummaryInfo": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BTElementLibrarySummaryInfo"
+                }
+              },
+              "forceExportRules": {
+                "type": "boolean"
+              },
+              "hasReleaseRevisionableObjects": {
+                "type": "boolean"
+              },
+              "hasRelevantInsertables": {
+                "type": "boolean"
+              },
+              "isOrphaned": {
+                "type": "boolean"
+              },
+              "isUsingManagedWorkflow": {
+                "type": "boolean"
+              },
+              "likedByCurrentUser": {
+                "type": "boolean"
+              },
+              "likes": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "notRevisionManaged": {
+                "type": "boolean"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "numberOfTimesCopied": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "numberOfTimesReferenced": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "permission": {
+                "$ref": "#/components/schemas/BTOldPermission"
+              },
+              "permissionSet": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "public": {
+                "type": "boolean"
+              },
+              "publishedVersionId": {
+                "type": "string"
+              },
+              "recentVersion": {
+                "$ref": "#/components/schemas/BTBaseInfo"
+              },
+              "sequence": {
+                "type": "string"
+              },
+              "supportTeamUserAndShared": {
+                "type": "boolean"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "thumbnail": {
+                "$ref": "#/components/schemas/BTThumbnailInfo"
+              },
+              "totalWorkspacesScheduledForUpdate": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "totalWorkspacesUpdating": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "trash": {
+                "type": "boolean"
+              },
+              "trashedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "userAccountLimitsBreached": {
+                "type": "boolean"
+              }
+            }
+          }
+        ],
+        "x-BTVisibility-properties": {
+          "totalWorkspacesUpdating": "INTERNAL",
+          "defaultVersionGraphMode": "INTERNAL",
+          "totalWorkspacesScheduledForUpdate": "INTERNAL",
+          "isOrphaned": "INTERNAL",
+          "defaultVersionGraphShowAutoVersions": "INTERNAL",
+          "defaultVersionGraphShowMerges": "INTERNAL",
+          "elementLibrarySummaryInfo": "INTERNAL"
+        }
+      },
+      "BTGlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTGlobalPermissionInfoItem"
+            }
+          }
+        }
+      },
+      "BTCompanyUserParams": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean",
+            "description": "Indicates the user is an admin if true."
+          },
+          "companyId": {
+            "type": "string",
+            "description": "Company ID of the user."
+          },
+          "documentationNameOverride": {
+            "type": "string",
+            "description": "String to override documentation name."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email ID of the company user."
+          },
+          "globalPermissions": {
+            "type": "array",
+            "description": "List of global permissions to grant. See [Onshape Help: Global Permissions](https://cad.onshape.com/help/Content/Plans/global_permissions.htm#Assignin) for details on each of the available permissions. \n * `0`: Manage role based access control \n * `1`: Manage users, teams, and aliases \n * `2`: Enterprise administrator \n * `3`: Permanently delete \n * `4`: Analytics administrator \n * `5`: Invite guest users \n * `6`: Create projects \n * `7`: Approve releases \n * `8`: Enable link sharing \n * `9`: Create releases \n * `10`: Allow access to the App Store \n * `11`: Create documents and folders in the Enterprise root \n * `12`: Allow access to public documents \n * `17`: Manage non-geometric items \n * `18`: Manage workflows \n * `19`: Transfer documents out of Enterprise \n * `20`: Sync to Arena \n * `21`: Create tasks \n * `22`: Manage standard content metadata \n * `23`: Workspace protection permissions \n * `24`: Import files \n * `25`: Use revision tools  * `26`: Export files \n",
+            "items": {
+              "type": "integer",
+              "description": "List of global permissions to grant. See [Onshape Help: Global Permissions](https://cad.onshape.com/help/Content/Plans/global_permissions.htm#Assignin) for details on each of the available permissions. \n * `0`: Manage role based access control \n * `1`: Manage users, teams, and aliases \n * `2`: Enterprise administrator \n * `3`: Permanently delete \n * `4`: Analytics administrator \n * `5`: Invite guest users \n * `6`: Create projects \n * `7`: Approve releases \n * `8`: Enable link sharing \n * `9`: Create releases \n * `10`: Allow access to the App Store \n * `11`: Create documents and folders in the Enterprise root \n * `12`: Allow access to public documents \n * `17`: Manage non-geometric items \n * `18`: Manage workflows \n * `19`: Transfer documents out of Enterprise \n * `20`: Sync to Arena \n * `21`: Create tasks \n * `22`: Manage standard content metadata \n * `23`: Workspace protection permissions \n * `24`: Import files \n * `25`: Use revision tools  * `26`: Export files \n",
+              "format": "int32"
+            }
+          },
+          "guest": {
+            "type": "boolean",
+            "description": "Indicates the user is a guest user if true."
+          },
+          "light": {
+            "type": "boolean",
+            "description": "Indicates the user is a light user if true."
+          }
+        }
+      },
+      "BTCompanyUserInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "company": {
+            "$ref": "#/components/schemas/BTCompanySummaryInfo"
+          },
+          "dateAdded_": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "documentationNameOverride": {
+            "type": "string"
+          },
+          "guest": {
+            "type": "boolean"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "lastLoginTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "light": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "userRolePriority": {
+            "$ref": "#/components/schemas/UserRolePriority"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTAddressInfo": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "stateCode": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      },
+      "BTPurchaseInfo": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string"
+          },
+          "actualAmountPaidCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amountCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "apiAllocationByPlan": {
+            "type": "integer",
+            "description": "Represents the default annual API call allocation defined by the user's Onshape billing plan.",
+            "format": "int64"
+          },
+          "apiAllocationEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "apiAllocationOverride": {
+            "type": "integer",
+            "description": "Manual override set by Onshape admin; when non-zero takes precedence over apiAllocationByPlan.",
+            "format": "int64"
+          },
+          "apiAllocationStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "application": {
+            "$ref": "#/components/schemas/BTAPIApplicationSummaryInfo"
+          },
+          "canceledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "card": {
+            "$ref": "#/components/schemas/BTCardInfo"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "couponAmountOff": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "couponPercentOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "durationMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "group": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "lastModified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedBy": {
+            "type": "string"
+          },
+          "lightSeats": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "nextCharge": {
+            "$ref": "#/components/schemas/NextCharge"
+          },
+          "overageEnabled": {
+            "type": "boolean"
+          },
+          "paymentType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingCancelation": {
+            "type": "boolean"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/BTBillingPlanInfo"
+          },
+          "planId": {
+            "type": "string"
+          },
+          "planName": {
+            "type": "string"
+          },
+          "planType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "preTrialPlanId": {
+            "type": "string"
+          },
+          "proratedCharges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProratedCharges"
+            }
+          },
+          "proratedTotal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resellerName": {
+            "type": "string"
+          },
+          "seats": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTPlanSubscriberInfo"
+            }
+          },
+          "subscriptionBeginAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "subscriptionEndAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "subscriptionId": {
+            "type": "string"
+          },
+          "subscriptionType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "taxAmountCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trialEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trialInitiatedBy": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTGlobalTreeNodeInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "canMove": {
+            "type": "boolean"
+          },
+          "connectionName": {
+            "type": "string"
+          },
+          "connectionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isContainer": {
+            "type": "boolean"
+          },
+          "isEnterpriseOwned": {
+            "type": "boolean"
+          },
+          "isExternalConnectionResource": {
+            "type": "boolean"
+          },
+          "isMutable": {
+            "type": "boolean"
+          },
+          "jsonType": {
+            "type": "string"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "treeHref": {
+            "type": "string"
+          },
+          "unparentHref": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "document-summary": "#/components/schemas/BTGlobalTreeNodeSummaryInfo",
+            "folder": "#/components/schemas/BTFolderInfo",
+            "magic": "#/components/schemas/BTGlobalTreeMagicNodeInfo",
+            "project": "#/components/schemas/BTProjectInfo",
+            "label": "#/components/schemas/BTDocumentLabelInfo",
+            "team-summary": "#/components/schemas/BTTeamSummaryInfo",
+            "cloudstorageaccount": "#/components/schemas/BTCloudStorageAccountInfo",
+            "classroom": "#/components/schemas/BTClassroomInfo",
+            "resource-owner": "#/components/schemas/BTResourceOwnerInfo",
+            "external-connection": "#/components/schemas/BTExternalConnectionInfo"
+          }
+        }
+      },
+      "BTVersionGraphMode": {
+        "type": "string",
+        "enum": [
+          "ALL_BRANCHES",
+          "ACTIVE_BRANCH",
+          "ALL_BRANCHES_WITH_WORKSPACES",
+          "ACTIVE_BRANCH_WITH_PARENTS"
+        ]
+      },
+      "BTWorkspaceInfo": {
+        "type": "object",
+        "properties": {
+          "canDelete": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isReadOnly": {
+            "type": "boolean"
+          },
+          "lastModifier": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "microversion": {
+            "type": "string"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "overrideDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTVersionInfo"
+            }
+          },
+          "protectionRule": {
+            "$ref": "#/components/schemas/BTWorkspaceProtectionRuleOptions"
+          },
+          "state": {
+            "$ref": "#/components/schemas/BTObjectState"
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "type": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTDocumentLabelInfo": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTGlobalTreeNodeInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "parentLabelId": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTElementLibrarySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "libraryDefinitionId": {
+            "type": "string",
+            "description": "The ID of the definition of the element library."
+          },
+          "libraryId": {
+            "pattern": "[0-9a-fA-F]{24}",
+            "type": "string",
+            "description": "The Id of the library -- unique across Onshape."
+          },
+          "libraryVersion": {
+            "pattern": "[0-9a-fA-F]{24}",
+            "type": "string",
+            "description": "The current version Id of the library."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "ownerId": {
+            "pattern": "[0-9a-fA-F]{24}",
+            "type": "string",
+            "description": "The owner Id of an element library (either Onshape, company, or user)."
+          },
+          "ownerType": {
+            "type": "integer",
+            "description": "The type of library owner, Onshape, user, or company",
+            "format": "int32"
+          },
+          "sourceFolderId": {
+            "type": "string",
+            "description": "The id of the root folder of the library"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        },
+        "description": "Element library metadata"
+      },
+      "BTOldPermission": {
+        "type": "string",
+        "enum": [
+          "NOACCESS",
+          "ANONYMOUS_ACCESS",
+          "READ",
+          "READ_COPY_EXPORT",
+          "COMMENT",
+          "WRITE",
+          "RESHARE",
+          "FULL",
+          "OWNER"
+        ]
+      },
+      "BTBaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTGlobalPermissionInfoItem": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "identities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTIdentityInfo"
+            }
+          }
+        }
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      },
+      "UserRolePriority": {
+        "type": "string",
+        "enum": [
+          "OWNER",
+          "ADMIN",
+          "MEMBER",
+          "GUEST"
+        ]
+      },
+      "BTAPIApplicationSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "applicationOwnerType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTCardInfo": {
+        "type": "object",
+        "properties": {
+          "billingAddress": {
+            "$ref": "#/components/schemas/BTAddressInfo"
+          },
+          "expMonth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "expYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "last4": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "NextCharge": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "interval": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "BTBillingPlanInfo": {
+        "type": "object",
+        "properties": {
+          "amountCents": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicationId": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "companyPlan": {
+            "type": "boolean"
+          },
+          "consumableQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deprecated": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "discountInfo": {
+            "$ref": "#/components/schemas/BTDiscountInfo"
+          },
+          "group": {
+            "type": "string"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "interval": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "onshapePlan": {
+            "type": "boolean"
+          },
+          "planType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trialPeriodDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "ProratedCharges": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "BTPlanSubscriberInfo": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTOwnerInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "isEnterpriseOwnedResource": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTVersionInfo": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "lastModifier": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "metadataWorkspaceId": {
+            "type": "string"
+          },
+          "microversion": {
+            "type": "string"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "overrideDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "parent": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "type": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTWorkspaceProtectionRuleOptions": {
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "MERGE",
+          "FAST_FORWARD_MERGE"
+        ]
+      },
+      "BTObjectState": {
+        "type": "string",
+        "enum": [
+          "DELETED",
+          "TRASH",
+          "ACTIVE",
+          "INACTIVE"
+        ]
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTIdentityInfo": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/BTCompanySummaryInfo"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "identityType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "team": {
+            "$ref": "#/components/schemas/BTTeamSummaryInfo"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTDiscountInfo": {
+        "type": "object",
+        "properties": {
+          "accountBalance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amountOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "couponType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "couponValidMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "percentOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planId": {
+            "type": "string"
+          },
+          "trialEndDate": {
+            "type": "string"
+          },
+          "usedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTTeamSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "canMove": {
+            "type": "boolean"
+          },
+          "connectionName": {
+            "type": "string"
+          },
+          "connectionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isContainer": {
+            "type": "boolean"
+          },
+          "isEnterpriseOwned": {
+            "type": "boolean"
+          },
+          "isExternalConnectionResource": {
+            "type": "boolean"
+          },
+          "isMutable": {
+            "type": "boolean"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "predefinedTeam": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "predefinedTeamMutable": {
+            "type": "boolean"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "treeHref": {
+            "type": "string"
+          },
+          "unparentHref": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "team": "#/components/schemas/BTTeamInfo"
+          }
+        }
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

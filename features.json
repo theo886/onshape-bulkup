@@ -1,0 +1,97 @@
+{
+  "_comment": "DO NOT remove or modify feature definitions. Only update 'passed' status after verification.",
+  "project": "SolidWorks PDM to Onshape Migration",
+  "features": [
+    {
+      "id": "categorize-files",
+      "description": "Parse PDM export and categorize files by type and dependencies",
+      "testCommand": "node categorizeFiles.js -r PDM/references.csv -d 'PDM/Upload List.xlsx' -o output/ --dry-run",
+      "passed": true,
+      "notes": "Generates standaloneParts.json, assemblyParts.json, topLevelAssemblies.json, etc."
+    },
+    {
+      "id": "upload-standalone-parts",
+      "description": "Upload standalone parts as master Part Studios with Y-up orientation",
+      "testCommand": "node uploadStandaloneParts.js -i example/test-parts-10365.json -f af89b4c072a8fb45084e1757 --dry-run",
+      "passed": true,
+      "notes": "Uses createComposite:true, yAxisIsUp:true"
+    },
+    {
+      "id": "upload-assemblies",
+      "description": "Upload Pack & Go ZIPs via translations API with Y-up orientation",
+      "testCommand": "node uploadAssemblies.js -i example/test-assembly-10365.json -f af89b4c072a8fb45084e1757 --dry-run",
+      "passed": true,
+      "notes": "Uses createComposite:true, yAxisIsUp:true"
+    },
+    {
+      "id": "relink-delete-instances",
+      "description": "Delete duplicate instances from imported assembly",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Part of relinkAssemblies.js"
+    },
+    {
+      "id": "relink-create-instances",
+      "description": "Create new instances from master parts with correct transforms",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Uses includePartTypes: ['PARTS', 'COMPOSITE_PARTS'], includeNonSolids:true"
+    },
+    {
+      "id": "relink-group-instances",
+      "description": "Group all instances to lock relative positions",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Creates BTMMateGroup feature"
+    },
+    {
+      "id": "relink-fasten-origin",
+      "description": "Fasten first instance to assembly origin to prevent movement",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Creates BTMMate with FASTENED type to origin"
+    },
+    {
+      "id": "relink-delete-partstudio",
+      "description": "Delete duplicate Part Studio elements after relinking",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Uses /api/elements/ DELETE endpoint"
+    },
+    {
+      "id": "relink-full-workflow",
+      "description": "Run complete relink workflow on test assembly",
+      "testCommand": "node relinkAssemblies.js -a example/test-assemblyMapping-10365.json -p example/test-partMapping-10365.json -o example/test-relinkReport-10365.json",
+      "passed": true,
+      "notes": "Tested with 10365-01 (2 parts) and 30172 (5 parts, 16 instances)"
+    },
+    {
+      "id": "release-documents",
+      "description": "Release all elements in a document after migration",
+      "testCommand": "node releaseDocument.js <documentId> --dry-run",
+      "passed": false,
+      "notes": "Exists but not tested in new workflow"
+    },
+    {
+      "id": "bulk-upload-excel",
+      "description": "Bulk upload from Excel with properties and release",
+      "testCommand": "node bulkUploadFromExcel.js -i test.xlsx --dry-run",
+      "passed": true,
+      "notes": "For non-CAD files (PDFs, docs) only. Uses blob upload, not translations API. Not part of CAD migration workflow."
+    },
+    {
+      "id": "large-assembly-test",
+      "description": "Test workflow with larger assembly (40037 - 26 parts)",
+      "testCommand": null,
+      "passed": true,
+      "notes": "Completed 2025-12-04: 26 parts, 200+ relink ops, sub-assemblies 43123/43125/43110"
+    },
+    {
+      "id": "production-run",
+      "description": "Run migration on actual production data",
+      "testCommand": null,
+      "passed": false,
+      "notes": "Final goal - ~24,000 files"
+    }
+  ]
+}

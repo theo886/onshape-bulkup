@@ -1,0 +1,1663 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Metadata",
+    "description": "Access and modify metadata.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Metadata",
+      "description": "Access and modify metadata."
+    }
+  ],
+  "paths": {
+    "/metadata/d/{did}/{wvm}/{wvmid}/e": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for all elements in a document.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* You can specify the optional `depth` query parameter to get multiple levels in an assembly. Default `depth` is `1`. \n* `linkDocumentId` can be specified where applicable. Combined with `inferMetadataOwner` (default value is `false`), this is used to infer metadata owner. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getWMVEsMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inferMetadataOwner",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "1"
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectListInfoBTMetadataElementInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/d/{did}/{wvm}/{wvmid}/e/{eid}": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for an element.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* `linkDocumentId` can be specified where applicable and this combined with the query param `inferMetadataOwner` (default value is `false`) will be used to infer metadata owner. \n* `configuration` optional query parameter defaults to default configuration. \n* You can specify an optional `depth` query parameter to get multiple levels in an assembly. Default `depth` is `1`. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getWMVEMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inferMetadataOwner",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "1"
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Update the metadata for an element.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* Microversion (`m`) in `wvm` path parameter option is not supported. \n* Specify the property metadata to update in the Request body.",
+        "operationId": "updateWVEMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/d/{did}/{wvm}/{wvmid}/e/{eid}/assembly-debug": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for an assembly, including supporting metadata.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* `linkDocumentId` can be specified where applicable and this combined with the query param `inferMetadataOwner` (default value is `false`) will be used to infer metadata owner. \n* `configuration` optional query parameter defaults to default configuration. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getFullAssemblyMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAssemblyItemMetadataInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/d/{did}/{wvm}/{wvmid}/e/{eid}/p": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for all parts in a document.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* The `configuration` optional query parameter uses the default configuration unless otherwise specified. \n* You can specify an optional `depth` query parameter to get multiple levels in an assembly. Default `depth` is `1`. \n* `linkDocumentId` can be specified where applicable. Combined with `inferMetadataOwner` (default value is `false`), this is used to infer metadata owner. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getWMVEPsMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "inferMetadataOwner",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectListInfoBTMetadataPartInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/d/{did}/{wvm}/{wvmid}/e/{eid}/{iden}/{pid}": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for a part.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* Specify the part in the `iden` or `pid` path parameter. \n* The `configuration` optional query parameter uses the default configuration unless otherwise specified. \n* `linkDocumentId` can be specified where applicable. Combined with `inferMetadataOwner` (default value is `false`), this is used to infer metadata owner. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getWMVEPMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "rollbackBarIndex",
+            "in": "query",
+            "description": "Index specifying the location of the rollback bar when the call is evaluated. A -1 indicates that it should be at the end of the featurelist.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": -1
+            }
+          },
+          {
+            "name": "elementMicroversionId",
+            "in": "query",
+            "description": "A specific element microversion in which to evaluate the request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "iden",
+            "in": "path",
+            "description": "Denotes whether the pid specified is a part id (p) or a part identity (pi).",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "p",
+                "pi"
+              ]
+            }
+          },
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inferMetadataOwner",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Update the metadata for a part.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* Specify the part in the `iden` or `pid` path parameter. \n* The `configuration` optional query parameter uses the default configuration unless otherwise specified. \n* `linkDocumentId` can be specified where applicable. Combined with `inferMetadataOwner` (default value is `false`), this is used to infer metadata owner. \n* Specify the property metadata to update in the Request body.",
+        "operationId": "updateWVEPMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "rollbackBarIndex",
+            "in": "query",
+            "description": "Index specifying the location of the rollback bar when the call is evaluated. A -1 indicates that it should be at the end of the featurelist.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": -1
+            }
+          },
+          {
+            "name": "elementMicroversionId",
+            "in": "query",
+            "description": "A specific element microversion in which to evaluate the request.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "iden",
+            "in": "path",
+            "description": "Denotes whether the pid specified is a part id (p) or a part identity (pi).",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "p",
+                "pi"
+              ]
+            }
+          },
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/d/{did}/{wv}/{wvid}": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for a workspace or version.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* `linkDocumentId` can be specified where applicable. Combined with `inferMetadataOwner` (default value is `false`), this is used to infer metadata owner. \n* You can specify an optional `depth` query parameter to get multiple levels in an assembly. Default `depth` is `1`. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getWVMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "inferMetadataOwner",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "1"
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Update the metadata for a workspace or version.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details.",
+        "operationId": "updateWVMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/standardcontent/d/{did}": {
+      "post": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Update the metadata for a standard content part.",
+        "description": "Specify the property metadata to update in the Request body. See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/#update-standard-content-part-metadata) for an example.",
+        "operationId": "updateVEOPStandardContentPartMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The ID of the document that owns the standard content part.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The ID of the document in which you have inserted the standard content part.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/metadata/standardcontent/d/{did}/v/{vid}/e/{eid}/p/{pid}": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "Get the metadata for a standard content part.",
+        "description": "See [API Guide: Metadata](https://onshape-public.github.io/docs/api-adv/metadata/) for details. \n* Specify the part in the `pid` path parameter. \n* The `configuration` and `linkDocumentId` query parameters are required. \n* `includeComputedProperties` can be used to include or omit computed properties. Default value is `true`. \n* `includeComputedAssemblyProperties` can be used to query computed assembly properties which are generally expensive. Default value is `false`. \n* You can also choose to include a `thumbnail`. Default value is `false`.",
+        "operationId": "getVEOPStandardContentMetadata",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeComputedProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeComputedAssemblyProperties",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "thumbnail",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTMetadataObjectInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTMetadataObjectListInfoBTMetadataElementInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataElementInfo"
+            }
+          },
+          "next": {
+            "type": "string"
+          },
+          "prev": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataObjectInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "jsonType": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "array",
+            "description": "Properties associated with this metadata object",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataPropertyInfo"
+            }
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType"
+        }
+      },
+      "BTAssemblyItemMetadataInfo": {
+        "type": "object",
+        "properties": {
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAssemblyItemMetadataInfo"
+            }
+          },
+          "propertyIdToError": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "propertyIdToEvalInfo": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "propertyIdToOverrideStatus": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "propertyIdToSourceType": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "propertyIdToValue": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "requestInfo": {
+            "$ref": "#/components/schemas/BTAssemblyItemMetadataRequestInfo"
+          }
+        }
+      },
+      "BTMetadataObjectListInfoBTMetadataPartInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataPartInfo"
+            }
+          },
+          "next": {
+            "type": "string"
+          },
+          "prev": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataElementInfo": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTMetadataObjectInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "elementId": {
+                "type": "string"
+              },
+              "elementType": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "mimeType": {
+                "type": "string"
+              },
+              "parts": {
+                "$ref": "#/components/schemas/BTMetadataObjectListInfoBTMetadataPartInfo"
+              }
+            }
+          }
+        ]
+      },
+      "BTMetadataPropertyInfo": {
+        "type": "object",
+        "properties": {
+          "aggregationSkippedFilteredOutValues": {
+            "type": "boolean"
+          },
+          "computedAssemblyProperty": {
+            "type": "boolean"
+          },
+          "computedProperty": {
+            "type": "boolean"
+          },
+          "computedPropertyError": {
+            "type": "string"
+          },
+          "computedPropertyEvalInfo": {
+            "type": "string"
+          },
+          "dateFormat": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "object"
+          },
+          "dirty": {
+            "type": "boolean"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "editableInUi": {
+            "type": "boolean"
+          },
+          "enumValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataEnumValueInfo"
+            }
+          },
+          "initialValue": {
+            "type": "object"
+          },
+          "multivalued": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "propertyOverrideStatus": {
+            "type": "integer",
+            "description": "0: Unknown | 1: Not computed | 2: Computed without override | 3: Computed with override | 4: Computed with subassembly overrides | 5: Overridden",
+            "format": "int32"
+          },
+          "propertySource": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "schemaId": {
+            "type": "string"
+          },
+          "uiHints": {
+            "$ref": "#/components/schemas/BTMetadataPropertyUiHintsInfo"
+          },
+          "validator": {
+            "$ref": "#/components/schemas/BTMetadataPropertyValidatorInfo"
+          },
+          "value": {
+            "type": "object"
+          },
+          "valueType": {
+            "type": "string"
+          }
+        }
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTAssemblyItemMetadataRequestInfo": {
+        "type": "object",
+        "properties": {
+          "apiConfig": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "itemId": {
+            "type": "string"
+          },
+          "linkedDocumentId": {
+            "type": "string"
+          },
+          "partId": {
+            "type": "string"
+          },
+          "wvmId": {
+            "type": "string"
+          },
+          "wvmType": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataPartInfo": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTMetadataObjectInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isFlattenedBody": {
+                "type": "boolean"
+              },
+              "isPublicPartOverridable": {
+                "type": "boolean"
+              },
+              "meshState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "partId": {
+                "type": "string"
+              },
+              "partIdentity": {
+                "type": "string"
+              },
+              "partType": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTMetadataEnumValueInfo": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataPropertyUiHintsInfo": {
+        "type": "object",
+        "properties": {
+          "multiline": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTMetadataPropertyValidatorInfo": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "type": "number"
+          },
+          "maxCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min": {
+            "type": "number"
+          },
+          "minCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "minLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "quantityType": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

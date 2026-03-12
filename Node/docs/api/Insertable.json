@@ -1,0 +1,521 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Insertable",
+    "description": "Access the list of things that can be inserted into a document.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Insertable",
+      "description": "Access the list of things that can be inserted into a document."
+    }
+  ],
+  "paths": {
+    "/insertables/d/{did}/latest": {
+      "get": {
+        "tags": [
+          "Insertable"
+        ],
+        "summary": "Get a list of things in this document that can be inserted elsewhere.",
+        "description": "* Returns only the latest revision of released insertables. \n* Use the document ID (`did`) parameter to specify the source document, not the insertion target. \n* For example, you can insert a custom Feature library into another custom Feature library, insert Parts into an Assembly or a Drawing, etc.",
+        "operationId": "getLatestInDocument",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeParts",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeSurfaces",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeSketches",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeReferenceFeatures",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeAssemblies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFeatureStudios",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeBlobs",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "allowedBlobMimeTypes",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "excludeNewerFSVersions",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "maxFeatureScriptVersion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "includePartStudios",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFeatures",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeMeshes",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeWires",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFlattenedBodies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeApplications",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "allowedApplicationMimeTypes",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "includeCompositeParts",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFSTables",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeFSComputedPartPropertyFunctions",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeVariables",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeVariableStudios",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "allowedBlobExtensions",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "isObsoletion",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTInsertableInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTInsertableInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTInsertableInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTInsertableInfo": {
+        "type": "object",
+        "properties": {
+          "bodyType": {
+            "$ref": "#/components/schemas/GBTBodyType"
+          },
+          "classType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "configuration": {
+            "type": "string"
+          },
+          "configurationParameterValues": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "configurationParameters": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "deterministicId": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "elementName": {
+            "type": "string"
+          },
+          "elementType": {
+            "$ref": "#/components/schemas/GBTElementType"
+          },
+          "featureId": {
+            "type": "string"
+          },
+          "featureName": {
+            "type": "string"
+          },
+          "featureSpec": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "featureType": {
+            "type": "string"
+          },
+          "fsComputedPartPropertySpec": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "fsTableSpec": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          },
+          "hasFaults": {
+            "type": "boolean"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "insertableQuery": {
+            "type": "string"
+          },
+          "isFlattenedBody": {
+            "type": "boolean"
+          },
+          "isMesh": {
+            "type": "boolean"
+          },
+          "meshState": {
+            "$ref": "#/components/schemas/GBTMeshState"
+          },
+          "microversionId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "partIdentity": {
+            "type": "string"
+          },
+          "partName": {
+            "type": "string"
+          },
+          "predictableThumbnailId": {
+            "type": "string"
+          },
+          "sourceFileExtension": {
+            "type": "string"
+          },
+          "thumbnailUri": {
+            "type": "string"
+          },
+          "unflattenedPartDeterministicId": {
+            "type": "string"
+          },
+          "variableName": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "versionName": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "workspaceName": {
+            "type": "string"
+          }
+        },
+        "description": "Array of items in the current page."
+      },
+      "GBTBodyType": {
+        "type": "string",
+        "enum": [
+          "SOLID",
+          "SHEET",
+          "WIRE",
+          "POINT",
+          "MATE_CONNECTOR",
+          "COMPOSITE",
+          "UNKNOWN"
+        ]
+      },
+      "GBTElementType": {
+        "type": "string",
+        "enum": [
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "DRAWING",
+          "FEATURESTUDIO",
+          "BLOB",
+          "APPLICATION",
+          "TABLE",
+          "BILLOFMATERIALS",
+          "VARIABLESTUDIO",
+          "PUBLICATIONITEM",
+          "UNKNOWN"
+        ]
+      },
+      "GBTMeshState": {
+        "type": "string",
+        "enum": [
+          "NO_MESH",
+          "MIXED",
+          "ALL_MESH",
+          "UNKNOWN"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

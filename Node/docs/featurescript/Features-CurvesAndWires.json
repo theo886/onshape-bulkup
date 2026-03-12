@@ -1,0 +1,903 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-CurvesAndWires",
+    "description": "Curve and wire creation — helix, spline, projection, isocline, composite curves",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-CurvesAndWires",
+  "modules": {
+    "compositeCurve.fs": {
+      "name": "compositeCurve",
+      "importPath": "onshape/std/compositeCurve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "compositeCurve",
+          "kind": "function",
+          "id": "compositeCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates one or more Curves that are a combination of edges from various sources, be they parts, surfaces, sketches or other Curves."
+        }
+      ]
+    },
+    "editCurve.fs": {
+      "name": "editCurve",
+      "importPath": "onshape/std/editCurve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CONTROL_POINT_INDEX_BOUND",
+          "kind": "const",
+          "id": "CONTROL_POINT_INDEX_BOUND",
+          "returnType": null,
+          "description": "An `IntegerBoundSpec` for control point indices."
+        },
+        {
+          "name": "PlaneReference",
+          "kind": "enum",
+          "id": "PlaneReference",
+          "returnType": null,
+          "description": "Reference plane enum for planarization",
+          "values": [
+            {
+              "name": "BEST",
+              "description": null
+            },
+            {
+              "name": "YZPLANE",
+              "description": null
+            },
+            {
+              "name": "XZPLANE",
+              "description": null
+            },
+            {
+              "name": "XYPLANE",
+              "description": null
+            },
+            {
+              "name": "CUSTOM",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "editCurve",
+          "kind": "function",
+          "id": "editCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "A curve editing feature."
+        },
+        {
+          "name": "onEditCurveManipulatorChange",
+          "kind": "function",
+          "id": "onEditCurveManipulatorChange-Context-map-map",
+          "signature": "(context is Context, definition is map, newManipulators is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "newManipulators",
+              "type": "map"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Manipulator change handling for curve editing"
+        },
+        {
+          "name": "editCurveEditLogic",
+          "kind": "function",
+          "id": "editCurveEditLogic-Context-Id-map-map-boolean",
+          "signature": "(context is Context, id is Id, oldDefinition is map, definition is map, isCreating is boolean)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "oldDefinition",
+              "type": "map"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "isCreating",
+              "type": "boolean"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Edit logic function for curve editing"
+        }
+      ]
+    },
+    "faceIntersection.fs": {
+      "name": "faceIntersection",
+      "importPath": "onshape/std/faceIntersection.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "intersectionCurve",
+          "kind": "function",
+          "id": "intersectionCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates curves where two faces intersect."
+        }
+      ]
+    },
+    "fitSpline.fs": {
+      "name": "fitSpline",
+      "importPath": "onshape/std/fitSpline.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FitSplineType",
+          "kind": "enum",
+          "id": "FitSplineType",
+          "returnType": null,
+          "description": "The type of fit spline.",
+          "values": [
+            {
+              "name": "VERTICES",
+              "description": "Creates spline through selected vertices."
+            },
+            {
+              "name": "EDGES",
+              "description": "Approximates a set of edges by a single spline."
+            }
+          ]
+        },
+        {
+          "name": "fitSpline",
+          "kind": "function",
+          "id": "fitSpline-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing either `opFitSpline` or `opSplineThroughEdges` depending on selection"
+        }
+      ]
+    },
+    "helix.fs": {
+      "name": "helix",
+      "importPath": "onshape/std/helix.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "AxisType",
+          "kind": "enum",
+          "id": "AxisType",
+          "returnType": null,
+          "description": "Describes the type of body on which to create a helix.",
+          "values": [
+            {
+              "name": "SURFACE",
+              "description": "Impose a helix onto a cylinder or cone."
+            },
+            {
+              "name": "AXIS",
+              "description": "Revolve a helix around an axial edge or mate connector."
+            },
+            {
+              "name": "CIRCLE",
+              "description": "Revolve a helix along a circular path."
+            }
+          ]
+        },
+        {
+          "name": "PathType",
+          "kind": "enum",
+          "id": "PathType",
+          "returnType": null,
+          "description": "Describes the parameter(s) to vary when computing the path of a helix.",
+          "values": [
+            {
+              "name": "TURNS",
+              "description": "Allow only the number of turns (revolutions) to be varied."
+            },
+            {
+              "name": "PITCH",
+              "description": "Allow only the space between each turn (helical pitch) to be varied."
+            },
+            {
+              "name": "TURNS_PITCH",
+              "description": "Allow both turns and pitch to be varied. Always results in a cylindrical helix."
+            }
+          ]
+        },
+        {
+          "name": "StartType",
+          "kind": "enum",
+          "id": "StartType",
+          "returnType": null,
+          "description": "Describes the starting condition of a helix.",
+          "values": [
+            {
+              "name": "START_ANGLE",
+              "description": "Start the helix at an angle around the origin of the base."
+            },
+            {
+              "name": "START_POINT",
+              "description": "Start the helix at a point of choice along the plane of the base."
+            }
+          ]
+        },
+        {
+          "name": "EndType",
+          "kind": "enum",
+          "id": "EndType",
+          "returnType": null,
+          "description": "Describes the ending condition of a helix.",
+          "values": [
+            {
+              "name": "HEIGHT",
+              "description": "End the helix at a specified height."
+            },
+            {
+              "name": "END_POINT",
+              "description": "End the helix at a specified point along a perpendicular plane to the base."
+            }
+          ]
+        },
+        {
+          "name": "Direction",
+          "kind": "enum",
+          "id": "Direction",
+          "returnType": null,
+          "description": "Describes the direction a helix turns while traveling along its axis.",
+          "values": [
+            {
+              "name": "CW",
+              "description": "Clockwise."
+            },
+            {
+              "name": "CCW",
+              "description": "Counterclockwise."
+            }
+          ]
+        },
+        {
+          "name": "helix",
+          "kind": "function",
+          "id": "helix-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opHelix`."
+        }
+      ]
+    },
+    "isocline.fs": {
+      "name": "isocline",
+      "importPath": "onshape/std/isocline.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "isocline",
+          "kind": "function",
+          "id": "isocline-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates curves or split faces in a given direction at a given degree."
+        }
+      ]
+    },
+    "isoparametricCurve.fs": {
+      "name": "isoparametricCurve",
+      "importPath": "onshape/std/isoparametricCurve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "isoparametricCurve",
+          "kind": "function",
+          "id": "isoparametricCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates isoparametric curves on faces by using `opCreateCurvesOnFace`"
+        }
+      ]
+    },
+    "moveCurveBoundary.fs": {
+      "name": "moveCurveBoundary",
+      "importPath": "onshape/std/moveCurveBoundary.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "trimCurve",
+          "kind": "function",
+          "id": "trimCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Extend or trim a curve. This is a thin wrapper around `opMoveCurveBoundary`."
+        }
+      ]
+    },
+    "offsetCurveOnFace.fs": {
+      "name": "offsetCurveOnFace",
+      "importPath": "onshape/std/offsetCurveOnFace.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "OffsetCurveScope",
+          "kind": "enum",
+          "id": "OffsetCurveScope",
+          "returnType": null,
+          "description": "Drives the `extend` and `imprint` booleans in opOffsetCurveOnFace.",
+          "values": [
+            {
+              "name": "OFFSET",
+              "description": null
+            },
+            {
+              "name": "OFFSET_AND_EXTEND",
+              "description": null
+            },
+            {
+              "name": "OFFSET_EXTEND_AND_SPLIT",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "GapFill",
+          "kind": "enum",
+          "id": "GapFill",
+          "returnType": null,
+          "description": "Whether to use linear or rounded extensions to connect discontinuities within offset wires.",
+          "values": [
+            {
+              "name": "LINEAR",
+              "description": null
+            },
+            {
+              "name": "ROUND",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "offsetCurveOnFace",
+          "kind": "function",
+          "id": "offsetCurveOnFace-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an offset curve."
+        }
+      ]
+    },
+    "projectCurves.fs": {
+      "name": "projectCurves",
+      "importPath": "onshape/std/projectCurves.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurveProjectionType",
+          "kind": "enum",
+          "id": "CurveProjectionType",
+          "returnType": null,
+          "description": "Specifies the method used for generating intersection curves.",
+          "values": [
+            {
+              "name": "TWO_SKETCHES",
+              "description": "Performs `opExtrude` to convert sketches into surface, then uses `opBoolean` to intersect those surfaces."
+            },
+            {
+              "name": "CURVE_TO_FACE",
+              "description": "Performs `opDropCurve` to project curves onto faces."
+            }
+          ]
+        },
+        {
+          "name": "projectCurves",
+          "kind": "function",
+          "id": "projectCurves-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature creating projected curves.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "curveProjectionType",
+                  "type": "CurveProjectionType",
+                  "typeRef": "#CurveProjectionType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe method used for generating intersection curves. Default is `TWO_SKETCHES`."
+                },
+                {
+                  "name": "sketchEdges1",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "curveProjectionType is TWO_SKETCHES",
+                  "description": "Required if `curveProjectionType` is `TWO_SKETCHES` Edges from a single sketch that will be extruded to perform an intersection."
+                },
+                {
+                  "name": "sketchEdges2",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "curveProjectionType is TWO_SKETCHES",
+                  "description": "Required if `curveProjectionType` is `TWO_SKETCHES` Edges from a single sketch that will be extruded to perform an intersection."
+                },
+                {
+                  "name": "dropTools",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "curveProjectionType is CURVE_TO_FACE",
+                  "description": "Required if `curveProjectionType` is `CURVE_TO_FACE` Edges that will be projected onto `targets`."
+                },
+                {
+                  "name": "projectionType",
+                  "type": "ProjectionType",
+                  "typeRef": "#ProjectionType",
+                  "required": false,
+                  "requiredIf": "curveProjectionType is CURVE_TO_FACE",
+                  "description": "Required if `curveProjectionType` is `CURVE_TO_FACE` Specifies whether to project along a direction or the face normal of `targets`."
+                },
+                {
+                  "name": "directionQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "projectionType is DIRECTION",
+                  "description": "Required if `projectionType` is `DIRECTION` Specifies the direction of projection."
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "projectionType is DIRECTION",
+                  "description": "Required if `projectionType` is `DIRECTION` If true, negates the direction supplied by `directionQuery`."
+                },
+                {
+                  "name": "targets",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "curveProjectionType is CURVE_TO_FACE",
+                  "description": "Required if `curveProjectionType` is `CURVE_TO_FACE` Faces, sheet bodies, or solid bodies to project onto."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "CurveProjectionType",
+            "Query",
+            "ProjectionType"
+          ]
+        }
+      ]
+    },
+    "routingCurve.fs": {
+      "name": "routingCurve",
+      "importPath": "onshape/std/routingCurve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RoutingCurveType",
+          "kind": "enum",
+          "id": "RoutingCurveType",
+          "returnType": null,
+          "description": "Curve types.",
+          "values": [
+            {
+              "name": "INTERPOLATED_SPLINE",
+              "description": null
+            },
+            {
+              "name": "POLYLINE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "InputType",
+          "kind": "enum",
+          "id": "InputType",
+          "returnType": null,
+          "description": "Input types.",
+          "values": [
+            {
+              "name": "VERTEX",
+              "description": null
+            },
+            {
+              "name": "CURVE",
+              "description": null
+            },
+            {
+              "name": "CSV",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "CurveStep",
+          "kind": "enum",
+          "id": "CurveStep",
+          "returnType": null,
+          "description": "Curve edit modes.",
+          "values": [
+            {
+              "name": "POINTS",
+              "description": null
+            },
+            {
+              "name": "SEGMENTS",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "DerivativeAlignment",
+          "kind": "enum",
+          "id": "DerivativeAlignment",
+          "returnType": null,
+          "description": "Interpolated spline derivative alignments.",
+          "values": [
+            {
+              "name": "X",
+              "description": null
+            },
+            {
+              "name": "Y",
+              "description": null
+            },
+            {
+              "name": "Z",
+              "description": null
+            },
+            {
+              "name": "DIRECTION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "ReferenceType",
+          "kind": "enum",
+          "id": "ReferenceType",
+          "returnType": null,
+          "description": "Point reference types.",
+          "values": [
+            {
+              "name": "ORIGIN",
+              "description": null
+            },
+            {
+              "name": "VERTEX",
+              "description": null
+            },
+            {
+              "name": "CURVE",
+              "description": null
+            },
+            {
+              "name": "RELATIVE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SegmentEditType",
+          "kind": "enum",
+          "id": "SegmentEditType",
+          "returnType": null,
+          "description": "Segment edit modes.",
+          "values": [
+            {
+              "name": "ADD",
+              "description": null
+            },
+            {
+              "name": "ORTHOGONAL",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "OrthoCoordSystem",
+          "kind": "enum",
+          "id": "OrthoCoordSystem",
+          "returnType": null,
+          "description": "Coordinate system options for the othogonal path segment edit mode.",
+          "values": [
+            {
+              "name": "WORLD",
+              "description": null
+            },
+            {
+              "name": "CURVE",
+              "description": null
+            },
+            {
+              "name": "OTHER",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "POINT_INDEX_BOUNDS",
+          "kind": "const",
+          "id": "POINT_INDEX_BOUNDS",
+          "returnType": null,
+          "description": "Integer bound for segment index in segment edit mode."
+        },
+        {
+          "name": "SEGMENT_INDEX_BOUNDS",
+          "kind": "const",
+          "id": "SEGMENT_INDEX_BOUNDS",
+          "returnType": null,
+          "description": "Integer bound for segment index in segment edit mode."
+        },
+        {
+          "name": "COLUMN_BOUNDS",
+          "kind": "const",
+          "id": "COLUMN_BOUNDS",
+          "returnType": null,
+          "description": "Integer bound for CSV column index."
+        },
+        {
+          "name": "CURVE_SAMPLE_BOUNDS",
+          "kind": "const",
+          "id": "CURVE_SAMPLE_BOUNDS",
+          "returnType": null,
+          "description": "Integer bound for curve sampling."
+        },
+        {
+          "name": "routingCurve",
+          "kind": "function",
+          "id": "routingCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates a routing curve feature."
+        },
+        {
+          "name": "routingCurveManipulator",
+          "kind": "function",
+          "id": "routingCurveManipulator-Context-map-map",
+          "signature": "(context is Context, definition is map, newManipulators is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "newManipulators",
+              "type": "map"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Manipulator handler for routing curve feature."
+        },
+        {
+          "name": "routingCurveEditLogic",
+          "kind": "function",
+          "id": "routingCurveEditLogic-Context-Id-map-map-boolean-map-Query-string",
+          "signature": "(context is Context, id is Id, oldDefinition is map, definition is map, isCreating is boolean, specifiedParameters is map, hiddenQueries is Query, clickedButton is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "oldDefinition",
+              "type": "map"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "isCreating",
+              "type": "boolean"
+            },
+            {
+              "name": "specifiedParameters",
+              "type": "map"
+            },
+            {
+              "name": "hiddenQueries",
+              "type": "Query"
+            },
+            {
+              "name": "clickedButton",
+              "type": "string"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Edit logic function for routing curve."
+        }
+      ]
+    }
+  }
+}

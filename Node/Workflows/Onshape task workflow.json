@@ -1,0 +1,88 @@
+{
+    "osWorkflowVersion": 1.5,
+    "options": {
+        "requireNote": false,
+        "requireApprover" : true,
+        "disallowCreatorAsApprover": false,
+        "requireAllApprovers" : true
+    },
+    "properties": [
+        {
+            "name": "Assigned to",
+            "propertyId": "TASK_APPROVERS",
+            "valueType": "USER",
+            "usersOnly": true
+        }
+    ],
+    "transitions": [
+        {
+            "name": "ASSIGN",
+            "displayName": "Assign",
+            "type": "SUBMIT",
+            "uiHint": "primary",
+            "sourceState": "DRAFT",
+            "targetState": "OPEN",
+            "requiredProperties": [
+                "TASK_APPROVERS"
+            ],
+            "actions": []
+        },
+        {
+            "name": "COMPLETE",
+            "displayName": "Complete",
+            "type": "APPROVE",
+            "uiHint": "success",
+            "sourceState": "OPEN",
+            "targetState": "COMPLETE",
+            "actions": []
+        }
+    ],
+    "states": [
+        {
+            "name": "DRAFT",
+            "displayName": "Draft",
+            "entryActions": [],
+            "exitActions": []
+        },
+        {
+            "name": "OPEN",
+            "displayName": "Open",
+            "approverSourceProperty": "TASK_APPROVERS",
+            "entryActions": [
+                {
+                    "name": "markTaskStatus",
+                    "params": {
+                        "status": "OPEN"
+                    }
+                },
+                {
+                    "name": "sendEmailNotifications"
+                },
+                {
+                    "name": "sendUserNotifications"
+                }
+            ],
+            "exitActions": [],
+            "editableProperties": ["TASK_APPROVERS"]
+        },
+        {
+            "name": "COMPLETE",
+            "displayName": "Complete",
+            "entryActions": [
+                {
+                    "name": "markTaskStatus",
+                    "params": {
+                        "status": "COMPLETE"
+                    }
+                },
+                {
+                    "name": "sendEmailNotifications"
+                },
+                {
+                    "name": "sendUserNotifications"
+                }
+            ],
+            "exitActions": []
+        }
+    ]
+}

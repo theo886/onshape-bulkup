@@ -1,0 +1,354 @@
+# Session Handoff
+
+## Currently Working On
+Onshape Console desktop app — v0.1.2 with HMAC auth fixes. Ready to test connection.
+
+## Last Action (2026-02-09)
+Fixed HMAC 401 auth issues and added Debug Auth tool (v0.1.2):
+- Trim all credentials (base_url, access_key, secret_key) to remove copy/paste whitespace
+- Fixed POST body serialization: manual `serde_json::to_string` instead of `.json()` which overrides Content-Type
+- Added `build_headers_debug()` method with fixed nonce/date for reproducible HMAC comparison
+- Added `debug_auth` Tauri command + "Debug Auth" button on Settings page
+- Debug output shows: HMAC input string, signature, auth header, key lengths
+- Bumped version to 0.1.2 in tauri.conf.json, package.json, Sidebar.tsx
+- Build verified: `Onshape Console_0.1.2_aarch64.dmg`
+- Next: kill old process, launch v0.1.2, test connection. If still 401, compare Debug Auth output with Node.js
+
+## Previous Action (2026-02-09)
+Created new Tauri 2.0 + React + SQLite desktop app at `~/Documents/GitHub/onshape-console`:
+- Scaffolded with create-tauri-app (React + TypeScript template)
+- Installed Rust toolchain (rustc 1.93.0) and all dependencies
+- SQLite database with 11 tables (documents, elements, properties, revisions, publications, audit_log, etc.)
+- Onshape HMAC-SHA256 API client in Rust (ported from Node.js onshape.js)
+- Adaptive rate limiter (200ms-5000ms based on X-Rate-Limit-Remaining)
+- React frontend: AG Grid data table, Settings page, Sidebar navigation, Zustand stores
+- Tauri IPC commands: test_connection, get_settings, save_settings, get_db_stats
+- Builds to macOS .app and .dmg (3MB bundle)
+- Committed as initial commit on main branch
+
+## Previous Action (2026-02-08)
+`createPublicationsFromExcel.js` — revision IDs now output to Excel and sidecar. Ready for real run.
+
+## Previous Action (2026-02-08)
+Added `item:revisionId` and `item:partId` output columns to `_completed.xlsx`:
+- After successful creation: sidecar stores `itemRevisions` array with per-item revisionId/partId
+- Excel rows get `item:revisionId` (blobs + parts) and `item:partId` (parts only)
+- Resume path reads `itemRevisions` from sidecar and writes IDs back to Excel rows
+- Updated file header comments and `--help` output with new columns
+- Updated SCRIPTS.md with output columns table
+- Dry-run verified: no regressions
+
+## Previous Action (2026-02-08)
+Fixed blob items in publications to show "Released" instead of version-pinned with update dot:
+- Added `getBlobRevisionInfo(documentId, versionId, elementId)` — calls Revision API with `elementType=4`
+- For `uploadLevel=0` items: looks up blob revision before building request body
+- If revision found: item entry includes `revisionId` (no `isBlob`/`dataType` flags)
+- Falls back to `isBlob: true` + `dataType` if revision lookup fails
+- Dry-run verified: shows `type=blob (application/pdf, revisionId lookup at runtime)`
+- Delete existing publications + sidecar before real run to re-create with revision refs
+
+## Previous Action (2026-02-08)
+Fixed part studio items in publications to show "Released" instead of "In progress":
+- Added `getAsync` helper (promisified `onshape.get`)
+- Added `getRevisionInfo(partNumber)` — calls Revision API to get partId, revisionId, partName
+- For `uploadLevel=1` items: looks up revision before building request body
+- Item entry now includes `partId`, `revisionId`, `partName` (no `isWholePartStudio` flag)
+- Falls back to `isWholePartStudio: true` if revision lookup fails
+- Updated sidecar with fixed publication IDs for 10004, 10062, 10063
+- Updated SCRIPTS.md with `File Extension` column docs
+- Dry-run verified: shows `type=part (revisionId lookup at runtime)`
+
+## Previous Action (2026-02-08)
+Added `dataType` field to blob publication items to fix HTTP 500 errors:
+- Added `MIME_TYPES` lookup table (PDF, STEP, DWG, etc.)
+- Read `File Extension` column from Excel, store on items during grouping
+- Blob items now include `dataType: "application/pdf"` (or mapped MIME type)
+
+## Previous Action (2026-02-08)
+Added element type flags to `createPublicationsFromExcel.js`:
+- Added `uploadLevel` → type flag mapping on items (isBlob/isWholePartStudio/isAssembly)
+- Notes markdown table format already correct (blank lines around table)
+- Updated SCRIPTS.md with uploadLevel optional column
+
+## Previous Action (2026-02-08)
+Added NEAR-MATCH detection to `comparePDFs.js`:
+- Second pass compares file sizes among non-matched elements (threshold ≤100 bytes)
+- Detects 8 near-duplicate pairs caused by PDF metadata differences (UUID, xref offsets)
+- Added `Size Diff` column to results Excel
+- Added `nearMatchesFound` counter to summary
+- Updated SCRIPTS.md with NEAR-MATCH status value
+
+## Previous Action (2026-02-08)
+Created `comparePDFs.js` — downloads PDFs from Onshape and compares SHA-256 hashes within each document:
+- Input: Excel with onshape:documentId/workspaceId/elementId + File Name columns
+- Groups by documentId, skips single-element docs (48 groups, 112 PDFs)
+- Downloads via new `getBinary()` method on onshape.js (Buffer.concat, not string concat)
+- Computes SHA-256, identifies REFERENCE/MATCH/UNIQUE/ERROR per element
+- Output: `pdf_compare_results.xlsx` + crash-safe sidecar
+- Flags: --dry-run, --keep-files, --slow-run
+- Updated SCRIPTS.md, TOOLS.md (`compare-pdfs`), MODULES.md (`getBinary`)
+
+## Previous Action (2026-02-08)
+Created `deleteEmptyDocuments.js` — checks 412 documents for zero elements, deletes empty ones:
+- Input: tab-separated text file (documentId\tworkspaceId per line)
+- Per doc: GET elements, if 0 → DELETE document (trash)
+- Flags: --dry-run, --slow-run
+- Updated SCRIPTS.md and TOOLS.md (`delete-empty` command)
+
+## Previous Action (2026-02-08)
+Created `deleteAndObsoleteFromExcel.js` — combined script that per row:
+1. Obsoletes all active revisions for the part number (re-releasable)
+2. Deletes the element from the document
+3. Removes from upload_status.json
+- Flags: --dry-run, --slow-run, --skip-obsolete
+- Updated SCRIPTS.md and TOOLS.md (`delete-obsolete` command)
+
+## Previous Action (2026-02-07)
+Rewrote `onshape-feature-tree.md` memory file as comprehensive sketch knowledge base:
+- All 14 FeatureScript sketch entity functions with params, returns, notes
+- All 32 ConstraintType enum values categorized (geometric/dimensional/other)
+- Full JSON API BTM type reference (entities, geometry, parameters, queries, constraints)
+- Inline JSON examples for circle, line segment, extrude, constraint structure
+- Python model cross-reference (geometry.py, feature.py, queries.py)
+- Critical lessons: BTMSketchCurve vs BTMSketchCurveSegment, closing loops, units, deterministic IDs
+
+## Previous Action (2026-02-06)
+Deployed TaperedHelicalSpring.fs + DesignRuleChecker.fs to document `bd586d0d7bf2ddf0b3815a76`:
+- TaperedHelicalSpring: element `f5036488485605e01766f03c` — parametric spring with opHelix + sweep
+- DesignRuleChecker: element `5b3ce19ee58945d4d298a56f` — custom table with 4 DFM checks
+- Both created as new Feature Studios in workspace Main (`2dc6c7d47b52fce65ed845a0`)
+- Deploy sidecar saved for idempotent re-runs
+
+### Previous Action (2026-02-06)
+Created `deployFeatureScript.js` — CLI tool to push .fs files to Onshape Feature Studios:
+- Content hashing (SHA-256) for idempotent deploys — unchanged files skipped
+- Auto-detects workspace if -w omitted
+- Creates Feature Studios or updates existing ones by name matching
+- Sidecar JSON (`deploy_status.json`) for crash-safe resume
+- --dry-run and --force flags
+- Adaptive rate limiting (200ms–5000ms), 429 retry
+
+Created `Node/featurescript/DesignRuleChecker.fs` — FeatureScript custom table:
+- 4 checks: Small Holes, Small Fillets, Thin Walls, Sharp Internal Edges
+- Configurable thresholds (min wall thickness, min fillet radius, max sharp angle, min hole diameter)
+- Cross-highlighting: hover a row → flagged geometry highlights in 3D
+- Uses evSurfaceDefinition, evDistance, evPlane, evEdgeTangentLine, evFaceTangentPlane
+
+Updated SCRIPTS.md and TOOLS.md with `deploy` command.
+
+### Previous Action (2026-02-06)
+Created `generateFeatureScript.js` — CLI tool that generates FeatureScript code from plain-English prompts using Claude AI:
+- Smart context selection: loads 5 core guide files (~75KB) + keyword-matched JSON module specs
+- Keyword detection: scans prompt for known function/type names and common terms (extrude, fillet, sketch, etc.)
+- Cross-reference lookup: uses `_crossReferences.json` to find which module defines each type
+- 200KB cap on JSON context to stay within token limits
+- Supports `--type feature|table|property` for different output types
+- `--verbose` shows loaded docs, matched modules, and token estimates
+- `--list-modules` lists all 209 Standard Library modules by category
+- API key via `ANTHROPIC_API_KEY` env var or `config/aikey.js`
+- Added `@anthropic-ai/sdk` dependency, `config/aikeyexample.js` template
+- Updated TOOLS.md, SCRIPTS.md, .gitignore
+
+### Previous Action (2026-02-06)
+Created FeatureScript documentation toolkit (`Node/docs/featurescript/`) — 21 files.
+
+### Previous Action (2026-02-05)
+Created `createPublicationsFromExcel.js` for Onshape publication creation from Excel.
+
+## Blockers / Notes
+- Several new scripts created but uncommitted (replaceFromExcel.js, releaseFromExcel.js, createPublicationsFromExcel.js, etc.)
+- Level 1 parts already uploaded and released
+- Level 2 test assembly (80201-01) fully verified end-to-end
+- Publications script ready — user needs to prepare Excel with publication names
+
+## Quick Commands
+```bash
+# Create publications:
+node createPublicationsFromExcel.js -i input.xlsx --dry-run    # Validate and preview
+node createPublicationsFromExcel.js -i input.xlsx              # Create publications
+
+# Delete Part Studios and Assemblies:
+node deletePartStudiosAndAssemblies.js --doc <docId> --dry-run
+node deletePartStudiosAndAssemblies.js -i input.xlsx --dry-run
+node deletePartStudiosAndAssemblies.js -i input.xlsx
+
+# Level 2 assembly upload:
+node unifiedUpload.js -i Upload/Onshape_Upload_List.xlsx --level 2 --slow-run --asmref output/asmref.json
+node unifiedUpload.js -i Upload/Onshape_Upload_List.xlsx --level 2 --asmref output/asmref.json
+```
+
+---
+
+# Reference Documentation
+
+## Status: UNIFIED UPLOAD TESTED & VERIFIED
+## Last Updated: 2025-12-06
+## Session: Tested unified upload - 43 parts + 6 assemblies successful
+
+---
+
+## Quick Start
+
+```bash
+./init.sh                    # Run this first every session
+node unifiedUpload.js -h     # See unified upload options
+node assignLevels.js -h      # See level assignment options
+```
+
+---
+
+## What's Working
+
+### NEW: Unified Upload Tool
+Single Excel-driven script that handles the entire migration:
+
+```bash
+# Assign levels to files based on dependencies
+node assignLevels.js -i Upload/Onshape_Upload_List.xlsx -o Upload/Onshape_Upload_Levels.xlsx
+
+# Upload everything (processes in level order)
+node unifiedUpload.js -i Upload/Onshape_Upload_List.xlsx
+
+# Or upload by level for testing
+node unifiedUpload.js --level 1  # Parts only
+node unifiedUpload.js --level 2  # Assemblies only
+```
+
+### Key Features
+- **Excel-driven**: All file info, properties, folders in one spreadsheet
+- **Level-based processing**: 0=non-CAD, 1=parts, 2+=assemblies (depth-sorted)
+- **Auto-relink**: Assemblies automatically relink to master parts
+- **JSON sidecar**: Crash-safe status tracking (upload_status.json)
+- **Document grouping**: Files with same `document:name` go to same doc
+- **Folder handling**: Creates folders if they don't exist
+
+### New Files Created
+| File | Purpose |
+|------|---------|
+| `assignLevels.js` | Assigns uploadLevel based on assembly dependencies |
+| `unifiedUpload.js` | Main migration script - Excel-driven |
+| `lib/relink.js` | Reusable relink module for assemblies |
+| `Upload/Onshape_Upload_Levels.xlsx` | Output with levels assigned |
+
+### Core Scripts (Still Available)
+1. `uploadStandaloneParts.js` - Upload master parts as composite Part Studios
+2. `uploadAssemblies.js` - Upload Pack & Go ZIPs
+3. `relinkAssemblies.js` - Full relink with grouping and origin fastening
+
+### Key Implementation Details
+- `createComposite: true` - All parts import as composite (handles multi-body)
+- `yAxisIsUp: true` - Correct orientation for both parts and assemblies
+- `includeNonSolids: true` - Required to detect composite parts in assembly API
+- `includePartTypes: ['PARTS', 'COMPOSITE_PARTS']` - Insert both part types
+- Group + Fasten to Origin - Locks assembly in place
+
+---
+
+## Excel Schema for Unified Upload
+
+| Column | Purpose |
+|--------|---------|
+| `uploadLevel` | 0=non-CAD, 1=parts, 2+=assemblies |
+| `document:name` | Groups files into same Onshape document |
+| `folder` | Target folder name |
+| `filePath` | Local file path |
+| `zipPath` | Pack & Go ZIP path (for assemblies) |
+| `uploadStatus` | pending/uploaded/failed |
+| `onshape:documentId` | Filled after upload |
+| `onshape:elementId` | Filled after upload |
+| `property:*` | Metadata to set (Description, Vendor, etc.) |
+
+---
+
+## Verified Test Cases
+- **10365-01**: 2 parts, simple assembly - PASSED
+- **30172**: 5 parts, 16 instances with duplicates - PASSED
+- **40037**: 26 parts, 200+ relink ops, sub-assemblies - PASSED
+
+### ASMREF Level 2 Re-test (2026-02-04)
+- **80201-01 (L2)**: 14 instances relinked via ASMREF, properties set, **released** - PASSED
+  - Previous run failed at release ("pending reference updates")
+  - Fixed by removing "update to latest version" requirement in Onshape release workflow
+  - Full pipeline: upload → relink → properties → release all succeeded
+
+### Unified Upload Test (2025-12-06)
+- **43 Parts (Level 1)**: All uploaded with metadata properties - PASSED
+- **6 Assemblies (Levels 2-4)**: All uploaded and relinked - PASSED
+  - 43123 (L2): 2 instances relinked
+  - 43667 (L2): 2 instances relinked
+  - 43125 (L3): 19 instances relinked
+  - 43685 (L3): 21 instances relinked
+  - 40037 (L4): 57 instances relinked
+  - 40083 (L4): 61 instances relinked
+- **Total**: 162 relink operations successful
+
+---
+
+## Known Issues
+
+1. All parts import as composite (even single-body) because `createComposite: true`
+   - This is intentional to handle multi-body parts
+   - Functionally equivalent, just displays differently in Onshape
+
+2. releaseDocument.js has some gaps (403 permission error on some docs)
+
+3. Excel file paths are Windows-style - run on Windows machine with file access
+
+---
+
+## Recent Session Notes
+
+### 2026-02-05 - Created Publications Script
+- Created `Node/createPublicationsFromExcel.js` — reads Excel, groups by publication name, creates publications via API
+- Excel columns: `onshape:folderId`, `property:publication:name`, `property:publication:description`, `property:publication:notes`, `item:documentId`, `item:elementId`, `item:versionId`
+- Multi-row grouping: rows with same publication name → one publication with multiple items
+- Crash-safe: JSON sidecar saves after each creation, resume skips already-created
+- Rate limiting: adaptive delay 200ms–5000ms, 429 retry up to 3 times
+- Output: `<input>_completed.xlsx` with `onshape:publicationId` filled in
+- Updated `SCRIPTS.md` (added full entry) and `TOOLS.md` (added `publications` command)
+- Discussed naming: Onshape requires enterprise-wide unique publication names, recommended `12345 - Published` or `12345 Pub`
+
+### 2026-02-04 - Level 2 Release Fix Verified
+- Re-tested 80201-01 after Onshape release workflow setting change
+- Root cause: Onshape required assembly references to point to latest version, but relinked instances reference the released (fixed) version of parts
+- User removed "update to latest version" requirement in Onshape release workflow settings
+- Re-test: upload, relink (14 instances), properties, and release all succeeded
+- Level 2 assembly pipeline is fully verified end-to-end
+
+### 2026-02-02 - ASMREF Key Fix
+- Fixed `convertAsmrefToJson.js` to use `Part File Name` instead of `Link File Name`
+- Root cause: Pack & Go adds config suffix to Link File Name (e.g., `30093_[30093-01].SLDPRT`)
+- But Onshape uses original filename as instance name (e.g., `30093.SLDPRT`)
+- Regenerated `output/asmref.json` - verified fix works for assembly 20036
+- `lib/asmref.js` has fallback logic (`extractBaseName`) kept as defensive measure
+
+### 2025-12-06 - Unified Upload Script TESTED
+- Created `assignLevels.js` - auto-assigns upload levels from references.csv
+- Created `unifiedUpload.js` - single Excel-driven migration tool
+- Created `lib/relink.js` - reusable relink module
+- Level assignment: 0=non-CAD, 1=parts, 2-6=assemblies (by dependency depth)
+- Auto-relink integrated into assembly upload flow
+- JSON sidecar for crash-safe status tracking
+- **TESTED**: 43 parts + 6 assemblies uploaded successfully
+- Fixed case-insensitive filename matching in assignLevels.js
+- Fixed path handling for assemblies (zipPath vs filePath)
+- Script handles network interruptions gracefully with retry capability
+
+### 2025-12-05 - Orchestrator Pattern Session
+- Using supervisor/sub-agent pattern to preserve context
+- Discovered 40037 test was already complete (marked PASSED)
+- Features now at 11/13 passed
+
+### 2025-12-03 - Harness Implementation
+- Created `init.sh` for session initialization
+- Created `features.json` with pass/fail tracking
+- All core relink features working
+
+---
+
+## Next Steps
+
+1. ~~**Test on work computer** with real files~~ - DONE (43 parts + 6 assemblies)
+2. ~~**Run small batch** - test 10-20 files through full workflow~~ - DONE (49 files)
+3. ~~**Verify relink** - confirm assemblies reference master parts~~ - DONE (162 operations)
+4. **Production run** - ~24,000 files (script is ready!)

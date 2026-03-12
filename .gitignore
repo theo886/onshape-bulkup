@@ -1,0 +1,46 @@
+# mac os
+.DS_Store
+.Trashes
+.Spotlight-V100
+
+# node
+.npm
+.node_repl_history
+npm-debug.log
+node_modules
+
+# python
+__pycache__
+*.pyc
+*.egg
+*.egg-info
+.eggs
+env
+
+# api keys
+node/config/apikey.js
+Node/config/apikey.js
+Node/config/aikey.js
+python/creds.json
+
+# migration data directories (contain company-specific Excel/ZIP/data files)
+Node/Upload/
+Node/XLSX/
+Node/Release/
+Node/output/
+
+# empty artifact
+Node/Release
+
+# status/sidecar JSON files (runtime state, not source)
+Node/deploy_status.json
+Node/description_update_status.json
+Node/rename_status.json
+Node/upload_status_revert.json
+Node/relinkReport.json
+Node/assemblyImportMapping.json
+publication_status.json
+
+# temp Excel lock files
+~$*.xlsx
+firebase-debug.log

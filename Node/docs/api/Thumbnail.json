@@ -1,0 +1,1049 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Thumbnail",
+    "description": "Access, modify, and delete thumbnails.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Thumbnail",
+      "description": "Access, modify, and delete thumbnails."
+    }
+  ],
+  "paths": {
+    "/thumbnails/d/{did}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail info for a document in the default workspace.",
+        "description": "* By default, returns thumbnail info for the element with the most-recently generated image. If you pinned an element for the document thumbnail, that element will always be used for the document-level thumbnail, if it exists in the workspace.\n* The default workspace may vary by user; the image served depends on the signed-in user.\n* See also: [Tech tip on how to change a document thumbnail in onshape](https://www.onshape.com/en/resource-center/tech-tips/tech-tip-how-to-change-a-document-thumbnail-in-onshape)",
+        "operationId": "getThumbnailForDocument",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/v/{vid}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail info for a version of a document.",
+        "description": "* By default, returns thumbnail info for the element with the most-recently generated image. If you pinned an element for the document thumbnail, that element will always be used for the document-level thumbnail, if it exists in the workspace.\n* See also: [Tech tip on how to change a document thumbnail in onshape](https://www.onshape.com/en/resource-center/tech-tips/tech-tip-how-to-change-a-document-thumbnail-in-onshape)",
+        "operationId": "getThumbnailForDocumentAndVersion",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/w/{wid}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail info for a workspace.",
+        "description": "* By default, returns thumbnail info for the element with the most-recently generated image. If you pinned an element for the document thumbnail, that element will always be used for the document-level thumbnail, if it exists in the workspace.\n* See also: [Tech tip on how to change a document thumbnail in onshape](https://www.onshape.com/en/resource-center/tech-tips/tech-tip-how-to-change-a-document-thumbnail-in-onshape)",
+        "operationId": "getDocumentThumbnail",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/w/{wid}/e/{eid}/ac/{cid}/s/{sz}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail image with the given configuration for an element.",
+        "description": "Returns the thumbnail image for an element at a specified version, with the given configuration.",
+        "operationId": "getElementThumbnailWithApiConfiguration",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sz",
+            "in": "path",
+            "description": "the generated thumbnail size in pixels, widthxheigth",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "300x300"
+          },
+          {
+            "name": "t",
+            "in": "query",
+            "description": "Cache Control key. If specified, the response header returned will tell the client to use cached thumbnails.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skipDefaultImage",
+            "in": "query",
+            "description": "Controls the return of the default image, if thumbnail is not available",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "By default return the default thumbnail, if the thumbnail is not found or generated": {
+                "summary": "Get the default image, if the thumbnail is not found",
+                "description": "By default return the default thumbnail, if the thumbnail is not found or generated"
+              },
+              "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found": {
+                "summary": "Skip the default image, if the thumbnail does not exist.",
+                "description": "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found",
+                "value": true
+              }
+            }
+          },
+          {
+            "name": "rejectEmpty",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "requireConfigMatch",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "image/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/w/{wid}/s/{sz}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail image with the given size for a document.",
+        "description": "* By default, returns thumbnail image for the element with the most-recently generated image. If you pinned an element for the document thumbnail, that element will always be used for the document-level thumbnail, if it exists in the workspace.\n* See also: [Tech tip on how to change a document thumbnail in onshape](https://www.onshape.com/en/resource-center/tech-tips/tech-tip-how-to-change-a-document-thumbnail-in-onshape)",
+        "operationId": "getDocumentThumbnailWithSize",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sz",
+            "in": "path",
+            "description": "the generated thumbnail size in pixels, widthxheigth",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "300x300"
+          },
+          {
+            "name": "t",
+            "in": "query",
+            "description": "Cache Control key. If specified, the response header returned will tell the client to use cached thumbnails.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skipDefaultImage",
+            "in": "query",
+            "description": "Controls the return of the default image, if thumbnail is not available",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "By default return the default thumbnail, if the thumbnail is not found or generated": {
+                "summary": "Get the default image, if the thumbnail is not found",
+                "description": "By default return the default thumbnail, if the thumbnail is not found or generated"
+              },
+              "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found": {
+                "summary": "Skip the default image, if the thumbnail does not exist.",
+                "description": "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found",
+                "value": true
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "image/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/{wv}/{wvid}/e/{eid}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail info structure for an element.",
+        "description": "Returns thumbnail info for the given document, workspace or version, and element.",
+        "operationId": "getElementThumbnail",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Set the thumbnail image for an application element.",
+        "description": "* Allows 3rd-party applications to set thumbnails for their elements. \n* Application elements can have both primary and secondary thumbnails. A primary thumbnail represents the top-level of the element. A secondary thumbnail can represent sub-components of the element (e.g., a drawing sheet).\n* To update one or more thumbnails, you must set the overwrite query param to `true` and supply the entire set of thumbnails. All previous thumbnails will be deleted prior to updating the element with the latest images.",
+        "operationId": "setApplicationElementThumbnail",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "overwrite",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTApplicationElementThumbnailParamsArray"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Delete an element's thumbnail.",
+        "description": "Deletes an application element's thumbnail and images for the given document, workspace or version, and element combination.",
+        "operationId": "deleteApplicationThumbnails",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/d/{did}/{wv}/{wvid}/e/{eid}/s/{sz}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "Get the thumbnail image with the given size for an element.",
+        "operationId": "getElementThumbnailWithSize",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sz",
+            "in": "path",
+            "description": "the generated thumbnail size in pixels, widthxheigth",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "300x300"
+          },
+          {
+            "name": "t",
+            "in": "query",
+            "description": "Cache Control key. If specified, the response header returned will tell the client to use cached thumbnails.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skipDefaultImage",
+            "in": "query",
+            "description": "Controls the return of the default image, if thumbnail is not available",
+            "schema": {
+              "type": "string",
+              "default": ""
+            },
+            "examples": {
+              "By default return the default thumbnail, if the thumbnail is not found or generated": {
+                "summary": "Get the default image, if the thumbnail is not found",
+                "description": "By default return the default thumbnail, if the thumbnail is not found or generated"
+              },
+              "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found": {
+                "summary": "Skip the default image, if the thumbnail does not exist.",
+                "description": "Setting skipDefaultImage=true, returns a 404 if the thumbnail is not found",
+                "value": true
+              }
+            }
+          },
+          {
+            "name": "rejectEmpty",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "image/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/document/{did}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "This endpoint will be deprecated soon. Use `getThumbnailForDocument` instead.",
+        "description": "This API exists for historical reasons. It uses `/document/` in the path, rather than the standard `/d/` to specify the document.",
+        "operationId": "getThumbnailForDocumentOld",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/thumbnails/document/{did}/version/{vid}": {
+      "get": {
+        "tags": [
+          "Thumbnail"
+        ],
+        "summary": "This endpoint will be deprecated soon. Use `getThumbnailForDocumentAndVersion` instead.",
+        "description": "This API exists for historical reasons. It uses `/document/` in the path, rather than the standard `/d/` to specify the document.",
+        "operationId": "getThumbnailForDocumentAndVersionOld",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTThumbnailInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTApplicationElementThumbnailParamsArray": {
+        "type": "object",
+        "properties": {
+          "thumbnails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTApplicationElementThumbnailParams"
+            }
+          }
+        }
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTApplicationElementThumbnailParams": {
+        "type": "object",
+        "properties": {
+          "base64EncodedImage": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "imageHeight": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageWidth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isPrimary": {
+            "type": "boolean"
+          },
+          "uniqueId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

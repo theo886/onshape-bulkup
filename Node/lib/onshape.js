@@ -1,0 +1,516 @@
+var util = require('./util.js');
+var errors = require('../config/errors.js');
+var crypto = require('crypto');
+var querystring = require('querystring');
+var fs = require('fs');
+var pathModule = require('path');
+
+var apikey = null;
+try {
+  apikey = require('../config/apikey.js');
+} catch (e) {
+  util.error(errors.credentialsFileError);
+}
+
+// creates random 25-character string
+var buildNonce = function () {
+  var chars = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+    'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0',
+    '1', '2', '3', '4', '5', '6', '7', '8', '9'
+  ];
+  var nonce = '';
+  for (var i = 0; i < 25; i++) {
+    nonce += chars[Math.floor(Math.random()*chars.length)];
+  }
+  return nonce;
+}
+
+module.exports = (function (creds) {
+  var protocol = null;
+  // basic error checking on creds
+  if (typeof creds.baseUrl !== 'string' ||
+    typeof creds.accessKey !== 'string' ||
+    typeof creds.secretKey !== 'string') {
+    util.error(errors.credentialsFormatError);
+  }
+  if (creds.baseUrl.indexOf('http://') === 0) {
+    protocol = require('http');
+  } else if (creds.baseUrl.indexOf('https://') === 0) {
+    protocol = require('https');
+  } else {
+    util.error(errors.badBaseUrlError);
+  }
+
+  var buildHeaders = function (method, path, queryString, inputHeaders) {
+    var headers = util.copyObject(inputHeaders);
+    // the Date header needs to be reasonably (5 minutes) close to the server time when the request is received
+    var authDate = (new Date()).toUTCString();
+    // the On-Nonce header is a random (unique) string that serves to identify the request
+    var onNonce = buildNonce();
+    if (!('Content-Type' in headers)) {
+      headers['Content-Type'] = 'application/json';
+    }
+    // the Authorization header needs to have this very particular format, which the server uses to validate the request
+    // the access key is provided for the server to retrieve the API key; the signature is encrypted with the secret key
+    var hmacString = (method + '\n' + onNonce + '\n' + authDate + '\n' +
+      headers['Content-Type'] + '\n' + path + '\n' + queryString + '\n').toLowerCase();
+    var hmac = crypto.createHmac('sha256', creds.secretKey);
+    hmac.update(hmacString);
+    var signature = hmac.digest('base64');
+    var asign = 'On ' + creds.accessKey + ':HmacSHA256:' + signature;
+
+    headers['On-Nonce'] = onNonce;
+    headers['Date'] = authDate;
+    headers['Authorization'] = asign;
+
+    if (!('Accept' in headers)) {
+      headers['Accept'] = 'application/vnd.onshape.v1+json';
+    }
+
+    return headers;
+  }
+
+  var buildDWMVEPath = function (opts) {
+    var path = '/api/' + opts.resource + '/d/' + opts.d;
+    if ('w' in opts) {
+      path += '/w/' + opts.w;
+    } else if ('v' in opts) {
+      path += '/v/' + opts.v;
+    } else if ('m' in opts) {
+      path += '/m/' + opts.m;
+    }
+    if ('e' in opts) {
+      path += '/e/' + opts.e;
+    }
+    if ('subresource' in opts) {
+      path += '/' + opts.subresource;
+    }
+
+    return path;
+  }
+
+  var buildQueryString = function (opts) {
+    if (!('query' in opts) || typeof opts.query !== 'object' || opts.query == null) {
+      return '';
+    }
+    return querystring.stringify(opts.query);
+  }
+
+  var inputHeadersFromOpts = function (opts) {
+    return (!('headers' in opts) || typeof opts.headers !== 'object' || opts.headers == null) ?
+      {} : util.copyObject(opts.headers);
+  }
+
+  /*
+   * opts: {
+   *   d: document ID
+   *   w: workspace ID (only one of w, v, m)
+   *   v: version ID (only one of w, v, m)
+   *   m: microversion ID (only one of w, v, m)
+   *   e: elementId
+   *   baseUrl: base URL; if present, overrides apikey.js
+   *   resource: top-level resource (partstudios)
+   *   subresource: sub-resource, if any (massproperties)
+   *   path: from /api/...; if present, overrides the other options
+   *   accept: accept header (default: application/vnd.onshape.v1+json)
+   *   query: query object
+   *   headers: headers object
+   * }
+   */
+  var get = function (opts, cb) {
+    var path = '';
+    if ('path' in opts) {
+      path = opts.path;
+    } else {
+      path = buildDWMVEPath(opts);
+    }
+    var baseUrl = ('baseUrl' in opts) ? opts.baseUrl : creds.baseUrl;
+    var queryString = buildQueryString(opts);
+    var inputHeaders = inputHeadersFromOpts(opts);
+    var headers = buildHeaders('GET', path, queryString, inputHeaders);
+    if (queryString !== '') queryString = '?' + queryString;
+    var requestOpts = new URL(baseUrl + path + queryString);
+    requestOpts.method = 'GET';
+    requestOpts.headers = headers;
+    var req = protocol.request(requestOpts, function (res) {
+      var wholeData = '';
+      res.on('data', function (data) {
+        wholeData += data;
+      });
+      res.on('end', function () {
+        // Build rate limit info for all responses
+        var rateInfo = {
+          remaining: res.headers['x-rate-limit-remaining'],
+          retryAfter: res.headers['retry-after']
+        };
+        if (res.statusCode === 200) {
+          cb(wholeData, null, rateInfo);
+        } else if (res.statusCode === 307) {
+          var redirectParsedUrl = new URL(res.headers.location);
+          console.log('Redirecting to ' + res.headers.location);
+          // the redirect contains a query string, which the API key mechanism needs to encrypt
+          var redirectOpts = {
+            baseUrl: redirectParsedUrl.protocol + '//' + redirectParsedUrl.host,
+            path: redirectParsedUrl.pathname,
+            headers: inputHeaders,
+            query: querystring.parse(redirectParsedUrl.search.substring(1))
+          };
+          get(redirectOpts, cb);
+        } else {
+          console.log(requestOpts.method + ' ' + baseUrl + path + queryString);
+          console.log('Status: ' + res.statusCode);
+          if (wholeData) {
+            console.log(wholeData.toString());
+          }
+          // Pass response info to callback for rate limit handling
+          cb(null, {
+            statusCode: res.statusCode,
+            body: wholeData.toString(),
+            headers: res.headers
+          }, rateInfo);
+        }
+      });
+    }).on('error', function (e) {
+      console.log(requestOpts.method + ' ' + baseUrl + path + queryString);
+      console.log(e);
+      util.error(errors.getError, cb);
+    });
+    req.end();
+  };
+
+  /*
+   * opts: same as get()
+   * cb: function(buffer, error, rateInfo)
+   *   buffer: Buffer on success (not string)
+   *   error: { statusCode, body, headers } or null
+   *   rateInfo: { remaining, retryAfter }
+   *
+   * Like get() but collects response data as Buffer (for binary downloads).
+   */
+  var getBinary = function (opts, cb) {
+    var path = '';
+    if ('path' in opts) {
+      path = opts.path;
+    } else {
+      path = buildDWMVEPath(opts);
+    }
+    var baseUrl = ('baseUrl' in opts) ? opts.baseUrl : creds.baseUrl;
+    var queryString = buildQueryString(opts);
+    var inputHeaders = inputHeadersFromOpts(opts);
+    var headers = buildHeaders('GET', path, queryString, inputHeaders);
+    if (queryString !== '') queryString = '?' + queryString;
+    var requestOpts = new URL(baseUrl + path + queryString);
+    requestOpts.method = 'GET';
+    requestOpts.headers = headers;
+    var req = protocol.request(requestOpts, function (res) {
+      var chunks = [];
+      res.on('data', function (data) {
+        chunks.push(data);
+      });
+      res.on('end', function () {
+        var wholeData = Buffer.concat(chunks);
+        var rateInfo = {
+          remaining: res.headers['x-rate-limit-remaining'],
+          retryAfter: res.headers['retry-after']
+        };
+        if (res.statusCode === 200) {
+          cb(wholeData, null, rateInfo);
+        } else if (res.statusCode === 307) {
+          var redirectParsedUrl = new URL(res.headers.location);
+          console.log('Redirecting to ' + res.headers.location);
+          var redirectOpts = {
+            baseUrl: redirectParsedUrl.protocol + '//' + redirectParsedUrl.host,
+            path: redirectParsedUrl.pathname,
+            headers: inputHeaders,
+            query: querystring.parse(redirectParsedUrl.search.substring(1))
+          };
+          getBinary(redirectOpts, cb);
+        } else {
+          console.log(requestOpts.method + ' ' + baseUrl + path + queryString);
+          console.log('Status: ' + res.statusCode);
+          if (wholeData.length > 0) {
+            console.log(wholeData.toString());
+          }
+          cb(null, {
+            statusCode: res.statusCode,
+            body: wholeData.toString(),
+            headers: res.headers
+          }, rateInfo);
+        }
+      });
+    }).on('error', function (e) {
+      console.log(requestOpts.method + ' ' + baseUrl + path + queryString);
+      console.log(e);
+      util.error(errors.getError, cb);
+    });
+    req.end();
+  };
+
+  /*
+   * opts: {
+   *   d: document ID
+   *   w: workspace ID (only one of w, v, m)
+   *   v: version ID (only one of w, v, m)
+   *   m: microversion ID (only one of w, v, m)
+   *   e: elementId
+   *   baseUrl: base URL; if present, overrides apikey.js
+   *   resource: top-level resource (partstudios)
+   *   subresource: sub-resource, if any (massproperties)
+   *   path: from /api/...; if present, overrides the other options
+   *   accept: accept header (default: application/vnd.onshape.v1+json)
+   *   body: POST body
+   *   headers: headers object
+   * }
+   */
+  var post = function (opts, cb) {
+    var path = '';
+    if ('path' in opts) {
+      path = opts.path;
+    } else {
+      path = buildDWMVEPath(opts);
+    }
+    var baseUrl = ('baseUrl' in opts) ? opts.baseUrl : creds.baseUrl;
+    var queryString = buildQueryString(opts);
+    var headers = buildHeaders('POST', path, queryString, inputHeadersFromOpts(opts));
+    if (queryString !== '') queryString = '?' + queryString;
+    var requestOpts = new URL(baseUrl + path + queryString);
+    requestOpts.method = 'POST';
+    requestOpts.headers = headers;
+    var req = protocol.request(requestOpts, function (res) {
+      var wholeData = '';
+      res.on('data', function (data) {
+        wholeData += data;
+      });
+      res.on('end', function () {
+        // 200 OK or 204 No Content are both success responses
+        if (res.statusCode === 200 || res.statusCode === 204) {
+          cb(wholeData || '{}');
+        } else {
+          console.log(requestOpts.method + ' ' + baseUrl + path);
+          console.log(req.body);
+          console.log('Status: ' + res.statusCode);
+          if (wholeData) {
+            console.log(wholeData.toString());
+          }
+          cb(null, {
+            statusCode: res.statusCode,
+            body: wholeData.toString()
+          });
+        }
+      });
+    }).on('error', function (e) {
+      console.log(requestOpts.method + ' ' + baseUrl + path);
+      console.log(e);
+      util.error(errors.postError, cb);
+    });
+    if ('body' in opts) {
+      req.write(JSON.stringify(opts.body));
+    } else {
+      req.write('{}');
+    }
+    req.end();
+  };
+
+  /*
+   * opts: {
+   *   d: document ID
+   *   w: workspace ID (only one of w, v, m)
+   *   v: version ID (only one of w, v, m)
+   *   m: microversion ID (only one of w, v, m)
+   *   e: elementId
+   *   baseUrl: base URL; if present, overrides apikey.js
+   *   resource: top-level resource (partstudios)
+   *   subresource: sub-resource, if any (massproperties)
+   *   path: from /api/...; if present, overrides the other options
+   *   headers: headers object
+   * }
+   */
+  var del = function (opts, cb) { // 'delete' is a reserved keyword, so it can't be a variable name
+    var path = '';
+    if ('path' in opts) {
+      path = opts.path;
+    } else {
+      path = buildDWMVEPath(opts);
+    }
+    var baseUrl = ('baseUrl' in opts) ? opts.baseUrl : creds.baseUrl;
+    var headers = buildHeaders('DELETE', path, '', inputHeadersFromOpts(opts));
+    var requestOpts = new URL(baseUrl + path);
+    requestOpts.method = 'DELETE';
+    requestOpts.headers = headers;
+    var req = protocol.request(requestOpts, function (res) {
+      var wholeData = '';
+      res.on('data', function (data) {
+        wholeData += data;
+      });
+      res.on('end', function () {
+        // 200 OK or 204 No Content are both success responses
+        if (res.statusCode === 200 || res.statusCode === 204) {
+          cb(wholeData || '{}');
+        } else {
+          // Return error to callback instead of terminating
+          cb(null, {
+            statusCode: res.statusCode,
+            body: wholeData.toString()
+          });
+        }
+      });
+    }).on('error', function (e) {
+      console.log(requestOpts.method + ' ' + baseUrl + path);
+      console.log(e);
+      cb(null, { error: e });
+    });
+    req.end();
+  };
+
+  /*
+   * opts: {
+   *   name: name of document
+   *   isPublic: boolean, true for public, false for private
+   * }
+   */
+  var createDocument = function (opts, cb) {
+    opts.path = '/api/documents';
+    // isPublic being false is the default, so we only need to handle it being true
+    opts.body = {
+      name: opts.name
+    };
+    if (opts.isPublic) {
+      opts.body.isPublic = true;
+    }
+    if (opts.parentId) {
+      opts.body.parentId = opts.parentId;
+    }
+    post(opts, cb);
+  };
+
+  var getCompany = function (cb) {
+      opts = {};
+      opts.path = '/api/v10/companies';
+      get(opts, cb);
+  }
+
+  var getCompanyPolicies = function (opts, cb) {
+      opts.path = '/api/v10/companies/' + opts.cid + '/policies';
+      get(opts, cb);
+  }
+
+  var createReleasePackage = function (opts, cb) {
+    opts.path = '/api/v10/releasepackages';
+    post(opts, cb);
+  };
+
+  var submitReleasePackage = function (opts, cb) {
+    opts.path = '/api/v10/releasepackages/' + opts.rpid + '/submit';
+    opts.body = ('body' in opts) ? opts.body : {};
+    post(opts, cb);
+  };
+
+  var moveDocumentToFolder = function (opts, cb) {
+    opts.path = `/api/globaltreenodes/folder/${opts.folderId}`;
+  };
+
+  /*
+   * opts: {
+   *   d: document ID
+   *   w: workspace ID (only one of w, v, m)
+   *   v: version ID (only one of w, v, m)
+   *   m: microversion ID (only one of w, v, m)
+   *   e: elementId
+   *   baseUrl: base URL; if present, overrides apikey.js
+   *   resource: top-level resource (partstudios)
+   *   subresource: sub-resource, if any (massproperties)
+   *   path: from /api/...; if present, overrides the other options
+   *   headers: headers object
+   *   file: local path of file to upload
+   *   mimeType: MIME type of file
+   *   body: other form data; should be plain key/value pairs
+   * }
+   */
+  var upload = function (opts, cb) {
+    var path = '';
+    if ('path' in opts) {
+      path = opts.path;
+    } else {
+      path = buildDWMVEPath(opts);
+    }
+    var baseUrl = ('baseUrl' in opts) ? opts.baseUrl : creds.baseUrl;
+
+    // set up headers
+    var inputHeaders = inputHeadersFromOpts(opts);
+    var boundaryKey = Math.random().toString(16); // random string for boundary
+    inputHeaders['Content-Type'] = 'multipart/form-data; boundary="' + boundaryKey + '"';
+    var headers = buildHeaders('POST', path, '', inputHeaders);
+    var requestOpts = new URL(baseUrl + path);
+    requestOpts.method = 'POST';
+    requestOpts.headers = headers;
+
+    // set up request
+    var req = protocol.request(requestOpts, function (res) {
+      var wholeData = '';
+      res.on('data', function (data) {
+        wholeData += data;
+      });
+      res.on('end', function () {
+        if (res.statusCode === 200) {
+          cb(wholeData);
+        } else {
+          console.log(requestOpts.method + ' ' + baseUrl + path);
+          console.log('Status: ' + res.statusCode);
+          if (wholeData) {
+            console.log(wholeData.toString());
+          }
+          util.error(errors.notOKError, cb);
+        }
+      });
+    }).on('error', function (e) {
+      console.log(requestOpts.method + ' ' + baseUrl + path);
+      console.log(e);
+      util.error(errors.postError, cb);
+    });
+
+    // set up file info
+    if (!('body' in opts)) {
+      opts.body = {};
+    }
+    var filename = pathModule.basename(opts.file);
+    // Use custom elementName if provided, otherwise use the original filename
+    var elementName = opts.elementName || filename;
+    opts.body.encodedFilename = elementName;
+    opts.body.fileContentLength = fs.statSync(opts.file).size;
+
+    // set up form data
+    for (var key in opts.body) {
+      req.write('--' + boundaryKey + '\r\nContent-Disposition: form-data; name="' + key + '"\r\n\r\n');
+      req.write('' + opts.body[key]);
+      req.write('\r\n');
+    }
+
+    // add file and end request
+    req.write('--' + boundaryKey + '\r\nContent-Disposition: form-data; name="file"; filename="' + elementName + '"\r\n');
+    req.write('Content-Type: ' + opts.mimeType + '\r\n\r\n');
+    var readStream = fs.createReadStream(opts.file);
+    readStream.on('data', function (data) {
+      req.write(data);
+    });
+    readStream.on('end', function () {
+      req.write('\r\n--' + boundaryKey + '--');
+      req.end();
+    });
+  };
+
+  return {
+    get: get,
+    getBinary: getBinary,
+    post: post,
+    delete: del,
+    upload: upload,
+    getCompany: getCompany,
+    getCompanyPolicies: getCompanyPolicies,
+    createDocument: createDocument,
+    createReleasePackage: createReleasePackage,
+    submitReleasePackage: submitReleasePackage,
+    moveDocumentToFolder: moveDocumentToFolder
+  };
+})(apikey);

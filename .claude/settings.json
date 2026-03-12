@@ -1,0 +1,55 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "head -25 claude-progress.txt 2>/dev/null || echo 'No claude-progress.txt found'"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '=== Re-injecting context before compaction ===' && head -20 claude-progress.txt 2>/dev/null"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node releaseDocument.js:*)",
+      "Bash(node -e:*)",
+      "WebFetch(domain:cad.onshape.com)",
+      "WebSearch",
+      "WebFetch(domain:onshape-public.github.io)",
+      "WebFetch(domain:forum.onshape.com)",
+      "Bash(node bulkUploadFromExcel.js:*)",
+      "WebFetch(domain:www.onshape.com)",
+      "WebFetch(domain:www.goengineer.com)",
+      "WebFetch(domain:help.solidworks.com)",
+      "WebFetch(domain:stackoverflow.com)",
+      "WebFetch(domain:forum.solidworks.com)",
+      "Bash(node uploadStandaloneParts.js:*)",
+      "Bash(node uploadAssemblies.js:*)",
+      "Bash(node relinkAssemblies.js:*)",
+      "Bash(./init.sh)",
+      "Bash(ls:*)",
+      "WebFetch(domain:www.anthropic.com)",
+      "Bash(node unifiedUpload.js:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ],
+    "deny": []
+  }
+}

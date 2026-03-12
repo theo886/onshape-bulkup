@@ -1,0 +1,2088 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Drawing",
+    "description": "Access, create, and translate drawings.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Drawing",
+      "description": "Access, create, and translate drawings."
+    }
+  ],
+  "paths": {
+    "/drawings/d/{did}/w/{wid}/create": {
+      "post": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Create a new drawing in a document.",
+        "description": "This endpoint takes a JSON Schema as input. See the schema docs below for details, and see [API Guide: Drawings](https://onshape-public.github.io/docs/api-adv/drawings/) for more information.",
+        "operationId": "createDrawingAppElement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "ID of the document in which to create the drawing.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "ID of the workspace in which to create the drawing.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTDrawingParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTDocumentElementInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/d/{did}/w/{wid}/e/{eid}/modify": {
+      "post": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Modify a drawing via JSON payload.",
+        "description": "See [API Guide: Drawings](https://onshape-public.github.io/docs/api-adv/drawings/) for more information.When polling for drawing modifications to complete, use a reasonable interval (e.g., avoid polling multiple times a second, use an exponential backoff strategy, etc.). See [Rate Limiting](/docs/api-adv/errors/#429) and [API Limits](/docs/auth/limits) for more information.",
+        "operationId": "modifyDrawing",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTDrawingModificationParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppModificationRequestInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/d/{did}/w/{wid}/e/{eid}/translationformats": {
+      "get": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Get a list of all valid formats the drawing can be translated (exported) to.",
+        "description": "See [API Guide: Translations](https://onshape-public.github.io/docs/api-adv/translation/#export-a-drawing-as-a-json) for more information.",
+        "operationId": "getDrawingTranslatorFormats",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTModelFormatInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/d/{did}/{wvm}/{wvmid}/e/{eid}/views": {
+      "get": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Get details of all drawing views.",
+        "operationId": "getDrawingViews_1",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppArrayInfoBTAppDrawingViewInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/d/{did}/{wvm}/{wvmid}/e/{eid}/views/{viewid}/jsongeometry": {
+      "get": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Get view geometry of a drawing view in JSON format.",
+        "operationId": "getDrawingViewJsonGeometry_1",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "viewid",
+            "in": "path",
+            "description": "The id of the view in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "scale",
+            "in": "query",
+            "description": "Scale for measurements.",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/d/{did}/{wv}/{wvid}/e/{eid}/translations": {
+      "post": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Translate (export) a drawing to a different format.",
+        "description": "Export a drawing to a different format within a document. Use `getDrawingTranslatorFormats` for a list of supported translation (i.e., import/export) formats. See [API Guide: Translations](https://onshape-public.github.io/docs/api-adv/translation/#export-a-drawing-as-a-json) for more information.",
+        "operationId": "createDrawingTranslation",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTTranslateFormatParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTranslationRequestInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/drawings/modify/status/{mrid}": {
+      "get": {
+        "tags": [
+          "Drawing"
+        ],
+        "summary": "Get the status of a drawing modification operation.",
+        "operationId": "getModificationStatus",
+        "parameters": [
+          {
+            "name": "mrid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppModificationRequestInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTDrawingParams": {
+        "type": "object",
+        "properties": {
+          "border": {
+            "type": "boolean",
+            "description": "Set to `true` to include a border in the drawing.",
+            "default": false
+          },
+          "computeIntersection": {
+            "type": "boolean",
+            "description": "Set to `true` to compute and display virtual edges (curves drawn where parts intersect). Leave as `false` to improve performance.",
+            "default": false
+          },
+          "decimalSeparator": {
+            "type": "string",
+            "description": "`PERIOD` | `COMMA`",
+            "default": "PERIOD"
+          },
+          "displayStateId": {
+            "type": "string",
+            "description": "Apply this display state's properties to the drawing."
+          },
+          "documentId": {
+            "type": "string",
+            "description": "The document in which to create the drawing. If used, this value must match the document ID (`did`) value provided in the URL."
+          },
+          "documentMicroversionId": {
+            "type": "string",
+            "description": "Create a drawing of a part or assembly from this microversion."
+          },
+          "drawingName": {
+            "type": "string",
+            "description": "Provide a name for the drawing."
+          },
+          "elementConfiguration": {
+            "type": "string",
+            "description": "Apply this configuration from the source element to the drawing."
+          },
+          "elementId": {
+            "type": "string",
+            "description": "The id of the element in which to perform the operation."
+          },
+          "elementMicroversionId": {
+            "type": "string",
+            "description": "The id of the element microversion in which to perform the operation."
+          },
+          "explosionId": {
+            "type": "string",
+            "description": "Apply this exploded view to the drawing."
+          },
+          "externalDocumentId": {
+            "type": "string",
+            "description": "Create a drawing of an element from this external document."
+          },
+          "externalDocumentVersionId": {
+            "type": "string",
+            "description": "Create a drawing of an element from this external document version."
+          },
+          "hiddenLines": {
+            "$ref": "#/components/schemas/BTDrawingHiddenLineOption"
+          },
+          "includeSurfaces": {
+            "type": "boolean",
+            "description": "Set to `true` to include surfaces in the drawing.",
+            "default": false
+          },
+          "includeWires": {
+            "type": "boolean",
+            "description": "Set to `true` to include wires in the drawing.",
+            "default": false
+          },
+          "isFlattenedPart": {
+            "type": "boolean",
+            "description": "Set to `true` if creating a drawing from a flattened part.",
+            "default": false
+          },
+          "isSketchOnly": {
+            "type": "boolean",
+            "description": "Set to `true` if creating a drawing of a sketch.",
+            "default": false
+          },
+          "isSurface": {
+            "type": "boolean",
+            "description": "Set to `true` if creating a drawing from a surface.",
+            "default": false
+          },
+          "language": {
+            "type": "string",
+            "description": "Set the language for the drawing. Accepts any ISO 639-1 standard language code.",
+            "default": "en-us"
+          },
+          "location": {
+            "$ref": "#/components/schemas/BTElementLocationParams"
+          },
+          "modelType": {
+            "type": "string",
+            "description": "The type of model to include in the drawing: `partstudio` | `assembly`"
+          },
+          "namedPositionId": {
+            "type": "string",
+            "description": "Apply this named view to the drawing."
+          },
+          "numberHorizontalZones": {
+            "type": "integer",
+            "description": "The number of horizontal zones to include in the drawing's graphics area.",
+            "format": "int32",
+            "example": 2,
+            "default": 0
+          },
+          "numberVerticalZones": {
+            "type": "integer",
+            "description": "The number of vertical zones to include in the drawing's graphics area.",
+            "format": "int32",
+            "example": 2,
+            "default": 0
+          },
+          "partId": {
+            "type": "string",
+            "description": "Include this part in the drawing."
+          },
+          "partNumber": {
+            "type": "string",
+            "description": "Include this part in the drawing."
+          },
+          "partQuery": {
+            "type": "string",
+            "description": "Include all parts found by the query in the drawing."
+          },
+          "projection": {
+            "type": "string",
+            "description": "Apply this projection to the drawing."
+          },
+          "pureSketch": {
+            "type": "boolean",
+            "description": "Set to `true` if creating the drawing of an empty sketch.",
+            "default": false
+          },
+          "qualityOption": {
+            "type": "string",
+            "description": "`BEST_PERFORMANCE` | `BEST_QUALITY` | `BALANCED` | `ADAPTIVE`"
+          },
+          "referenceType": {
+            "type": "integer",
+            "description": "Specify the type of element to create the drawing from. `0: UNKNOWN` | `1: PARTSTUDIO` | `2: ASSEMBLY` | `3: PART` | `4: FLATTENED_PART` | `5: COMPOSITE_PART` | `6: MESH_PART` | `7: SURFACE` | `8: SKETCH` | `9: CURVE`",
+            "format": "int32"
+          },
+          "referenceTypeEnum": {
+            "$ref": "#/components/schemas/GBTAppElementReferenceType"
+          },
+          "revision": {
+            "type": "string",
+            "description": "Create the drawing from this specific revision."
+          },
+          "showCutGeomOnly": {
+            "type": "boolean",
+            "description": "Set to `true` to show only cut geometry in the drawing.",
+            "default": false
+          },
+          "simplificationOption": {
+            "type": "string",
+            "description": "`NONE` | `ABSOLUTE` | `RATIO_TO_MODEL` | `RATIO_TO_BODY` | `AUTOMATIC`"
+          },
+          "simplificationThreshold": {
+            "type": "number",
+            "description": "`NONE` | `UNKNOWN` | `SMOOTH` | `DRAFTING`",
+            "format": "double"
+          },
+          "size": {
+            "type": "string",
+            "description": "Provide a size for the drawing."
+          },
+          "sketchIds": {
+            "type": "array",
+            "description": "Include these sketches in the drawing.",
+            "items": {
+              "type": "string",
+              "description": "Include these sketches in the drawing."
+            }
+          },
+          "standard": {
+            "type": "string",
+            "description": "Provide the Standard to use in the drawing.",
+            "example": "ANSI"
+          },
+          "startZones": {
+            "type": "string",
+            "description": "The zone in which to start the drawing.",
+            "example": "A1"
+          },
+          "templateArgs": {
+            "type": "array",
+            "description": "Provide any additional arguments for the template being used for this drawing.",
+            "items": {
+              "type": "string",
+              "description": "Provide any additional arguments for the template being used for this drawing."
+            }
+          },
+          "templateDocumentId": {
+            "type": "string",
+            "description": "Apply the template from this document to the drawing."
+          },
+          "templateElementId": {
+            "type": "string",
+            "description": "Apply the template from this element to the drawing."
+          },
+          "templateName": {
+            "type": "string",
+            "description": "Apply this template to the drawing."
+          },
+          "templateVersionId": {
+            "type": "string",
+            "description": "Apply the template from this version to the drawing."
+          },
+          "templateWorkspaceId": {
+            "type": "string",
+            "description": "Apply the template from this workspace to the drawing."
+          },
+          "titleblock": {
+            "type": "boolean",
+            "description": "Set to `true` to include a title block in the drawing.",
+            "default": false
+          },
+          "units": {
+            "type": "string",
+            "description": "Units for the element: `METER` | `CENTIMETER` | `MILLIMETER` | `INCH` | `FOOT` | `YARD`"
+          },
+          "views": {
+            "type": "string",
+            "description": "Add these views to the drawing."
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "Create a drawing of a part or assembly from this workspace."
+          }
+        },
+        "description": "JSON schema for creating or updating a drawing."
+      },
+      "BTDocumentElementInfo": {
+        "type": "object",
+        "properties": {
+          "accelerationUnits": {
+            "type": "string"
+          },
+          "angleUnits": {
+            "type": "string"
+          },
+          "angularVelocityUnits": {
+            "type": "string"
+          },
+          "applicationTarget": {
+            "$ref": "#/components/schemas/BTApplicationTargetInfo"
+          },
+          "areaUnits": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "densityUnits": {
+            "type": "string"
+          },
+          "elementType": {
+            "$ref": "#/components/schemas/GBTElementType"
+          },
+          "energyUnits": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "forceUnits": {
+            "type": "string"
+          },
+          "foreignDataId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lengthUnits": {
+            "type": "string"
+          },
+          "massUnits": {
+            "type": "string"
+          },
+          "microversionId": {
+            "type": "string"
+          },
+          "momentUnits": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pressureUnits": {
+            "type": "string"
+          },
+          "prettyType": {
+            "type": "string"
+          },
+          "safeToShow": {
+            "type": "boolean"
+          },
+          "specifiedUnit": {
+            "type": "string"
+          },
+          "thumbnailInfo": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "thumbnails": {
+            "type": "string",
+            "format": "uri"
+          },
+          "timeUnits": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "unupdatable": {
+            "type": "boolean"
+          },
+          "volumeUnits": {
+            "type": "string"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/BTZipFileInfo"
+          }
+        }
+      },
+      "BTDrawingModificationParams": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "jsonRequests": {
+            "type": "array",
+            "description": "Array of drawing modification operations.",
+            "items": {
+              "$ref": "#/components/schemas/BTBDrawingOperationParams"
+            }
+          }
+        }
+      },
+      "BTAppModificationRequestInfo": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "output": {
+            "type": "string"
+          },
+          "outputStatusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentDocumentMicroversionId": {
+            "type": "string"
+          },
+          "parentElementMicroversionId": {
+            "type": "string"
+          },
+          "requestState": {
+            "$ref": "#/components/schemas/BTAppModificationRequestState"
+          },
+          "resultDocumentMicroversionId": {
+            "type": "string"
+          },
+          "resultElementMicroversionId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTModelFormatInfo": {
+        "type": "object",
+        "properties": {
+          "couldBeAssembly": {
+            "type": "boolean",
+            "description": "Indicates if this format could be an assembly.",
+            "example": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the format.",
+            "example": "STEP"
+          },
+          "translatorName": {
+            "type": "string",
+            "description": "The name of the translator for the format.",
+            "example": "step"
+          }
+        }
+      },
+      "BTAppArrayInfoBTAppDrawingViewInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAppDrawingViewInfo"
+            }
+          },
+          "parentChangeId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTTranslateFormatParams": {
+        "required": [
+          "formatName"
+        ],
+        "type": "object",
+        "properties": {
+          "allowFaultyParts": {
+            "type": "boolean",
+            "description": "If true, parts with faults are imported. If false, faulty parts are omitted.",
+            "default": false
+          },
+          "angularTolerance": {
+            "type": "number",
+            "description": "Determines the maximum angular deviation, between the analytical surface and its triangulation. Lower values result in a finer geometry and higher values result in coarser geometry.",
+            "format": "double",
+            "example": 0.001
+          },
+          "annotationsFontHeightInMillimeters": {
+            "type": "number",
+            "description": "Determines the font size in workspace units used for the MBD annotations text export",
+            "format": "double",
+            "example": 4
+          },
+          "blobElementId": {
+            "type": "string"
+          },
+          "blobMicroversionId": {
+            "type": "string"
+          },
+          "cloudObjectId": {
+            "type": "string",
+            "description": "Folder id where to store the exported model."
+          },
+          "cloudStorageAccountId": {
+            "type": "string",
+            "description": "Account id to access the cloud storage."
+          },
+          "colorMethod": {
+            "type": "string"
+          },
+          "configuration": {
+            "type": "string",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details."
+          },
+          "connectionId": {
+            "type": "string"
+          },
+          "createComposite": {
+            "type": "boolean"
+          },
+          "currentSheetOnly": {
+            "type": "boolean"
+          },
+          "destinationName": {
+            "type": "string",
+            "description": "The name of the exported file."
+          },
+          "distanceTolerance": {
+            "type": "number",
+            "description": "Determines the maximum distance deviation, between the analytical surface and its triangulation. Lower values result in a finer geometry and higher values result in coarser geometry.",
+            "format": "double",
+            "example": 0.001
+          },
+          "dxfVersion": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string",
+            "description": "The id of the element in which to perform the operation."
+          },
+          "elementIds": {
+            "type": "array",
+            "description": "An array of element ids for multi-element export.",
+            "items": {
+              "type": "string",
+              "description": "An array of element ids for multi-element export."
+            }
+          },
+          "emailLink": {
+            "type": "boolean",
+            "description": "Use `true` if a link in an email should be sent."
+          },
+          "emailMessage": {
+            "type": "string",
+            "description": "Message to send in the email body along with the download link."
+          },
+          "emailSubject": {
+            "type": "string",
+            "description": "Subject to send the email with."
+          },
+          "emailTo": {
+            "type": "array",
+            "description": "List of email addresses to send the email to.",
+            "items": {
+              "type": "string",
+              "description": "List of email addresses to send the email to."
+            }
+          },
+          "evaluateExportRule": {
+            "type": "boolean",
+            "description": "Set to `true` to evaluate the export rule for the given `formatName` and to include an `exportRuleFileName` value in the response.",
+            "default": false
+          },
+          "excludeHiddenEntities": {
+            "type": "boolean",
+            "description": "Whether or not to exclude hidden parts from export."
+          },
+          "excludeOffSheetContent": {
+            "type": "boolean"
+          },
+          "extractAssemblyHierarchy": {
+            "type": "boolean"
+          },
+          "flatPatternAsync": {
+            "type": "boolean"
+          },
+          "flatten": {
+            "type": "boolean"
+          },
+          "flattenAssemblies": {
+            "type": "boolean"
+          },
+          "foreignId": {
+            "type": "string"
+          },
+          "formatName": {
+            "type": "string",
+            "description": "The name of the file format."
+          },
+          "fromUserId": {
+            "type": "string",
+            "description": "Id of the user who does the export."
+          },
+          "getyAxisIsUp": {
+            "type": "boolean"
+          },
+          "grouping": {
+            "type": "boolean",
+            "description": "Whether parts should be exported as a group or individually in a .zip file."
+          },
+          "hideInspectionItems": {
+            "type": "boolean"
+          },
+          "ignoreExportRulesForContents": {
+            "type": "boolean",
+            "description": "For multiple elements export, use `true` if export rule shouldn't be applied for all elements."
+          },
+          "imageHeight": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageWidth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "importAppearances": {
+            "type": "boolean"
+          },
+          "importInBackground": {
+            "type": "boolean"
+          },
+          "importMaterialDensity": {
+            "type": "boolean"
+          },
+          "importWithinDocument": {
+            "type": "boolean"
+          },
+          "includeBendCenterlines": {
+            "type": "boolean"
+          },
+          "includeBendLines": {
+            "type": "boolean"
+          },
+          "includeCboreCsink": {
+            "type": "boolean"
+          },
+          "includeExportIds": {
+            "type": "boolean",
+            "description": "Whether topology ids should be exported as parasolid attributes."
+          },
+          "includeFormedCentermarks": {
+            "type": "boolean"
+          },
+          "includeFormedOutlines": {
+            "type": "boolean"
+          },
+          "includeSketches": {
+            "type": "boolean"
+          },
+          "joinAdjacentSurfaces": {
+            "type": "boolean"
+          },
+          "level": {
+            "type": "string"
+          },
+          "linkDocumentId": {
+            "type": "string",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both."
+          },
+          "linkDocumentWorkspaceId": {
+            "type": "string",
+            "description": "The id of the workspace through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both."
+          },
+          "maximumChordLength": {
+            "type": "number",
+            "description": "Determines the maximum of a triangle edge length. Lower values result in a finer geometry and higher values result in coarser geometry.",
+            "format": "double",
+            "example": 0.01
+          },
+          "notifyUser": {
+            "type": "boolean",
+            "description": "Send notification to the user client."
+          },
+          "occurrencesToExport": {
+            "type": "string",
+            "description": "IDs of the occurrences to retrieve. Use comma-separated IDs for multiple instances (example: occurrencesToExport=JHK,JHD)."
+          },
+          "onePartPerDoc": {
+            "type": "boolean"
+          },
+          "originalForeignId": {
+            "type": "string"
+          },
+          "parasolidMode": {
+            "$ref": "#/components/schemas/GBTParasolidEncodingType"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "partIds": {
+            "type": "string",
+            "description": "IDs of the parts to retrieve. Use comma-separated IDs for multiple parts (example: partIds=JHK,JHD)."
+          },
+          "partsExportFilter": {
+            "$ref": "#/components/schemas/BTPartsExportFilter-4308"
+          },
+          "password": {
+            "type": "string",
+            "description": "A password to protect the email with."
+          },
+          "passwordRequired": {
+            "type": "boolean",
+            "description": "Use `true` if the email should be protected with a password."
+          },
+          "pdfVersion": {
+            "type": "string"
+          },
+          "processedForeignId": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "proxyDocumentId": {
+            "type": "string"
+          },
+          "proxyElementId": {
+            "type": "string"
+          },
+          "proxyWorkspaceVersion": {
+            "type": "string"
+          },
+          "proxyWorkspaceVersionId": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string",
+            "description": "Determines export resolution of fine, medium, or coarse",
+            "example": "fine",
+            "enum": [
+              "fine",
+              "medium",
+              "coarse"
+            ]
+          },
+          "rhinoVersion": {
+            "$ref": "#/components/schemas/GBTRhinoVersions"
+          },
+          "selectablePdfText": {
+            "type": "boolean"
+          },
+          "sendCopyToMe": {
+            "type": "boolean",
+            "description": "Use `true` if email copy should be sent to the user who does the export."
+          },
+          "sheetIndices": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "sheetMetalFlat": {
+            "type": "boolean"
+          },
+          "showOverriddenDimensions": {
+            "type": "boolean"
+          },
+          "skipBodyshop": {
+            "type": "boolean"
+          },
+          "sourceName": {
+            "type": "string"
+          },
+          "specifyMaterialData": {
+            "type": "boolean"
+          },
+          "specifyUnits": {
+            "type": "boolean"
+          },
+          "splinesAsPolylines": {
+            "type": "boolean"
+          },
+          "splitAssembliesIntoMultipleDocuments": {
+            "type": "boolean"
+          },
+          "stepParasolidPreprocessingOption": {
+            "$ref": "#/components/schemas/GBTPreProcessParasolidOption"
+          },
+          "stepVersionString": {
+            "type": "string",
+            "description": "Export STEP in version: `AP242` | `AP203` | `AP214`",
+            "default": "AP242"
+          },
+          "stlMode": {
+            "$ref": "#/components/schemas/GBTStlEncodingType"
+          },
+          "storeInDocument": {
+            "type": "boolean",
+            "description": "Create a blob with exported file in the source document."
+          },
+          "textAsGeometry": {
+            "type": "boolean"
+          },
+          "textOption": {
+            "type": "string"
+          },
+          "triggerAutoDownload": {
+            "type": "boolean",
+            "description": "Automatically download a translated file."
+          },
+          "unit": {
+            "type": "string"
+          },
+          "uploadId": {
+            "type": "string"
+          },
+          "urdfMeshFormat": {
+            "$ref": "#/components/schemas/GBTUrdfMeshFormat"
+          },
+          "useFileNameToSetSinglePartName": {
+            "type": "boolean"
+          },
+          "useGltfCompression": {
+            "type": "boolean"
+          },
+          "useIGESImportPostProcessing": {
+            "type": "boolean"
+          },
+          "useIgesCompatibilityMode": {
+            "type": "boolean"
+          },
+          "validForDays": {
+            "type": "integer",
+            "description": "Number of days to keep the link valid for.",
+            "format": "int32"
+          },
+          "versionString": {
+            "type": "string",
+            "description": "Parasolid version number as string. Use '0' for the latest.",
+            "default": "0"
+          }
+        },
+        "x-BTVisibility-properties": {
+          "disableHoops": "INTERNAL",
+          "upgradeFeatureScriptVersion": "INTERNAL",
+          "documentId": "INTERNAL",
+          "preserveSourceIds": "INTERNAL",
+          "documentVersion": "INTERNAL"
+        }
+      },
+      "BTTranslationRequestInfo": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "exportRuleFileName": {
+            "type": "string",
+            "description": "The file name after evaluating a rule for the given `formatName`. `NULL` if `evaluateExportRule=false` or if the export rule is not found."
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "requestElementId": {
+            "type": "string"
+          },
+          "requestState": {
+            "$ref": "#/components/schemas/BTTranslationRequestState"
+          },
+          "resultDocumentId": {
+            "type": "string"
+          },
+          "resultElementIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultExternalDataIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resultWorkspaceId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDrawingHiddenLineOption": {
+        "type": "string",
+        "enum": [
+          "drafting",
+          "excluded",
+          "marked"
+        ]
+      },
+      "BTElementLocationParams": {
+        "type": "object",
+        "properties": {
+          "elementId": {
+            "type": "string",
+            "description": "The id of an element which provides context for the position value specified."
+          },
+          "position": {
+            "type": "integer",
+            "description": "An indicator for the relative placement of the new element. If elementId is specified, a negative number indicates insertion prior to the element and a non-negative number indicates insertion following the element. If no elementId is specified, a negative value indicates insertion at the end of the element list and a non-negative number indicates insertion at the start of the element list.",
+            "format": "int32"
+          }
+        },
+        "description": "The location at which the new element should be inserted."
+      },
+      "GBTAppElementReferenceType": {
+        "type": "string",
+        "enum": [
+          "UNKNOWN",
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "PART",
+          "FLATTENED_PART",
+          "COMPOSITE_PART",
+          "MESH_PART",
+          "SURFACE",
+          "SKETCH",
+          "CURVE"
+        ]
+      },
+      "BTApplicationTargetInfo": {
+        "type": "object",
+        "properties": {
+          "baseHref": {
+            "type": "string",
+            "format": "uri"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "supportsCollaboration": {
+            "type": "boolean"
+          },
+          "tabIconHref": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "GBTElementType": {
+        "type": "string",
+        "enum": [
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "DRAWING",
+          "FEATURESTUDIO",
+          "BLOB",
+          "APPLICATION",
+          "TABLE",
+          "BILLOFMATERIALS",
+          "VARIABLESTUDIO",
+          "PUBLICATIONITEM",
+          "UNKNOWN"
+        ]
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTZipFileInfo": {
+        "type": "object",
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTBDrawingOperationParams": {
+        "required": [
+          "formatVersion",
+          "messageName"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Operation description",
+            "example": "Replicate annotations"
+          },
+          "formatVersion": {
+            "type": "string",
+            "description": "Version of drawing entity format.",
+            "example": "2021-01-01"
+          },
+          "messageName": {
+            "type": "string",
+            "description": "Type of drawing modification operation: `onshapeCreateAnnotations` | `onshapeEditAnnotations`",
+            "example": "onshapeCreateAnnotations"
+          },
+          "otherFields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "description": "Other entity creation or modification parameters."
+            },
+            "description": "Other entity creation or modification parameters."
+          }
+        },
+        "description": "A single drawing entity creation or modification definition"
+      },
+      "BTAppModificationRequestState": {
+        "type": "string",
+        "enum": [
+          "ACTIVE",
+          "DONE",
+          "FAILED"
+        ]
+      },
+      "BTAppElementErrorCode": {
+        "type": "string",
+        "enum": [
+          "OK",
+          "TRANSACTION_CONFLICT",
+          "NOT_FOUND",
+          "INCONSISTENT_CHANGES"
+        ]
+      },
+      "BTAppDrawingViewInfo": {
+        "type": "object",
+        "properties": {
+          "associativityChangeId": {
+            "type": "string"
+          },
+          "bomReferenceId": {
+            "type": "string"
+          },
+          "brokenOutBBoxes": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BTBoundingBox-1052"
+            }
+          },
+          "brokenOutEndConditions": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BTBrokenOutEndCondition-1107"
+            }
+          },
+          "brokenOutPointNumbers": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "changeId": {
+            "type": "string"
+          },
+          "computeIntersection": {
+            "type": "boolean"
+          },
+          "cutPoint": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "depthSectionEndCondition": {
+            "$ref": "#/components/schemas/BTBrokenOutEndCondition-1107"
+          },
+          "displayStateId": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "explodedViewId": {
+            "type": "string"
+          },
+          "hasSecondaryViewDefinition": {
+            "type": "boolean"
+          },
+          "hiddenLines": {
+            "type": "string"
+          },
+          "ignoreFaultyParts": {
+            "type": "boolean"
+          },
+          "includeHiddenInstances": {
+            "type": "boolean"
+          },
+          "includeSurfaces": {
+            "type": "boolean"
+          },
+          "includeWires": {
+            "type": "boolean"
+          },
+          "isAlignedSection": {
+            "type": "boolean"
+          },
+          "isBrokenOutSection": {
+            "type": "boolean"
+          },
+          "isCopiedView": {
+            "type": "boolean"
+          },
+          "isCropView": {
+            "type": "boolean"
+          },
+          "isPartialSection": {
+            "type": "boolean"
+          },
+          "isSectionOfAlignedSection": {
+            "type": "boolean"
+          },
+          "isSectionOfSectionOnBase": {
+            "type": "boolean"
+          },
+          "isSurface": {
+            "type": "boolean"
+          },
+          "modelReferenceId": {
+            "type": "string"
+          },
+          "modificationId": {
+            "type": "string"
+          },
+          "namedPositionId": {
+            "type": "string"
+          },
+          "occurrenceOrQueryToGeometryProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BTAppElementViewGeometryProperties-1100"
+            }
+          },
+          "offsetSectionPoints": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "parentChangeId": {
+            "type": "string"
+          },
+          "parentViewId": {
+            "type": "string"
+          },
+          "perspective": {
+            "type": "boolean"
+          },
+          "projectionAngle": {
+            "type": "string"
+          },
+          "qualityOption": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "renderSketches": {
+            "type": "boolean"
+          },
+          "sectionId": {
+            "type": "string"
+          },
+          "sectionPlanes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "showAutoCenterlines": {
+            "type": "boolean"
+          },
+          "showAutoCentermarks": {
+            "type": "boolean"
+          },
+          "showCutGeomOnly": {
+            "type": "boolean"
+          },
+          "showTangentLines": {
+            "type": "boolean"
+          },
+          "showThreads": {
+            "type": "boolean"
+          },
+          "showViewingPlane": {
+            "type": "boolean"
+          },
+          "simplificationOption": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "simplificationThreshold": {
+            "type": "number",
+            "format": "double"
+          },
+          "useParentViewSectionData": {
+            "type": "boolean"
+          },
+          "viewDirection": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "viewId": {
+            "type": "string"
+          },
+          "viewMatrix": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "viewVersion": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GBTParasolidEncodingType": {
+        "type": "string",
+        "description": "Export Parasolid in `BINARY` (.x_b) or `TEXT` (.x_t) mode.",
+        "default": "TEXT",
+        "enum": [
+          "TEXT",
+          "BINARY",
+          "UNKNOWN"
+        ]
+      },
+      "BTPartsExportFilter-4308": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "skipAllMesh": {
+            "type": "boolean"
+          },
+          "skipCurves": {
+            "type": "boolean"
+          },
+          "skipPartialMesh": {
+            "type": "boolean"
+          }
+        },
+        "description": "Skip mesh/curve foreign data creation in individual parts export",
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTPartsExportFilter-4308": "#/components/schemas/BTPartsExportFilter-4308"
+          }
+        }
+      },
+      "GBTRhinoVersions": {
+        "type": "string",
+        "enum": [
+          "V2",
+          "V3",
+          "V4",
+          "V5",
+          "V6",
+          "V7",
+          "V8",
+          "UNKNOWN"
+        ]
+      },
+      "GBTPreProcessParasolidOption": {
+        "type": "string",
+        "description": "Original geometry processing mode to improve results of translation to STEP.",
+        "enum": [
+          "NO_PRE_PROCESSING",
+          "USE_BODYSHOP_PRE_PROCESSING_ADVANCED",
+          "USE_TRANSLATOR_PRE_PROCESSING",
+          "USE_BODYSHOP_PRE_PROCESSING",
+          "USE_BODYSHOP_PRE_PROCESSING_ADVANCED_WITH_SURFS_TO_BSURFS_CONVERTING",
+          "UNKNOWN"
+        ]
+      },
+      "GBTStlEncodingType": {
+        "type": "string",
+        "description": "STL encoding type, `TEXT | BINARY`",
+        "default": "TEXT",
+        "enum": [
+          "TEXT",
+          "BINARY",
+          "UNKNOWN"
+        ]
+      },
+      "GBTUrdfMeshFormat": {
+        "type": "string",
+        "enum": [
+          "STEP",
+          "STL",
+          "GLTF",
+          "UNKNOWN"
+        ]
+      },
+      "BTTranslationRequestState": {
+        "type": "string",
+        "enum": [
+          "ACTIVE",
+          "DONE",
+          "FAILED"
+        ]
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTBoundingBox-1052": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "maxCorner": {
+            "$ref": "#/components/schemas/BTVector3d-389"
+          },
+          "minCorner": {
+            "$ref": "#/components/schemas/BTVector3d-389"
+          },
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "description": "An axis-aligned bounding box indicated by two opposite corners.",
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTNonAlignedBoundingBox-4180": "#/components/schemas/BTNonAlignedBoundingBox-4180"
+          }
+        }
+      },
+      "BTBrokenOutEndCondition-1107": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "hasOffset": {
+            "type": "boolean"
+          },
+          "hasUptoPoint": {
+            "type": "boolean"
+          },
+          "offsetDistance": {
+            "type": "number",
+            "format": "double"
+          },
+          "offsetOppositeDirection": {
+            "type": "boolean"
+          },
+          "uptoPoint": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "uptoPoint3d": {
+            "$ref": "#/components/schemas/BTVector3d-389"
+          }
+        }
+      },
+      "BTAppElementViewGeometryProperties-1100": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "propertyToValue": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTVector3d-389": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "x": {
+            "type": "number",
+            "format": "double"
+          },
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "z": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

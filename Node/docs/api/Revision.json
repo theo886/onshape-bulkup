@@ -1,0 +1,1365 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Revision",
+    "description": "Get revision information. See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/)",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Revision",
+      "description": "Get revision information. See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/)"
+    }
+  ],
+  "paths": {
+    "/revisions/c/{cid}/partnumber/{pnum}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get details for the specified revision.",
+        "description": "If the `revision` parameter is left blank, the latest revision information is returned. See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-latest-revision-info) for more details.",
+        "operationId": "getRevisionByPartNumber",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pnum",
+            "in": "path",
+            "description": "Part number.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "revision",
+            "in": "query",
+            "description": "ID of the revision to get",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "elementType",
+            "in": "query",
+            "description": "Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTRevisionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/companies/{cid}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for a company.",
+        "description": "See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-all-revisions) for more details. \n* Returns a list of `limit` size of all objects per API call. \n* To get the next set of results, use the `next` URL from the response body. \n* Do not change any other query parameters during subsequent enumeration. \n* Persist `after` query param value and use it to begin a fresh enumeration at a later date. \n* This API can only be called by company admins.",
+        "operationId": "enumerateRevisions",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "elementType",
+            "in": "query",
+            "description": "Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The number of list entries to return in a single API call.",
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "latestOnly",
+            "in": "query",
+            "description": "Whether to limit search to only latest revisions.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "description": "The earliest creation date of the revision to find.",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "default": "2000-01-01T00:00:00Z"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTRevisionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/companies/{cid}/d/{did}/{wv}/{wvid}/e/{eid}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for an element (tab).",
+        "description": "See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-latest-revision-info) for more details.",
+        "operationId": "getRevisionHistoryInCompanyByElementId",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "elementType",
+            "in": "query",
+            "description": "Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fillApprovers",
+            "in": "query",
+            "description": "Set to `true` to return a list of approvers. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "fillExportPermission",
+            "in": "query",
+            "description": "Set to `true` to return a list of export permissions. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "supportChangeType",
+            "in": "query",
+            "description": "Whether the revision can change object type. Used in reuse part number flow.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTRevisionListResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/companies/{cid}/d/{did}/{wv}/{wvid}/e/{eid}/p/{pid}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for a part ID.",
+        "description": "See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-latest-revision-info) for more details. ",
+        "operationId": "getRevisionHistoryInCompanyByPartId",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "did",
+            "in": "path",
+            "description": "Document ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "One of w or v corresponding to whether a workspace or version was specified.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "Workspace (w) or Version (v) ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "Element ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pid",
+            "in": "path",
+            "description": "Part ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "Id of document that links to the document being accessed. This may provide additional access rights to the document. Allowed only with version (v) path parameter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fillApprovers",
+            "in": "query",
+            "description": "Set to `true` to return a list of approvers. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "fillExportPermission",
+            "in": "query",
+            "description": "Set to `true` to return a list of export permissions. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "supportChangeType",
+            "in": "query",
+            "description": "Whether the revision can change object type. Used in reuse part number flow.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTRevisionListResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/companies/{cid}/partnumber/{pnum}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for a part number.",
+        "description": "You can also request `elementType` in addition to `partNumber` since companies may or may not allow drawings to share part numbers with their parts/assemblies. To perform search without `elementType`, use `elementType = -1` (UNKNOWN).  See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-all-revisions) for more details.",
+        "operationId": "getRevisionHistoryInCompanyByPartNumber",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pnum",
+            "in": "path",
+            "description": "Part number.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "elementType",
+            "in": "query",
+            "description": "Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fillApprovers",
+            "in": "query",
+            "description": "Set to `true` to return a list of approvers. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "fillExportPermission",
+            "in": "query",
+            "description": "Set to `true` to return a list of export permissions. Default is `false` and will return `null`.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "supportChangeType",
+            "in": "query",
+            "description": "Whether the revision can change object type. Used in reuse part number flow.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTRevisionListResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/companies/{cid}/partnumber/{pnum}/elementType/{et}": {
+      "delete": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Delete all revisions for a part number.",
+        "description": "Only company admins can call this API. All documents that contain or use the part number must be deleted first. This operation cannot be undone.",
+        "operationId": "deleteRevisionHistory",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The company or enterprise ID that owns the resource.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pnum",
+            "in": "path",
+            "description": "Part number.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "et",
+            "in": "path",
+            "description": "Element Type. Must be one of: `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ignoreLinkedDocuments",
+            "in": "query",
+            "description": "By default, revisions will be deleted for the part number in the specified, and all linked documents. Set to `true` to only delete revisions in the specified document.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Delete"
+            ],
+            "BasicAuth": [
+              "OAuth2Delete"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/d/{did}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for a document.",
+        "description": "Retrieve a list of all revisions that exist in a document and are owned by the document's owning company.  See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-all-revisions) for more details.",
+        "operationId": "getAllInDocument",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTRevisionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/d/{did}/v/{vid}": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get all revisions for a version.",
+        "description": "Retrieve a list of all revisions that exist in a document version and are owned by the document's owning company.  See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-all-revisions) for more details.",
+        "operationId": "getAllInDocumentVersion",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "Document ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vid",
+            "in": "path",
+            "description": "Version ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTRevisionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/revisions/{cd}/{cdid}/p/{pnum}/latest": {
+      "get": {
+        "tags": [
+          "Revision"
+        ],
+        "summary": "Get the latest revision information for a part.",
+        "description": "See [API Guide: Release Management](https://onshape-public.github.io/docs/api-adv/relmgmt/#get-latest-revision-info) for more details. Returns 204 if no revisions are found.",
+        "operationId": "getLatestInDocumentOrCompany",
+        "parameters": [
+          {
+            "name": "cd",
+            "in": "path",
+            "description": "Use `c` to specify a company ID or `d` to specify a document ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cdid",
+            "in": "path",
+            "description": "Company ID or document ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pnum",
+            "in": "path",
+            "description": "Part number.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "et",
+            "in": "query",
+            "description": "Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTRevisionInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTRevisionInfo": {
+        "type": "object",
+        "properties": {
+          "approvers": {
+            "type": "array",
+            "description": "The users who approved the release package that created this revision.",
+            "items": {
+              "$ref": "#/components/schemas/BTRevisionApproverInfo"
+            }
+          },
+          "autoObsoletionReleaseId": {
+            "type": "string"
+          },
+          "autoObsoletionReleaseName": {
+            "type": "string"
+          },
+          "canChangeType": {
+            "type": "boolean",
+            "description": "Whether the revision can change object type. Used in reuse part number flow.",
+            "default": false
+          },
+          "canExport": {
+            "type": "boolean"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "The company or enterprise ID that owns the resource."
+          },
+          "configuration": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string",
+            "description": "The Revision Description metadata property if revision is of a drawing."
+          },
+          "documentId": {
+            "type": "string",
+            "description": "The document that contains the revision object."
+          },
+          "documentName": {
+            "type": "string",
+            "description": "The name of the document that contains the revision object."
+          },
+          "documentState": {
+            "type": "integer",
+            "description": "The state of document containing this revision. Used in reuse part number flow",
+            "format": "int32"
+          },
+          "elementId": {
+            "type": "string",
+            "description": "The element that contains the revision object."
+          },
+          "elementType": {
+            "type": "integer",
+            "description": "The type of item Element Type. Must be one of: `-1`: Unknown, `0`: Part Studio, `1`: Assembly, `2`: Drawing. `4` : Blob, `8`: Variable Studio",
+            "format": "int32"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "flatPartInsertableId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "insertableId": {
+            "type": "string"
+          },
+          "isObsolete": {
+            "type": "boolean",
+            "description": "Whether the revision has been obsoleted."
+          },
+          "isRereleasable": {
+            "type": "boolean",
+            "description": "If true, the revision can be created again."
+          },
+          "isTranslatable": {
+            "type": "boolean"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "nextRevisionId": {
+            "type": "string",
+            "description": "The next revision if applicable. null for the latest revision."
+          },
+          "obsoletionPackageId": {
+            "type": "string",
+            "description": "The OBSOLETION release package that obsoleted this revision if applicable."
+          },
+          "partId": {
+            "type": "string"
+          },
+          "partIdentity": {
+            "type": "string"
+          },
+          "partNumber": {
+            "type": "string",
+            "description": "The part number with which the object was revised."
+          },
+          "previousRevisionId": {
+            "type": "string",
+            "description": "The previous revision if applicable. null for first revision."
+          },
+          "releaseCreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "releaseId": {
+            "type": "string",
+            "description": "The release package that created this revision."
+          },
+          "releaseName": {
+            "type": "string",
+            "description": "The name of the release package that created this item."
+          },
+          "releasedBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "revision": {
+            "type": "string",
+            "description": "The id of the revision."
+          },
+          "revisionRuleId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string",
+            "description": "The version of the document that contains this revision."
+          },
+          "versionName": {
+            "type": "string",
+            "description": "The name of the version of the document that contains this revision."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        },
+        "description": "Revision details."
+      },
+      "BTListResponseBTRevisionInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTRevisionInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTRevisionListResponse": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTRevisionInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "partNumber": {
+            "type": "string"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTRevisionApproverInfo": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Date the revision was created.",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "description": "User ID of the user who approved the revision."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the user who approved the revision."
+          }
+        },
+        "description": "The users who approved the release package that created this revision."
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      },
+      "BTBaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

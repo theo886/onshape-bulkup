@@ -1,0 +1,1934 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-Other",
+    "description": "Other features — hole, construction plane, import, mate connector, tag, variable, wrap, etc.",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-Other",
+  "modules": {
+    "compositePart.fs": {
+      "name": "compositePart",
+      "importPath": "onshape/std/compositePart.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "compositePart",
+          "kind": "function",
+          "id": "compositePart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature that creates a composite part from provided bodies. Performs an `opCreateCompositePart`."
+        }
+      ]
+    },
+    "cplane.fs": {
+      "name": "cplane",
+      "importPath": "onshape/std/cplane.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CPlaneType",
+          "kind": "enum",
+          "id": "CPlaneType",
+          "returnType": null,
+          "description": "The method of defining a construction plane.",
+          "values": [
+            {
+              "name": "OFFSET",
+              "description": null
+            },
+            {
+              "name": "PLANE_POINT",
+              "description": null
+            },
+            {
+              "name": "LINE_ANGLE",
+              "description": null
+            },
+            {
+              "name": "LINE_POINT",
+              "description": null
+            },
+            {
+              "name": "THREE_POINT",
+              "description": null
+            },
+            {
+              "name": "MID_PLANE",
+              "description": null
+            },
+            {
+              "name": "CURVE_POINT",
+              "description": null
+            },
+            {
+              "name": "TANGENT_PLANE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "cPlane",
+          "kind": "function",
+          "id": "cPlane-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates a construction plane feature by calling `opPlane`."
+        }
+      ]
+    },
+    "decal.fs": {
+      "name": "decal",
+      "importPath": "onshape/std/decal.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "decal",
+          "kind": "function",
+          "id": "decal-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature to place and position decal attributes on a surface."
+        },
+        {
+          "name": "vectorInPlanePerpendicularToZ",
+          "kind": "function",
+          "id": "vectorInPlanePerpendicularToZ-Vector",
+          "signature": "(planeNormal is Vector)",
+          "signatureParams": [
+            {
+              "name": "planeNormal",
+              "type": "Vector"
+            }
+          ],
+          "returnType": "Vector",
+          "returnTypeRef": "#Vector",
+          "description": "For a plane, get the x direction that is perpendicular to the global Z axis"
+        }
+      ]
+    },
+    "extend.fs": {
+      "name": "extend",
+      "importPath": "onshape/std/extend.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ExtendBoundingType",
+          "kind": "enum",
+          "id": "ExtendBoundingType",
+          "returnType": null,
+          "description": "Bounding type used with extend.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": null
+            },
+            {
+              "name": "UP_TO_FACE",
+              "description": null
+            },
+            {
+              "name": "UP_TO_BODY",
+              "description": null
+            },
+            {
+              "name": "UP_TO_VERTEX",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "extendSurface",
+          "kind": "function",
+          "id": "extendSurface-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Extends a surface body by calling `opExtendSheetBody`."
+        }
+      ]
+    },
+    "externalThread.fs": {
+      "name": "externalThread",
+      "importPath": "onshape/std/externalThread.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "externalThread",
+          "kind": "function",
+          "id": "externalThread-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Given a list of edge or selections and an optional offset, find the cylindrical faces corresponding to them split the face at the offset, and add external thread size data."
+        },
+        {
+          "name": "getSplitData",
+          "kind": "function",
+          "id": "getSplitData-Context-Id-Query-ValueWithUnits",
+          "signature": "(context is Context, topLevelId is Id, endEdge is Query, minorDiameter is ValueWithUnits)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "topLevelId",
+              "type": "Id"
+            },
+            {
+              "name": "endEdge",
+              "type": "Query"
+            },
+            {
+              "name": "minorDiameter",
+              "type": "ValueWithUnits"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "From a starting edge selection, get data about a valid cylindrical face to annotation and/or cut and data about the direction to cut."
+        }
+      ]
+    },
+    "hole.fs": {
+      "name": "hole",
+      "importPath": "onshape/std/hole.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "HoleEndStyle",
+          "kind": "enum",
+          "id": "HoleEndStyle",
+          "returnType": null,
+          "description": "Defines the end bound for the hole cut.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": "Cut holes to a specific depth."
+            },
+            {
+              "name": "BLIND_IN_LAST",
+              "description": "Cut holes through all parts but the last, then cut to a specific depth in the last part."
+            },
+            {
+              "name": "UP_TO_NEXT",
+              "description": null
+            },
+            {
+              "name": "UP_TO_ENTITY",
+              "description": null
+            },
+            {
+              "name": "THROUGH",
+              "description": "Cut holes with a through-all extrude."
+            }
+          ]
+        },
+        {
+          "name": "HoleEndStyleV2",
+          "kind": "enum",
+          "id": "HoleEndStyleV2",
+          "returnType": null,
+          "description": "Defines the end bound for the hole cut.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": "Cut holes to a specific depth."
+            },
+            {
+              "name": "UP_TO_NEXT",
+              "description": null
+            },
+            {
+              "name": "UP_TO_ENTITY",
+              "description": null
+            },
+            {
+              "name": "THROUGH",
+              "description": "Cut holes with a through-all extrude."
+            }
+          ]
+        },
+        {
+          "name": "TipAngleStyle",
+          "kind": "enum",
+          "id": "TipAngleStyle",
+          "returnType": null,
+          "description": "Defines the tip angle style for the hole tip",
+          "values": [
+            {
+              "name": "DEGREE118",
+              "description": "Tip angle is set at 118 degrees"
+            },
+            {
+              "name": "DEGREE135",
+              "description": "Tip angle is set at 135 degrees"
+            },
+            {
+              "name": "FLAT",
+              "description": "Tip angle is flat or 180 degrees"
+            },
+            {
+              "name": "CUSTOM",
+              "description": "User inputs specific angle value"
+            }
+          ]
+        },
+        {
+          "name": "HoleStartStyle",
+          "kind": "enum",
+          "id": "HoleStartStyle",
+          "returnType": null,
+          "description": "Defines the options to adjust hole position.",
+          "values": [
+            {
+              "name": "PART",
+              "description": "Cut holes starting from the hole location."
+            },
+            {
+              "name": "SKETCH",
+              "description": "Cut holes starting from the first full entrance."
+            },
+            {
+              "name": "PLANE",
+              "description": "Cut holes starting at the selected input."
+            }
+          ]
+        },
+        {
+          "name": "parsePitch",
+          "kind": "function",
+          "id": "parsePitch-Context-string",
+          "signature": "(context is Context, pitch is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "pitch",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Parse and split the numerical and unit portion of a pitch string, e.g. \"20 tpi\""
+        },
+        {
+          "name": "buildPitchAnnotation",
+          "kind": "function",
+          "id": "buildPitchAnnotation-Context-string",
+          "signature": "(context is Context, pitch is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "pitch",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Parse a pitch string, e.g. \"20 tpi\" or \"1.5 mm, and return its annotation suffix in imperial or metric format, e.g. -20 or x1.5"
+        },
+        {
+          "name": "hole",
+          "kind": "function",
+          "id": "hole-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates holes of specific dimensions and style, based either on standard hole size, or by user-defined values. Each hole's position and orientation are specified using sketch points."
+        },
+        {
+          "name": "CSINK_ANGLE_BOUNDS",
+          "kind": "const",
+          "id": "CSINK_ANGLE_BOUNDS",
+          "returnType": null,
+          "description": "Angle bounds for a hole countersink."
+        },
+        {
+          "name": "computePitchValue",
+          "kind": "function",
+          "id": "computePitchValue-Context-string",
+          "signature": "(context is Context, pitch is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "pitch",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Extract value from pitch string"
+        },
+        {
+          "name": "clusterVertexQueries",
+          "kind": "function",
+          "id": "clusterVertexQueries-Context-Query",
+          "signature": "(context is Context, selected is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "selected",
+              "type": "Query"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": "Expects `selected` query to evaluate to a set of vertices. Throws if non-vertex is passed.\nClusters coincident vertices created by the same operation, it is important to group by operation because we may have multiple sketches with different normals which share a location. We would still want to make two holes in that case.\nReturns an array of vertices, each representing the \"first\" vertex of a cluster, where \"first\" is determined by the query evaluation order of `selected`. The overall ordering of the returned array will also respect the query evaluation order of `selected`."
+        }
+      ]
+    },
+    "holeTable.fs": {
+      "name": "holeTable",
+      "importPath": "onshape/std/holeTable.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "holeTable",
+          "kind": "const",
+          "id": "holeTable",
+          "returnType": null,
+          "description": "Computes one hole table for each part"
+        }
+      ]
+    },
+    "importDerived.fs": {
+      "name": "importDerived",
+      "importPath": "onshape/std/importDerived.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DerivedPlacementType",
+          "kind": "enum",
+          "id": "DerivedPlacementType",
+          "returnType": null,
+          "description": "Enum controlling the placement of derived entities in the target part studio.",
+          "values": [
+            {
+              "name": "AT_ORIGIN",
+              "description": null
+            },
+            {
+              "name": "AT_MATE_CONNECTOR",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "BuildFunction",
+          "kind": "type",
+          "id": "BuildFunction",
+          "returnType": null,
+          "description": "A special type for functions defined as the `build` function for a Part Studio, which return a context containing parts."
+        },
+        {
+          "name": "canBeBuildFunction",
+          "kind": "predicate",
+          "id": "canBeBuildFunction-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "Typecheck for `BuildFunction`",
+          "references": [
+            "BuildFunction"
+          ]
+        },
+        {
+          "name": "importDerived",
+          "kind": "function",
+          "id": "importDerived-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature using `PartStudioData` for including parts in one Part Studio that were designed in another.\nLocation query determines where in the current Part Studio the selections will be located. Bringing in multiple instances using multiple location queries is allowed but not recommended.\nOne can use the origin or a mate connector from the base Part Studio for placement in the current Part Studio.",
+          "references": [
+            "PartStudioData"
+          ]
+        }
+      ]
+    },
+    "importForeign.fs": {
+      "name": "importForeign",
+      "importPath": "onshape/std/importForeign.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ForeignId",
+          "kind": "type",
+          "id": "ForeignId",
+          "returnType": null,
+          "description": "A `string` representing a foreign element, such as the `dataId` from an imported tab."
+        },
+        {
+          "name": "canBeForeignId",
+          "kind": "predicate",
+          "id": "canBeForeignId-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "Typecheck for `ForeignId`",
+          "references": [
+            "ForeignId"
+          ]
+        },
+        {
+          "name": "importForeign",
+          "kind": "function",
+          "id": "importForeign-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opImportForeign`, transforming the result if necessary."
+        }
+      ]
+    },
+    "mateConnector.fs": {
+      "name": "mateConnector",
+      "importPath": "onshape/std/mateConnector.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "mateConnector",
+          "kind": "function",
+          "id": "mateConnector-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opMateConnector`.\nThe parameters below are designed for interactive use in the feature dialog. In FeatureScript, it is preferred to calculate the resulting coordinate system directly, and pass this coordinate system to `opMateConnector`.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "originQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The entity on which to place the mate connector \n Example: \n`qFarthestAlong(qCreatedBy(id + \"extrude1\", EntityType.VERTEX), vector(1, 1, 1))`"
+                },
+                {
+                  "name": "entityInferenceType",
+                  "type": "EntityInferenceType",
+                  "typeRef": "#EntityInferenceType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "A method of producing the coordinate system \n Example: \n`EntityInferenceType.POINT to place on a vertex, with the world coordinate system` Example: \n`EntityInferenceType.MID_POINT to place at the midpoint of an edge, with the Z axis along the edge`"
+                },
+                {
+                  "name": "secondaryOriginQuery",
+                  "type": "query",
+                  "typeRef": "#query-Id-string--map",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalAdditional entity to inference with, used in some inference types."
+                },
+                {
+                  "name": "originType",
+                  "type": "OriginCreationType",
+                  "typeRef": "#OriginCreationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`OriginCreationType.BETWEEN_ENTITIES to place mate connector origin on the midpoint between the speicified origin and the location of originAdditionalQuery. Default is OriginCreationType.ON_ENTITY.`"
+                },
+                {
+                  "name": "originAdditionalQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "originType is OriginCreationType.BETWEEN_ENTITIES",
+                  "description": "Required if `originType` is `OriginCreationType.BETWEEN_ENTITIES`"
+                },
+                {
+                  "name": "flipPrimary",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to flip the resulting Z axis`"
+                },
+                {
+                  "name": "secondaryAxisType",
+                  "type": "MateConnectorAxisType",
+                  "typeRef": "#MateConnectorAxisType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalChanges which axis (perpendicular to Z) will point along the secondary direction. Default is `MateConnectorAxisType.PLUS_X`"
+                },
+                {
+                  "name": "realign",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional`true` to change direction of axes"
+                },
+                {
+                  "name": "primaryAxisQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "realign is true",
+                  "description": "Required if `realign` is `true`Entity with axis to define the resulting Z direction"
+                },
+                {
+                  "name": "secondaryAxisQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "realign is true",
+                  "description": "Required if `realign` is `true`Entity with axis to define the secondary axis (set by `secondaryAxisType`)"
+                },
+                {
+                  "name": "transform",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to change the origin position with `translationX`, `translationY`, and `translationZ`. The X/Y/Z directions of this translation are affected by `primaryAxisQuery` and `secondaryAxisQuery` and `secondaryAxisType`, but not by `rotationType` and `rotation`"
+                },
+                {
+                  "name": "translationX",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transform is true",
+                  "description": "Required if `transform` is `true`Distance to move the resulting origin along resulting X direction."
+                },
+                {
+                  "name": "translationY",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transform is true",
+                  "description": "Required if `transform` is `true`Distance to move the resulting origin along resulting Y direction"
+                },
+                {
+                  "name": "translationZ",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transform is true",
+                  "description": "Required if `transform` is `true`Distance to move the resulting origin along resulting Z direction"
+                },
+                {
+                  "name": "rotationType",
+                  "type": "RotationType",
+                  "typeRef": "#RotationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalAxis to rotate around (does not change origin position)"
+                },
+                {
+                  "name": "rotation",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalAngle to rotate"
+                },
+                {
+                  "name": "requireOwnerPart",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to error if owner part is not provided. Default is `true`. If `false`, the mate connector may be an independent body with no owner part."
+                },
+                {
+                  "name": "ownerPart",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "requireOwnerPart is not false",
+                  "description": "Required if `requireOwnerPart` is not `false`Part on which to attach the resulting mate connector"
+                },
+                {
+                  "name": "specifyNormal",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true override the Z direction with the known vector (definition.nx, definition.ny, definition.nz). Used internally when the mate connector is placed on a mesh.`"
+                },
+                {
+                  "name": "nx",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "specifyNormal is true",
+                  "description": "Required if `specifyNormal` is `true`"
+                },
+                {
+                  "name": "ny",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "specifyNormal is true",
+                  "description": "Required if `specifyNormal` is `true`"
+                },
+                {
+                  "name": "nz",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "specifyNormal is true",
+                  "description": "Required if `specifyNormal` is `true`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "EntityInferenceType",
+            "OriginCreationType",
+            "MateConnectorAxisType",
+            "ValueWithUnits",
+            "RotationType"
+          ]
+        }
+      ]
+    },
+    "mutualTrim.fs": {
+      "name": "mutualTrim",
+      "importPath": "onshape/std/mutualTrim.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "mutualTrim",
+          "kind": "function",
+          "id": "mutualTrim-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Trim two adjacent surfaces by extending intersections to complete the trim."
+        }
+      ]
+    },
+    "queryVariable.fs": {
+      "name": "queryVariable",
+      "importPath": "onshape/std/queryVariable.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SelectionType",
+          "kind": "enum",
+          "id": "SelectionType",
+          "returnType": null,
+          "description": "Allowed selection types to create query variable.",
+          "values": [
+            {
+              "name": "SELECTION",
+              "description": null
+            },
+            {
+              "name": "CREATED_BY",
+              "description": null
+            },
+            {
+              "name": "OWNED_BY",
+              "description": null
+            },
+            {
+              "name": "PROTRUSION",
+              "description": null
+            },
+            {
+              "name": "POCKET",
+              "description": null
+            },
+            {
+              "name": "HOLE",
+              "description": null
+            },
+            {
+              "name": "FILLETS",
+              "description": null
+            },
+            {
+              "name": "BOUNDED_FACES",
+              "description": null
+            },
+            {
+              "name": "LOOP_CHAIN_CONNECTED",
+              "description": null
+            },
+            {
+              "name": "PARALLEL",
+              "description": null
+            },
+            {
+              "name": "TANGENT_CONNECTED",
+              "description": null
+            },
+            {
+              "name": "MATCHING",
+              "description": null
+            },
+            {
+              "name": "ALL_SOLID_BODIES",
+              "description": null
+            },
+            {
+              "name": "EDGE_CONVEXITY",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SeedType",
+          "kind": "enum",
+          "id": "SeedType",
+          "returnType": null,
+          "description": "Some selection types accept either faces or edges, not both. This enum allows picking which one.",
+          "values": [
+            {
+              "name": "FACE",
+              "description": null
+            },
+            {
+              "name": "EDGE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "FilletCompare",
+          "kind": "enum",
+          "id": "FilletCompare",
+          "returnType": null,
+          "description": "Subset of CompareType with just types allowed in qFilletFaces",
+          "values": [
+            {
+              "name": "EQUAL",
+              "description": null
+            },
+            {
+              "name": "LESS_EQUAL",
+              "description": null
+            },
+            {
+              "name": "GREATER_EQUAL",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "BodyTypeOptions",
+          "kind": "enum",
+          "id": "BodyTypeOptions",
+          "returnType": null,
+          "description": "Specifies the topological type of a body, similar to BodyType, with annotations. \n See also: `BodyType`",
+          "values": [
+            {
+              "name": "SOLID",
+              "description": null
+            },
+            {
+              "name": "SHEET",
+              "description": null
+            },
+            {
+              "name": "WIRE",
+              "description": null
+            },
+            {
+              "name": "POINT",
+              "description": null
+            },
+            {
+              "name": "MATE_CONNECTOR",
+              "description": null
+            },
+            {
+              "name": "COMPOSITE",
+              "description": null
+            }
+          ],
+          "references": [
+            "BodyType"
+          ]
+        },
+        {
+          "name": "initialQueryPredicate",
+          "kind": "predicate",
+          "id": "initialQueryPredicate-map",
+          "signature": "(definition is map)",
+          "signatureParams": [
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Predicate showing the selection type and the relevant queries/enum allowed by this type."
+        },
+        {
+          "name": "additionalQueryPredicate",
+          "kind": "predicate",
+          "id": "additionalQueryPredicate-map",
+          "signature": "(addQ is map)",
+          "signatureParams": [
+            {
+              "name": "addQ",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Same as initialQueryPredicate, needs to be separate because of naming restriction in array parameters."
+        },
+        {
+          "name": "queryVariable",
+          "kind": "function",
+          "id": "queryVariable-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature to create a query variable via calling `setQueryVariable`. This variable may be used in featurescript via call `getQueryVariable` or in the UI by clicking the \"Variable selection\" dropdown in the feature dialog or by selecting the query variable feature in the feature list.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "typeRef": "builtin:string",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The name of the feature. Must not belong to a non-query variable feature. If a query variable feature with this name exists, it will be overwritten after this feature."
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "typeRef": "builtin:string",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Description of the variable. Maximum length of 256 characters."
+                },
+                {
+                  "name": "selectionType",
+                  "type": "SelectionType",
+                  "typeRef": "#SelectionType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The type of selection the initial query will hold."
+                },
+                {
+                  "name": "seedType",
+                  "type": "SeedType",
+                  "typeRef": "#SeedType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If the selection type allows edges or faces, selects the seed type."
+                },
+                {
+                  "name": "selectionQuery",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is SELECTION, query that will be contained in the variable."
+                },
+                {
+                  "name": "createdByFeatures",
+                  "type": "FeatureList",
+                  "typeRef": "#FeatureList",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is CREATED_BY, features whose created entities will be contained in the variable."
+                },
+                {
+                  "name": "seedBodies",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is OWNED_BY or EDGE_CONVEXITY, bodies owning the entities that will be contained in the variable."
+                },
+                {
+                  "name": "seedFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is PROTRUSION or POCKET or HOLE or FILLETS or BOUNDED_FACES, or TANGENT_CONNECTED or MATCHING and seedType is FACE, faces from which the selection is created."
+                },
+                {
+                  "name": "seedEdgesOrFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is LOOP_CHAIN_CONNECTED, faces or edges from which the loops are computed."
+                },
+                {
+                  "name": "seedEdgesOrFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is PARALLEL, or TANGENT_CONNECTED or MATCHING and seedType is EDGE, edges from which the selection is created."
+                },
+                {
+                  "name": "entityType",
+                  "type": "EntityType",
+                  "typeRef": "#EntityType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is CREATED_BY or OWNED_BY, the entity type to include in the variable."
+                },
+                {
+                  "name": "filletCompareType",
+                  "type": "FilletCompare",
+                  "typeRef": "#FilletCompare",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is FILLETS, the type of fillets to include in the variable."
+                },
+                {
+                  "name": "boundedFacesBounds",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is BOUNDED_FACES, the faces or edges bounding the selection."
+                },
+                {
+                  "name": "edgeConvexityType",
+                  "type": "EdgeConvexityType",
+                  "typeRef": "#EdgeConvexityType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If selectionType is EDGE_CONVEXITY, the convexity type of edges to include in the variable."
+                },
+                {
+                  "name": "addAdditionalQueries",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to include addition queries in the variable."
+                },
+                {
+                  "name": "additionalQueries",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "An array of additional queries to include. Each item's content is analogous to what is contained in the original query. It also contains a `booleanOperation` field determining how to combine the additional query with the current query."
+                },
+                {
+                  "name": "evaluateOnUse",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to evaluate the variable when it is created or when it is used."
+                },
+                {
+                  "name": "showSelection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to highlight the entities contained in the created variable."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "SelectionType",
+            "SeedType",
+            "Query",
+            "FeatureList",
+            "EntityType",
+            "FilletCompare",
+            "EdgeConvexityType"
+          ]
+        },
+        {
+          "name": "getQueryVariable",
+          "kind": "function",
+          "id": "getQueryVariable-Context-string",
+          "signature": "(context is Context, name is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            }
+          ],
+          "returnType": "Query",
+          "returnTypeRef": "#Query",
+          "description": "Returns a query that was previously stored in a variable of the given name."
+        },
+        {
+          "name": "setQueryVariable",
+          "kind": "function",
+          "id": "setQueryVariable-Context-string-Query",
+          "signature": "(context is Context, name is string, value is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Saves a query in a variable with the given name."
+        },
+        {
+          "name": "setQueryVariable",
+          "kind": "function",
+          "id": "setQueryVariable-Context-string-string-Query",
+          "signature": "(context is Context, name is string, description is string, value is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Saves a query in a variable with the given name and description."
+        }
+      ]
+    },
+    "tag.fs": {
+      "name": "tag",
+      "importPath": "onshape/std/tag.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "TagPurpose",
+          "kind": "enum",
+          "id": "TagPurpose",
+          "returnType": null,
+          "description": "Defines the kind of entity being tagged in the feature.",
+          "values": [
+            {
+              "name": "FRAME",
+              "description": "Tag a frame profile with metadata. The metadata will be displayed in the cut list for frames derived from the tagged profile."
+            },
+            {
+              "name": "FORM",
+              "description": "Tag a form with metadata. The metadata will be used for formed features derived from the form."
+            }
+          ]
+        },
+        {
+          "name": "tag",
+          "kind": "function",
+          "id": "tag-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Tag an entity with metadata. The metadata will be used for formed and frame features."
+        }
+      ]
+    },
+    "variable.fs": {
+      "name": "variable",
+      "importPath": "onshape/std/variable.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "VariableMode",
+          "kind": "enum",
+          "id": "VariableMode",
+          "returnType": null,
+          "description": "Whether the variable is measured, assigned or from table.",
+          "values": [
+            {
+              "name": "ASSIGNED",
+              "description": null
+            },
+            {
+              "name": "MEASURED",
+              "description": null
+            },
+            {
+              "name": "TABLE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "VariableMeasurementMode",
+          "kind": "enum",
+          "id": "VariableMeasurementMode",
+          "returnType": null,
+          "description": "Whether to measure distance or length.",
+          "values": [
+            {
+              "name": "DISTANCE",
+              "description": null
+            },
+            {
+              "name": "LENGTH",
+              "description": null
+            },
+            {
+              "name": "DIAMETER",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "AxisWithCustom",
+          "kind": "enum",
+          "id": "AxisWithCustom",
+          "returnType": null,
+          "description": "Axis selection",
+          "values": [
+            {
+              "name": "DISTANCE",
+              "description": null
+            },
+            {
+              "name": "X",
+              "description": null
+            },
+            {
+              "name": "Y",
+              "description": null
+            },
+            {
+              "name": "Z",
+              "description": null
+            },
+            {
+              "name": "CUSTOM",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "VariableMinMaxSelection",
+          "kind": "enum",
+          "id": "VariableMinMaxSelection",
+          "returnType": null,
+          "description": "Min or max selection",
+          "values": [
+            {
+              "name": "MINIMUM",
+              "description": null
+            },
+            {
+              "name": "MAXIMUM",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "AccessType",
+          "kind": "enum",
+          "id": "AccessType",
+          "returnType": null,
+          "description": "Whether the accessType is by index, by index range, by label or all values",
+          "values": [
+            {
+              "name": "INDEX",
+              "description": null
+            },
+            {
+              "name": "INDEX_RANGE",
+              "description": null
+            },
+            {
+              "name": "LABEL",
+              "description": null
+            },
+            {
+              "name": "ALL",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "ResultType",
+          "kind": "enum",
+          "id": "ResultType",
+          "returnType": null,
+          "description": "Whether result type is single value, array or map",
+          "values": [
+            {
+              "name": "SINGLE",
+              "description": null
+            },
+            {
+              "name": "ARRAY",
+              "description": null
+            },
+            {
+              "name": "MAP",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "TABLE_INDEX_BOUNDS",
+          "kind": "const",
+          "id": "TABLE_INDEX_BOUNDS",
+          "returnType": null,
+          "description": "table index bounds"
+        },
+        {
+          "name": "assignVariable",
+          "kind": "function",
+          "id": "assignVariable-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing a `setVariable` allowing a user to assign a FeatureScript value to a context variable. This variable may be retrieved within a feature by calling `getVariable`, or in a Part Studio using `#` syntax (e.g. `#foo`) inside any parameter which allows an expression (including the `value` parameter of another variable!)",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "mode",
+                  "type": "VariableMode",
+                  "typeRef": "#VariableMode",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether the variable is measured, assigned or from table."
+                },
+                {
+                  "name": "name",
+                  "type": "string",
+                  "typeRef": "builtin:string",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Must be an identifier."
+                },
+                {
+                  "name": "description",
+                  "type": "string",
+                  "typeRef": "builtin:string",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Description of the variable. Maximum length of 256 characters."
+                },
+                {
+                  "name": "variableType",
+                  "type": "VariableType",
+                  "typeRef": "#VariableType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The type of variable. If it is not ANY, the value is restricted to be a length, angle, or number and is passed through the `lengthValue`, `angleValue`, or `numberValue` field, respectively."
+                },
+                {
+                  "name": "lengthValue",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Used if `variableType` is `LENGTH`."
+                },
+                {
+                  "name": "angleValue",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Used if `variableType` is `ANGLE`."
+                },
+                {
+                  "name": "numberValue",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Used if `variableType` is `NUMBER`."
+                },
+                {
+                  "name": "anyValue",
+                  "type": null,
+                  "typeRef": null,
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Used if `variableType` is `ANY`. Can be any immutable FeatureScript value, including a length, an array, or a function."
+                },
+                {
+                  "name": "measurementMode",
+                  "type": "VariableMeasurementMode",
+                  "typeRef": "#VariableMeasurementMode",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to measure distance, length, or diameter."
+                },
+                {
+                  "name": "entityCouple",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Query for distance mode, containing two entities to measure the distance between."
+                },
+                {
+                  "name": "minmax",
+                  "type": "VariableMinMaxSelection",
+                  "typeRef": "#VariableMinMaxSelection",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to measure the minimum or maximum distance."
+                },
+                {
+                  "name": "axis",
+                  "type": "AxisWithCustom",
+                  "typeRef": "#AxisWithCustom",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Axis to measure distance along."
+                },
+                {
+                  "name": "extendEntities",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Extend selected planes and lines out to infinity. Incompatible with maximum."
+                },
+                {
+                  "name": "measureFromAxis",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Measure from the axis of geometry with an axis, rather than from the edge. Incompatible with maximum."
+                },
+                {
+                  "name": "componentSelector",
+                  "type": "AxisWithCustom",
+                  "typeRef": "#AxisWithCustom",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Select an axis to measure along."
+                },
+                {
+                  "name": "customDirection",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If componentSelector is CUSTOM, a query containing geometry with a directon to measure along."
+                },
+                {
+                  "name": "lengthEntities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Query for length mode, containing entities to measure the length of."
+                },
+                {
+                  "name": "radius",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to measure the radius rather than the diameter."
+                },
+                {
+                  "name": "diameterEntity",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Query for diameter mode, containing an entity to measure the diameter of."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "VariableMode",
+            "VariableType",
+            "ValueWithUnits",
+            "VariableMeasurementMode",
+            "Query",
+            "VariableMinMaxSelection",
+            "AxisWithCustom"
+          ]
+        },
+        {
+          "name": "verifyVariableNameIsValid",
+          "kind": "function",
+          "id": "verifyVariableNameIsValid-string-string",
+          "signature": "(name is string, faultyParameter is string)",
+          "signatureParams": [
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "faultyParameter",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Throws an error if `name` is not a valid identifier."
+        },
+        {
+          "name": "verifyVariableName",
+          "kind": "function",
+          "id": "verifyVariableName-Context-string-string",
+          "signature": "(context is Context, name is string, faultyParameter is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "faultyParameter",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Throws an error if `name` is not a valid identifier or is used by a query variable."
+        },
+        {
+          "name": "makeLookupFunction",
+          "kind": "function",
+          "id": "makeLookupFunction-Context-Id",
+          "signature": "(context is Context, id is Id)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            }
+          ],
+          "returnType": "function",
+          "returnTypeRef": "builtin:function",
+          "description": "Make a function to look up variables from the given context. Used in generated part studio code."
+        },
+        {
+          "name": "measureDistance",
+          "kind": "function",
+          "id": "measureDistance-Context-map",
+          "signature": "(context is Context, arg is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "arg",
+              "type": "map"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Measure the distance between two entities.",
+          "parameters": [
+            {
+              "name": "arg",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "a query containing two entities to measure the distance between."
+                },
+                {
+                  "name": "measureFromAxis",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionalmeasure from the axis of the selected geometry, if an axis is available. Incompatible with the `maximum` option. Defaults to `false`."
+                },
+                {
+                  "name": "customDirection",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionalmeasure the distance between two entities along a direction selected by this query."
+                },
+                {
+                  "name": "extendEntities",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionalextend the entities out to infinity. Incompatible with the `maximum` option. Defaults to `false`."
+                },
+                {
+                  "name": "maximum",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionalmeasure the maximum distance between the selected entities, instead of the minimum by default. Defaults to `false`."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "selectDistanceComponent",
+          "kind": "function",
+          "id": "selectDistanceComponent-map-AxisWithCustom",
+          "signature": "(distanceMap is map, componentSelector is AxisWithCustom)",
+          "signatureParams": [
+            {
+              "name": "distanceMap",
+              "type": "map"
+            },
+            {
+              "name": "componentSelector",
+              "type": "AxisWithCustom"
+            }
+          ],
+          "returnType": null,
+          "description": "Returns appropriate entry in distanceMap returned from measureDistance given the selected AxisWithCustom."
+        },
+        {
+          "name": "measureDiameter",
+          "kind": "function",
+          "id": "measureDiameter-Context-map",
+          "signature": "(context is Context, arg is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "arg",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Measure the diameter (or radius) of the selected entity.",
+          "parameters": [
+            {
+              "name": "arg",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entity",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "a query containing an entity of GeometryType.CIRCLE, GeometryType.ARC, GeometryType.CYLINDER, or GeometryType.SPHERE."
+                },
+                {
+                  "name": "radius",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionalmeasure the radius instead of the diameter. Defaults to `false`."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        }
+      ]
+    },
+    "wrap.fs": {
+      "name": "wrap",
+      "importPath": "onshape/std/wrap.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "WrapResultType",
+          "kind": "enum",
+          "id": "WrapResultType",
+          "returnType": null,
+          "description": "Defines what type of output the Wrap feature should produce.",
+          "values": [
+            {
+              "name": "SOLID",
+              "description": "The wrap operation will produce thickened solid bodies."
+            },
+            {
+              "name": "SURFACE",
+              "description": "The wrap operation will produce surface bodies."
+            },
+            {
+              "name": "IMPRINT",
+              "description": "The wrap operation will imprint edges onto the destination face."
+            }
+          ]
+        },
+        {
+          "name": "wrap",
+          "kind": "function",
+          "id": "wrap-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opWrap`."
+        }
+      ]
+    }
+  }
+}

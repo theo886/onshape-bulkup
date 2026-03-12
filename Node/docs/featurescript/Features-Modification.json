@@ -1,0 +1,1085 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-Modification",
+    "description": "Body modification — boolean, chamfer, fillet, shell, draft, split, delete/move/replace faces",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-Modification",
+  "modules": {
+    "bodyDraft.fs": {
+      "name": "bodyDraft",
+      "importPath": "onshape/std/bodyDraft.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "bodyDraft",
+          "kind": "function",
+          "id": "bodyDraft-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "An operation that performs an `opBodyDraft`."
+        },
+        {
+          "name": "bodyDraftEditLogic",
+          "kind": "function",
+          "id": "bodyDraftEditLogic-Context-Id-map-map-boolean-map",
+          "signature": "(context is Context, id is Id, oldDefinition is map, definition is map, isCreating is boolean, specifiedParameters is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "oldDefinition",
+              "type": "map"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "isCreating",
+              "type": "boolean"
+            },
+            {
+              "name": "specifiedParameters",
+              "type": "map"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "body draft editing logic"
+        }
+      ]
+    },
+    "boolean.fs": {
+      "name": "boolean",
+      "importPath": "onshape/std/boolean.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "booleanBodies",
+          "kind": "function",
+          "id": "booleanBodies-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "The boolean feature. Performs an `opBoolean` after a possible `opOffsetFace` if the operation is subtraction."
+        },
+        {
+          "name": "convertNewBodyOpToBoolOp",
+          "kind": "function",
+          "id": "convertNewBodyOpToBoolOp-NewBodyOperationType",
+          "signature": "(operationType is NewBodyOperationType)",
+          "signatureParams": [
+            {
+              "name": "operationType",
+              "type": "NewBodyOperationType"
+            }
+          ],
+          "returnType": "BooleanOperationType",
+          "returnTypeRef": "#BooleanOperationType",
+          "description": "Maps a `NewBodyOperationType` (used in features like `extrude`) to its corresponding `BooleanOperationType`.",
+          "references": [
+            "NewBodyOperationType",
+            "BooleanOperationType"
+          ]
+        },
+        {
+          "name": "booleanStepTypePredicate",
+          "kind": "predicate",
+          "id": "booleanStepTypePredicate-map",
+          "signature": "(booleanDefinition is map)",
+          "signatureParams": [
+            {
+              "name": "booleanDefinition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Predicate which specifies a field `operationType` of type `NewBodyOperationType`. Used by body-creating feature preconditions such as extrude, revolve, sweep or loft.\nWhen used in a precondition, `NewBodyOperationType` creates UI like the extrude feature, with a horizontal list of the words \"New\", \"Add\", etc. When using this predicate in features, make sure to export an import of `tool.fs` so that `NewBodyOperationType` is visible to the Part Studios: \n\n```\nexport import(path : \"onshape/std/tool.fs\", version : \"\");\n```",
+          "references": [
+            "NewBodyOperationType"
+          ]
+        },
+        {
+          "name": "booleanStepScopePredicate",
+          "kind": "predicate",
+          "id": "booleanStepScopePredicate-map",
+          "signature": "(booleanDefinition is map)",
+          "signatureParams": [
+            {
+              "name": "booleanDefinition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Used by body-creating feature preconditions to allow post-creation booleans, specifying the merge scope (or \"Merge with all\") for that boolean.\nDesigned to be used together with `booleanStepTypePredicate`."
+        },
+        {
+          "name": "booleanPatternScopePredicate",
+          "kind": "predicate",
+          "id": "booleanPatternScopePredicate-map",
+          "signature": "(booleanDefinition is map)",
+          "signatureParams": [
+            {
+              "name": "booleanDefinition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Used by body-creating pattern feature preconditions to allow post-creation booleans with surfaces or solids, specifying the merge scope (or \"Merge with all\") for that boolean."
+        },
+        {
+          "name": "processNewBodyIfNeeded",
+          "kind": "function",
+          "id": "processNewBodyIfNeeded-Context-Id-map-function",
+          "signature": "(context is Context, id is Id, definition is map, reconstructOp is function)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function"
+            }
+          ],
+          "returnType": null,
+          "description": "This function is designed to be used by body-creating features (like `extrude`) as a boolean post-processing step with options from `booleanStepTypePredicate` and `booleanStepScopePredicate` in the case where the preceding operations of the feature have created new solid or surface bodies. On top of the regular boolean operation, converts the `operationType` and creates error bodies on failure.",
+          "parameters": [
+            {
+              "name": "id",
+              "type": "Id",
+              "typeRef": "#Id",
+              "required": true,
+              "requiredIf": null,
+              "description": "identifier of the main feature"
+            },
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "operationType",
+                  "type": "NewBodyOperationType",
+                  "typeRef": "#NewBodyOperationType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Example: \n`NewBodyOperationType.ADD performs a boolean union` Example: \n`NewBodyOperationType.NEW does nothing`"
+                },
+                {
+                  "name": "defaultScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true indicates merge scope of \"everything else\" (default)` Example: \n`false indicates merge scope is specified in booleanScope`"
+                },
+                {
+                  "name": "booleanScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "targets to use if `defaultScope` is false"
+                },
+                {
+                  "name": "seed",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalIf set, will be included in the tools section of the boolean."
+                },
+                {
+                  "name": "mergeScopeExclusion",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalIf set, will be excluded from the targets section of the boolean."
+                }
+              ]
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function",
+              "typeRef": "builtin:function",
+              "required": true,
+              "requiredIf": null,
+              "description": "A function which takes in an Id, and reconstructs the input to show to the user as error geometry in case the input is problematic or the boolean itself fails. \n Example: \n`function() {} . For a more elaborate example see the source code of revolve feature in the Standard Library.`"
+            }
+          ],
+          "references": [
+            "Id",
+            "NewBodyOperationType",
+            "Query"
+          ]
+        },
+        {
+          "name": "surfaceOperationTypePredicate",
+          "kind": "predicate",
+          "id": "surfaceOperationTypePredicate-map",
+          "signature": "(surfaceDefinition is map)",
+          "signatureParams": [
+            {
+              "name": "surfaceDefinition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Predicate which specifies a field `surfaceOperationType` of type `NewSurfaceOperationType`. Used by surface-creating feature preconditions such as revolve, sweep or loft.\nWhen used in a precondition, `NewSurfaceOperationType` creates UI like the sweep feature, with a horizontal list of the words \"New\" and \"Add\". When using this predicate in features, make sure to export an import of `tool.fs` so that `NewSurfaceOperationType` is visible to the Part Studios: \n\n```\nexport import(path : \"onshape/std/tool.fs\", version : \"\");\n```",
+          "references": [
+            "NewSurfaceOperationType"
+          ]
+        },
+        {
+          "name": "surfaceJoinStepScopePredicate",
+          "kind": "predicate",
+          "id": "surfaceJoinStepScopePredicate-map",
+          "signature": "(definition is map)",
+          "signatureParams": [
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Used by surface-creating feature preconditions to allow post-creation booleans, specifying the merge scope (or \"Merge with all\") for that boolean.\nDesigned to be used together with `surfaceOperationTypePredicate`."
+        },
+        {
+          "name": "joinSurfaceBodiesWithAutoMatching",
+          "kind": "function",
+          "id": "joinSurfaceBodiesWithAutoMatching-Context-Id-map-boolean-function",
+          "signature": "(context is Context, id is Id, definition is map, makeSolid is boolean, reconstructOp is function)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "makeSolid",
+              "type": "boolean"
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function"
+            }
+          ],
+          "returnType": null,
+          "description": "This function is designed to be used by surface-body-creating features (like `extrude`) as a boolean post-processing step with options from `surfaceOperationTypePredicate` and `surfaceJoinStepScopePredicate`. It detects matching edges of adjacent bodies and joins surface bodies at these edges.",
+          "parameters": [
+            {
+              "name": "id",
+              "type": "Id",
+              "typeRef": "#Id",
+              "required": true,
+              "requiredIf": null,
+              "description": "identifier of the feature"
+            },
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "defaultSurfaceScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true indicates merge scope of all the original and related surfaces used as input to create this surface (default)` Example: \n`false indicates merge scope is specified in booleanSurfaceScope`"
+                },
+                {
+                  "name": "booleanSurfaceScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionaltargets to use if `defaultSurfaceScope` is false Default is `qNothing()`"
+                },
+                {
+                  "name": "seed",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalDefault is `qNothing()` If set, will be included in the tools section of the boolean."
+                }
+              ]
+            },
+            {
+              "name": "makeSolid",
+              "type": "boolean",
+              "typeRef": "builtin:boolean",
+              "required": true,
+              "requiredIf": null,
+              "description": "Tries to join the surfaces into a solid"
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function",
+              "typeRef": "builtin:function",
+              "required": true,
+              "requiredIf": null,
+              "description": "A function which takes in an Id, and reconstructs the input to show to the user as error geometry in case the input is problematic or the join itself fails. \n Example: \n`function() {} . For a more elaborate example see the source code of revolve feature in the Standard Library.`"
+            }
+          ],
+          "references": [
+            "Id",
+            "Query"
+          ]
+        },
+        {
+          "name": "joinSurfaceBodiesWithAutoMatching",
+          "kind": "function",
+          "id": "joinSurfaceBodiesWithAutoMatching-Context-Id-map-function",
+          "signature": "(context is Context, id is Id, definition is map, reconstructOp is function)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function"
+            }
+          ],
+          "returnType": null,
+          "description": "This function is designed to be used by surface-body-creating features (like `extrude`) as a boolean post-processing step with options from `surfaceOperationTypePredicate` and `surfaceJoinStepScopePredicate`. It detects matching edges of adjacent bodies and joins surface bodies at these edges.",
+          "parameters": [
+            {
+              "name": "id",
+              "type": "Id",
+              "typeRef": "#Id",
+              "required": true,
+              "requiredIf": null,
+              "description": "identifier of the feature"
+            },
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "defaultSurfaceScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true indicates merge scope of all the original and related surfaces used as input to create this surface (default)` Example: \n`false indicates merge scope is specified in booleanSurfaceScope`"
+                },
+                {
+                  "name": "booleanSurfaceScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optionaltargets to use if `defaultSurfaceScope` is false Default is `qNothing()`"
+                },
+                {
+                  "name": "seed",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalDefault is `qNothing()` If set, will be included in the tools section of the boolean."
+                },
+                {
+                  "name": "makeSolid",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalTries to join the surfaces into a solid Default is false"
+                },
+                {
+                  "name": "eraseImprintedEdges",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalMerge all mergeable imprinted edges created by the boolean operation Default is true"
+                }
+              ]
+            },
+            {
+              "name": "reconstructOp",
+              "type": "function",
+              "typeRef": "builtin:function",
+              "required": true,
+              "requiredIf": null,
+              "description": "A function which takes in an Id, and reconstructs the input to show to the user as error geometry in case the input is problematic or the join itself fails. \n Example: \n`function() {} . For a more elaborate example see the source code of revolve feature in the Standard Library.`"
+            }
+          ],
+          "references": [
+            "Id",
+            "Query"
+          ]
+        }
+      ]
+    },
+    "chamfer.fs": {
+      "name": "chamfer",
+      "importPath": "onshape/std/chamfer.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "chamfer",
+          "kind": "function",
+          "id": "chamfer-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "The chamfer feature directly performs an `opChamfer` operation."
+        }
+      ]
+    },
+    "deleteBodies.fs": {
+      "name": "deleteBodies",
+      "importPath": "onshape/std/deleteBodies.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CompositePartDeleteOptions",
+          "kind": "enum",
+          "id": "CompositePartDeleteOptions",
+          "returnType": null,
+          "description": "Options that determine how the Delete part feature handles composite parts",
+          "values": [
+            {
+              "name": "DELETE",
+              "description": "Any selected composite parts are deleted along with their constituents"
+            },
+            {
+              "name": "DISSOLVE",
+              "description": "Constituents of composites are only deleted if explicitly selected"
+            },
+            {
+              "name": "IGNORE",
+              "description": "Disallow selection of composite parts"
+            }
+          ]
+        },
+        {
+          "name": "deleteBodies",
+          "kind": "function",
+          "id": "deleteBodies-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opDeleteBodies`."
+        }
+      ]
+    },
+    "deleteFace.fs": {
+      "name": "deleteFace",
+      "importPath": "onshape/std/deleteFace.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DeleteFaceType",
+          "kind": "enum",
+          "id": "DeleteFaceType",
+          "returnType": null,
+          "description": "Specifies how the void resulting from delete face should be closed, if at all.",
+          "values": [
+            {
+              "name": "HEAL",
+              "description": "Close void by shrinking or growing adjacent faces."
+            },
+            {
+              "name": "CAP",
+              "description": "Close void by a simple surface passing through all edges."
+            },
+            {
+              "name": "VOID",
+              "description": "Do not close the void. Creates surface out of solids."
+            }
+          ]
+        },
+        {
+          "name": "deleteFace",
+          "kind": "function",
+          "id": "deleteFace-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opDeleteFace`. Has options to heal the void created by removing the selected faces, or to leave it open."
+        }
+      ]
+    },
+    "draft.fs": {
+      "name": "draft",
+      "importPath": "onshape/std/draft.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DraftFeatureType",
+          "kind": "enum",
+          "id": "DraftFeatureType",
+          "returnType": null,
+          "description": "Types of drafts available for the draft feature.",
+          "values": [
+            {
+              "name": "NEUTRAL_PLANE",
+              "description": "Draft by holding the intersection between a set of faces and a neutral plane as a constant."
+            },
+            {
+              "name": "PARTING_LINE",
+              "description": "Draft by holding a set of parting edges as a constant."
+            }
+          ]
+        },
+        {
+          "name": "PartingLineSides",
+          "kind": "enum",
+          "id": "PartingLineSides",
+          "returnType": null,
+          "description": "Specifies which faces to draft when drafting with DraftFeatureType.PARTING_LINE.",
+          "values": [
+            {
+              "name": "ONE_SIDED",
+              "description": "Draft one of the faces attached to the parting line."
+            },
+            {
+              "name": "SYMMETRIC",
+              "description": "Draft both of the faces attached to the parting line symmetrically."
+            },
+            {
+              "name": "TWO_SIDED",
+              "description": "Draft both of the faces attached to the parting line with separate draft angles."
+            }
+          ]
+        },
+        {
+          "name": "draft",
+          "kind": "function",
+          "id": "draft-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opDraft`.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "draftFeatureType",
+                  "type": "DraftFeatureType",
+                  "typeRef": "#DraftFeatureType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies a `NEUTRAL_PLANE` or `PARTING_LINE` draft. Default is `NEUTRAL_PLANE`."
+                },
+                {
+                  "name": "neutralPlane",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "draftFeatureType is NEUTRAL_PLANE",
+                  "description": "Required if `draftFeatureType` is `NEUTRAL_PLANE` A planar face or mate connector defining both the neutral plane and pull direction of the the draft. The intersection of the drafted faces and the neutral plane remains unchanged. The pull direction of the draft will be the face normal or mate connector z-axis."
+                },
+                {
+                  "name": "draftFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "draftFeatureType is NEUTRAL_PLANE",
+                  "description": "Required if `draftFeatureType` is `NEUTRAL_PLANE` The faces to draft for a `NEUTRAL_PLANE` draft."
+                },
+                {
+                  "name": "pullDirectionEntity",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "draftFeatureType is PARTING_LINE",
+                  "description": "Required if `draftFeatureType` is `PARTING_LINE` An entity defining the pull direction of the draft. This entity should conform to the `ALLOWS_DIRECTION` specification in `QueryFilterCompound`."
+                },
+                {
+                  "name": "partingEdges",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "draftFeatureType is PARTING_LINE",
+                  "description": "Required if `draftFeatureType` is `PARTING_LINE` Edges defining the parting line of the draft. These edges will remain unchanged as some adjacent faces, as defined by `partingLineSides`, are drafted."
+                },
+                {
+                  "name": "hintFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalFor Onshape internal use. For `PARTING_LINE` draft, specifies in advance which adjacent faces of `partingEdges` should be treated as more along the pull direction. When unspecified, the feature will use a geometric calculation to determine this distinction."
+                },
+                {
+                  "name": "partingLineSides",
+                  "type": "PartingLineSides",
+                  "typeRef": "#PartingLineSides",
+                  "required": false,
+                  "requiredIf": "draftFeatureType is PARTING_LINE",
+                  "description": "Required if `draftFeatureType` is `PARTING_LINE` Specifies whether to draft one or both faces adjacent to the parting edges, and whether the draft should be symmetrical if drafting both faces. See `PartingLineSides`."
+                },
+                {
+                  "name": "alongPull",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "PartingLineSides is ONE_SIDED",
+                  "description": "Required if `PartingLineSides` is `ONE_SIDED` Specifies which face will be drafted in a `ONE_SIDED` `PARTING_LINE` draft. If `true`, the face which is more along the pull direction from the perspective of the parting edge is drafted. If `false`, the face which is more away from the pull direction from the perspective of the parting edge is drafted."
+                },
+                {
+                  "name": "angle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The draft angle, must be between 0 and 89.9 degrees. \n Example: \n`3 * degree`"
+                },
+                {
+                  "name": "pullDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether the pull direction of the draft should be reversed. In equivalent terms, whether the draft should use `-angle` as the draft angle (`true`), or `angle` as the draft angle (`false`). Default is `false`."
+                },
+                {
+                  "name": "secondAngle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "PartingLineSides is TWO_SIDED",
+                  "description": "Required if `PartingLineSides` is `TWO_SIDED` The second draft angle for a `TWO_SIDED` `PARTING_LINE` draft. Must be between 0 and 89.9 degrees. Note that when using `TWO_SIDED`, `angle` will be applied to faces that are away from the pull direction, from the perspective of the edge. `secondAngle` will be applied to faces that are along the pull direction, from the perspective of the edge. \n Example: \n`3 * degree`"
+                },
+                {
+                  "name": "secondPullDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether the pull direction of the draft should be reversed for the second angle of a `TWO_SIDED` draft. In equivalent terms, whether the draft should use `-secondAngle` as the second draft angle (`true`), or `secondAngle` as the second draft angle (`false`). Default is `false`."
+                },
+                {
+                  "name": "tangentPropagation",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalFor a `NEUTRAL_PLANE` draft, `true` to propagate draft across tangent faces. Default is `false`."
+                },
+                {
+                  "name": "referenceEdgePropagation",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalFor a `PARTING_LINE` draft, `true` to extend the parting line across connected edges of already included faces and tangent faces. Default is `false`."
+                },
+                {
+                  "name": "reFillet",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional`true` to attempt to defillet draft faces before the draft and reapply the fillets after. Default is `false`."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "DraftFeatureType",
+            "Query",
+            "QueryFilterCompound",
+            "PartingLineSides",
+            "ValueWithUnits"
+          ]
+        }
+      ]
+    },
+    "faceBlend.fs": {
+      "name": "faceBlend",
+      "importPath": "onshape/std/faceBlend.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "faceBlend",
+          "kind": "function",
+          "id": "faceBlend-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing a face blend."
+        }
+      ]
+    },
+    "fillet.fs": {
+      "name": "fillet",
+      "importPath": "onshape/std/fillet.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "fillet",
+          "kind": "function",
+          "id": "fillet-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opFillet` or `opFullRoundFillet`."
+        }
+      ]
+    },
+    "modifyFillet.fs": {
+      "name": "modifyFillet",
+      "importPath": "onshape/std/modifyFillet.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ModifyFilletType",
+          "kind": "enum",
+          "id": "ModifyFilletType",
+          "returnType": null,
+          "description": "Defines the action of a `modifyFillet` feature.",
+          "values": [
+            {
+              "name": "CHANGE_RADIUS",
+              "description": null
+            },
+            {
+              "name": "REMOVE_FILLET",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "modifyFillet",
+          "kind": "function",
+          "id": "modifyFillet-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opModifyFillet`."
+        }
+      ]
+    },
+    "moveFace.fs": {
+      "name": "moveFace",
+      "importPath": "onshape/std/moveFace.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "moveFace",
+          "kind": "function",
+          "id": "moveFace-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opMoveFace`."
+        },
+        {
+          "name": "deripEdges",
+          "kind": "function",
+          "id": "deripEdges-Context-Id-Query",
+          "signature": "(context is Context, id is Id, edges is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "edges",
+              "type": "Query"
+            }
+          ],
+          "returnType": "boolean",
+          "returnTypeRef": "builtin:boolean",
+          "description": "Splits input sheet metal edges and adjusts them to lie on corresponding sheet metal part faces."
+        }
+      ]
+    },
+    "replaceFace.fs": {
+      "name": "replaceFace",
+      "importPath": "onshape/std/replaceFace.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "replaceFace",
+          "kind": "function",
+          "id": "replaceFace-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opReplaceFace`."
+        }
+      ]
+    },
+    "shell.fs": {
+      "name": "shell",
+      "importPath": "onshape/std/shell.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "shell",
+          "kind": "function",
+          "id": "shell-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opShell`."
+        }
+      ]
+    },
+    "splitpart.fs": {
+      "name": "splitpart",
+      "importPath": "onshape/std/splitpart.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SplitType",
+          "kind": "enum",
+          "id": "SplitType",
+          "returnType": null,
+          "description": "Defines whether a `split` should split whole parts, or just faces.",
+          "values": [
+            {
+              "name": "PART",
+              "description": null
+            },
+            {
+              "name": "FACE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "splitPart",
+          "kind": "function",
+          "id": "splitPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opSplitPart`."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+    "osWorkflowVersion": 1.5,
+    "options": {
+        "requireNote": true,
+        "requireApprover": true,
+        "disallowCreatorAsApprover": true,
+        "requireAllApprovers": true
+    },
+    "properties": [
+        {
+            "name": "Approver",
+            "propertyId": "TASK_APPROVERS",
+            "valueType": "USER",
+            "teamsOnly": true,
+            "defaultValue": ["68b76c89ce3d9eef676750be"]
+        },
+        {
+            "name": "Assigned to",
+            "propertyId": "ECR_ASSIGNED_TO",
+            "valueType": "USER",
+            "teamsOnly": true,
+            "defaultValue": ["698a4bc7cacc7c300b9691b2"]
+        },
+        {
+            "name": "Priority",
+            "propertyId": "ECR_PRIORITY",
+            "valueType": "ENUM",
+            "enumValues": [
+                {"value": "Critical"},
+                {"value": "High"},
+                {"value": "Medium"},
+                {"value": "Low"}
+            ]
+        },
+        {
+            "name": "Category",
+            "propertyId": "ECR_CATEGORY",
+            "valueType": "ENUM",
+            "enumValues": [
+                {"value": "Seawater - Design"},
+                {"value": "Seawater - Docs"},
+                {"value": "CO2 - Design"},
+                {"value": "CO2 - Docs"},
+                {"value": "Wastewater - Design"},
+                {"value": "Wastewater - Docs"}
+            ]
+        }
+    ],
+    "transitions": [
+        {
+            "name": "SUBMIT",
+            "displayName": "Submit",
+            "type": "SUBMIT",
+            "uiHint": "primary",
+            "sourceState": "DRAFT",
+            "targetState": "SUBMITTED",
+            "requiredProperties": [
+                "ECR_PRIORITY",
+                "ECR_CATEGORY"
+            ],
+            "actions": []
+        },
+        {
+            "name": "APPROVE",
+            "displayName": "Approve",
+            "type": "APPROVE",
+            "uiHint": "success",
+            "sourceState": "SUBMITTED",
+            "targetState": "APPROVED",
+            "actions": []
+        }
+    ],
+    "states": [
+        {
+            "name": "DRAFT",
+            "displayName": "Draft",
+            "entryActions": [],
+            "exitActions": [],
+            "editableProperties": [
+                "ECR_PRIORITY",
+                "ECR_CATEGORY"
+            ]
+        },
+        {
+            "name": "SUBMITTED",
+            "displayName": "Submitted",
+            "approverSourceProperty": "TASK_APPROVERS",
+            "entryActions": [
+                {
+                    "name": "markTaskStatus",
+                    "params": {
+                        "status": "OPEN"
+                    }
+                },
+                {
+                    "name": "sendEmailNotifications"
+                },
+                {
+                    "name": "sendUserNotifications"
+                }
+            ],
+            "exitActions": []
+        },
+        {
+            "name": "APPROVED",
+            "displayName": "Approved",
+            "entryActions": [
+                {
+                    "name": "markTaskStatus",
+                    "params": {
+                        "status": "COMPLETE"
+                    }
+                },
+                {
+                    "name": "sendEmailNotifications"
+                },
+                {
+                    "name": "sendUserNotifications"
+                }
+            ],
+            "exitActions": []
+        }
+    ]
+}

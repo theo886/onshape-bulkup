@@ -1,0 +1,471 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - PropertiesTableTemplate",
+    "description": "Create, access, and delete templates for properties tables.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "PropertiesTableTemplate",
+      "description": "Create, access, and delete templates for properties tables."
+    }
+  ],
+  "paths": {
+    "/tabletemplates": {
+      "post": {
+        "tags": [
+          "PropertiesTableTemplate"
+        ],
+        "summary": "Create a new properties table template.",
+        "operationId": "createTableTemplate",
+        "parameters": [
+          {
+            "name": "templateGroupId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTPropertiesTableTemplateParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTPropertiesTableTemplateInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/tabletemplates/companies/{cid}": {
+      "get": {
+        "tags": [
+          "PropertiesTableTemplate"
+        ],
+        "summary": "Get all properties table templates available for a company.",
+        "operationId": "getByCompanyId",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "description": "The id of the company in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "templateType",
+            "in": "query",
+            "description": "Indicates filter for table templates: 0 (BOM) or 1 (Revision Table).",
+            "schema": {
+              "$ref": "#/components/schemas/BTPropertiesTableTemplateType"
+            }
+          },
+          {
+            "name": "onlyActive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "includeDefaults",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTPropertiesTableTemplateInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/tabletemplates/d/{did}": {
+      "get": {
+        "tags": [
+          "PropertiesTableTemplate"
+        ],
+        "summary": "Get all table templates that are available to use on the provided document.",
+        "operationId": "getByDocumentId",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "templateType",
+            "in": "query",
+            "description": "Indicates filter for table templates: 0 (BOM) or 1 (Revision Table).",
+            "schema": {
+              "$ref": "#/components/schemas/BTPropertiesTableTemplateType"
+            }
+          },
+          {
+            "name": "onlyActive",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "includeDefaults",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTPropertiesTableTemplateInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/tabletemplates/{tid}": {
+      "get": {
+        "tags": [
+          "PropertiesTableTemplate"
+        ],
+        "summary": "Get a properties table template by template ID.",
+        "operationId": "getTableTemplate",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "description": "The id of the template in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTPropertiesTableTemplateInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "PropertiesTableTemplate"
+        ],
+        "summary": "Delete a properties table template.",
+        "operationId": "deleteTableTemplate",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "description": "The id of the template in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Delete"
+            ],
+            "BasicAuth": [
+              "OAuth2Delete"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTPropertiesTableTemplateParams": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "isAllCaps": {
+            "type": "boolean"
+          },
+          "isIndented": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "propertyColumns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tableType": {
+            "$ref": "#/components/schemas/BTPropertiesTableTemplateType"
+          }
+        }
+      },
+      "BTPropertiesTableTemplateInfo": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isAllCaps": {
+            "type": "boolean"
+          },
+          "isIndented": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "propertyColumns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTSimplePropertyInfo"
+            }
+          },
+          "tableType": {
+            "$ref": "#/components/schemas/BTPropertiesTableTemplateType"
+          },
+          "templateGroupId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTPropertiesTableTemplateType": {
+        "type": "string",
+        "enum": [
+          "BOM",
+          "REVISION_TABLE",
+          "INSPECTION_TABLE"
+        ]
+      },
+      "BTSimplePropertyInfo": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "frozen": {
+            "type": "boolean"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "publishState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueType": {
+            "$ref": "#/components/schemas/BTMetadataValueType"
+          }
+        }
+      },
+      "BTMetadataValueType": {
+        "type": "string",
+        "enum": [
+          "STRING",
+          "BOOL",
+          "INT",
+          "DOUBLE",
+          "DATE",
+          "ENUM",
+          "OBJECT",
+          "BLOB",
+          "USER",
+          "LIST",
+          "FOREIGN",
+          "CATEGORY",
+          "COMPUTED",
+          "VALUE_WITH_UNITS"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

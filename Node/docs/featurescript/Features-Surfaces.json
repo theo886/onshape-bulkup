@@ -1,0 +1,638 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-Surfaces",
+    "description": "Surface creation — boundary surface, fill, ruled, offset, constrained, bridging curve",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-Surfaces",
+  "modules": {
+    "bridgingCurve.fs": {
+      "name": "bridgingCurve",
+      "importPath": "onshape/std/bridgingCurve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BridgingCurveMatchType",
+          "kind": "enum",
+          "id": "BridgingCurveMatchType",
+          "returnType": null,
+          "description": "Specifies how the bridging curve will match the vertex or edge at each side",
+          "values": [
+            {
+              "name": "POSITION",
+              "description": "The bridging curve will end at the provided vertex. Direction of the curve is unspecified"
+            },
+            {
+              "name": "TANGENCY",
+              "description": "The bridging curve will end at the vertex and the curve will be tangent to the edge"
+            },
+            {
+              "name": "CURVATURE",
+              "description": "The bridging curve will end at the vertex and the curve will have same curvature as the edge at the vertex"
+            },
+            {
+              "name": "G3",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "BIAS_BOUNDS",
+          "kind": "const",
+          "id": "BIAS_BOUNDS",
+          "returnType": null,
+          "description": "A `RealBoundSpec` for bias of a tangency/tangency bridge, defaulting to `0.5`."
+        },
+        {
+          "name": "bridgingCurve",
+          "kind": "function",
+          "id": "bridgingCurve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates a curve between two points, optionally with matching of tangency or curvature to other curves at that point"
+        },
+        {
+          "name": "SideQueries",
+          "kind": "type",
+          "id": "SideQueries",
+          "returnType": null,
+          "description": "Data type for side queries",
+          "parameters": [
+            {
+              "name": "SideQueries",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "vertex",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe vertex element on a side query"
+                },
+                {
+                  "name": "edge",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe edge element on a side query"
+                },
+                {
+                  "name": "face",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe face element on a side query"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "SideData",
+          "kind": "type",
+          "id": "SideData",
+          "returnType": null,
+          "description": "Data type for precomputed side data",
+          "parameters": [
+            {
+              "name": "SideData",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "point",
+                  "type": "Vector",
+                  "typeRef": "#Vector",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The position"
+                },
+                {
+                  "name": "frame",
+                  "type": "EdgeCurvatureResult",
+                  "typeRef": "#EdgeCurvatureResult",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe coordSystem and curvature at the given position"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Vector",
+            "EdgeCurvatureResult"
+          ]
+        },
+        {
+          "name": "TwoSidesData",
+          "kind": "type",
+          "id": "TwoSidesData",
+          "returnType": null,
+          "description": "Aggregation of both sides SideData",
+          "parameters": [
+            {
+              "name": "TwoSidesData",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "side1",
+                  "type": "SideData",
+                  "typeRef": "#SideData",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "SideData map for start side"
+                },
+                {
+                  "name": "side2",
+                  "type": "SideData",
+                  "typeRef": "#SideData",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "SideData map for end side"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "SideData"
+          ]
+        },
+        {
+          "name": "BridgingSideData",
+          "kind": "type",
+          "id": "BridgingSideData",
+          "returnType": null,
+          "description": "Data type for unified control points computation",
+          "parameters": [
+            {
+              "name": "BridgingSideData",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "degree",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "0 for positional continuity (G0), 1 for tangent continuity (G1), 2 for curvature continuity (G2)"
+                },
+                {
+                  "name": "position",
+                  "type": "Vector",
+                  "typeRef": "#Vector",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The position"
+                },
+                {
+                  "name": "tangent",
+                  "type": "Vector",
+                  "typeRef": "#Vector",
+                  "required": false,
+                  "requiredIf": "degree &gt;= 1",
+                  "description": "Required if `degree` &gt;= 1 The tangent direction vector"
+                },
+                {
+                  "name": "speedScale",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalHow much to scale the default speed"
+                },
+                {
+                  "name": "curvatureDirection",
+                  "type": "Vector",
+                  "typeRef": "#Vector",
+                  "required": false,
+                  "requiredIf": "degree == 2",
+                  "description": "Required if `degree` == 2 The curvature direction vector"
+                },
+                {
+                  "name": "curvature",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "degree == 2",
+                  "description": "Required if `degree` == 2 The curvature magnitude (inverse length units)"
+                },
+                {
+                  "name": "curvatureOffsetScale",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalHow much to scale the default third control point offset"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Vector",
+            "ValueWithUnits"
+          ]
+        },
+        {
+          "name": "computeBridgingControlPoints",
+          "kind": "function",
+          "id": "computeBridgingControlPoints-Context-BridgingSideData-BridgingSideData",
+          "signature": "(context is Context, side1 is BridgingSideData, side2 is BridgingSideData)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "side1",
+              "type": "BridgingSideData"
+            },
+            {
+              "name": "side2",
+              "type": "BridgingSideData"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": "Returns an array of control points for a bridigng bezier curve given two side constraints"
+        }
+      ]
+    },
+    "bsurf.fs": {
+      "name": "bsurf",
+      "importPath": "onshape/std/bsurf.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BSurfEndDerivativeType",
+          "kind": "enum",
+          "id": "BSurfEndDerivativeType",
+          "returnType": null,
+          "description": "Specifies an end condition for one side of a boundary surface.",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": null
+            },
+            {
+              "name": "NORMAL_TO_PROFILE",
+              "description": null
+            },
+            {
+              "name": "TANGENT_TO_PROFILE",
+              "description": null
+            },
+            {
+              "name": "MATCH_TANGENT",
+              "description": null
+            },
+            {
+              "name": "MATCH_CURVATURE",
+              "description": null
+            },
+            {
+              "name": "NORMAL_DIRECTION",
+              "description": null
+            },
+            {
+              "name": "TANGENT_DIRECTION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "BSurfComputationType",
+          "kind": "enum",
+          "id": "BSurfComputationType",
+          "returnType": null,
+          "description": "How the boundary surface is computed",
+          "values": [
+            {
+              "name": "COONS",
+              "description": null
+            },
+            {
+              "name": "MINIMIZATION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "boundarySurface",
+          "kind": "function",
+          "id": "boundarySurface-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature for testing Boundary Surface strategies"
+        }
+      ]
+    },
+    "constrainedSurface.fs": {
+      "name": "constrainedSurface",
+      "importPath": "onshape/std/constrainedSurface.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ConstrainedSurfaceType",
+          "kind": "enum",
+          "id": "ConstrainedSurfaceType",
+          "returnType": null,
+          "description": "Constrained surface input type",
+          "values": [
+            {
+              "name": "POINTS",
+              "description": null
+            },
+            {
+              "name": "MESH",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "OptimizationMethod",
+          "kind": "enum",
+          "id": "OptimizationMethod",
+          "returnType": null,
+          "description": "Constrained surface optimization type",
+          "values": [
+            {
+              "name": "PERF",
+              "description": "Faster performance that may produce lower-quality surfaces."
+            },
+            {
+              "name": "SMOOTH",
+              "description": "Typically produces higher-quality surfaces with lower curvatures, but with slower performance and more control points."
+            }
+          ]
+        },
+        {
+          "name": "constrainedSurface",
+          "kind": "function",
+          "id": "constrainedSurface-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Constrained surface feature. Takes an arbitrary number of vertices and optional normal directions or meshes and creates a surface passing through the vertices/mesh points within a provided tolerance. \n\n```\nconstrainedSurface(context, id + \"FG2MuQGCNLssvyp_123\", {\n     \"csType\" : ConstrainedSurfaceType.MESH,\n     \"vertices\" : [],\n     \"meshes\" : qUnion([iLEjUaBPUqVOpC_query]),\n     \"tolerance\" : { 'value' : try(1 * inch), 'expression' : \"1 in\" }.value,\n     \"optimize\" : OptimizationMethod.PERF\n});\n```",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "csType",
+                  "type": "ConstrainedSurfaceType",
+                  "typeRef": "#ConstrainedSurfaceType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Determines if the input is a mesh or a collection of points."
+                },
+                {
+                  "name": "vertices",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": false,
+                  "requiredIf": "csType is ConstrainedSurfaceType.POINTS",
+                  "description": "Required if `csType` is `ConstrainedSurfaceType.POINTS`An array of elements, each with a `vertex` on the surface to include. Optionally, specify a directional object to set the normal in the `normal` field, and set `flipNormal` to `true` to flip the normal. \n Example: \n\n```\n[\n    {\"vertex\": qVertex1},\n    {\"vertex\": qVertex2},\n    {\"vertex\": qVertex3, \"normal\": qNormal1},\n    {\"vertex\": qVertex4, \"normal\": qNormal2, \"flipNormal\": true}\n]\n```"
+                },
+                {
+                  "name": "meshes",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "csType is ConstrainedSurfaceType.MESH",
+                  "description": "Required if `csType` is `ConstrainedSurfaceType.MESH`A query of mesh faces or bodies. Each mesh vertex of the query elements is on the constrained surface. \n Example: \n`\"meshes\" : qUnion([iLEjUaBPUqVOpC_query])`"
+                },
+                {
+                  "name": "tolerance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Length to define how far from each vertex the constrained surface can be."
+                },
+                {
+                  "name": "optimize",
+                  "type": "OptimizationMethod",
+                  "typeRef": "#OptimizationMethod",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether to optimize for performance (`OptimizationMethod.PERF`) or smoothness (`OptimizationMethod.SMOOTH`)."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "ConstrainedSurfaceType",
+            "Query",
+            "ValueWithUnits",
+            "OptimizationMethod"
+          ]
+        }
+      ]
+    },
+    "fillSurface.fs": {
+      "name": "fillSurface",
+      "importPath": "onshape/std/fillSurface.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "fill",
+          "kind": "function",
+          "id": "fill-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates a surface bounded by input edges with prescribed continuity conditions, using `opFillSurface`."
+        }
+      ]
+    },
+    "offsetSurface.fs": {
+      "name": "offsetSurface",
+      "importPath": "onshape/std/offsetSurface.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "offsetSurface",
+          "kind": "function",
+          "id": "offsetSurface-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opExtractSurface`. Allows creation of an offset surface from faces, surfaces, or sketch regions. Offset may be zero. Offset direction may be flipped using the oppositeDirection flag."
+        }
+      ]
+    },
+    "ruledSurface.fs": {
+      "name": "ruledSurface",
+      "importPath": "onshape/std/ruledSurface.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "VertexOverrideType",
+          "kind": "enum",
+          "id": "VertexOverrideType",
+          "returnType": null,
+          "description": "The type of ruled surface to apply at a specific vertex.",
+          "values": [
+            {
+              "name": "NORMAL",
+              "description": null
+            },
+            {
+              "name": "TANGENT",
+              "description": null
+            },
+            {
+              "name": "ALIGNED_WITH_VECTOR",
+              "description": null
+            },
+            {
+              "name": "UP_TO_VERTEX",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "RuledSurfaceInterfaceType",
+          "kind": "enum",
+          "id": "RuledSurfaceInterfaceType",
+          "returnType": null,
+          "description": "The type of ruled surface to apply for the overall operation.",
+          "values": [
+            {
+              "name": "NORMAL",
+              "description": null
+            },
+            {
+              "name": "TANGENT",
+              "description": null
+            },
+            {
+              "name": "ALIGNED_WITH_VECTOR",
+              "description": null
+            },
+            {
+              "name": "ANGLE_FROM_VECTOR",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "ruledSurface",
+          "kind": "function",
+          "id": "ruledSurface-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature creating a ruled surface."
+        }
+      ]
+    }
+  }
+}

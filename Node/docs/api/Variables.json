@@ -1,0 +1,1048 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Variables",
+    "description": "Create, modify, and access variables.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Variables",
+      "description": "Create, modify, and access variables."
+    }
+  ],
+  "paths": {
+    "/variables/d/{did}/w/{wid}/e/{eid}/variables": {
+      "post": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Assign variables to a Variable Studio",
+        "operationId": "setVariables",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BTVariableParams"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/w/{wid}/e/{eid}/variablestudioreferences": {
+      "post": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Set the Variable Studio references for an element.",
+        "operationId": "setVariableStudioReferences",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTVariableStudioReferenceListInfo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/w/{wid}/e/{eid}/variablestudioscope": {
+      "post": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Set the scope the Variable Studio.",
+        "operationId": "setVariableStudioScope",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTVariableStudioScopeInfo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/w/{wid}/variablestudio": {
+      "post": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Create a new Variable Studio in a document and workspace.",
+        "operationId": "createVariableStudio",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTModelElementParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTDocumentElementInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/{wv}/{wvid}/e/{eid}/variables": {
+      "get": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Get the contents of all variable tables in an element.",
+        "operationId": "getVariables",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "description": "URL-encoded string of configuration values (separated by `;`). See the [Configurations API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for details.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "includeValuesAndReferencedVariables",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTVariableTableInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/{wv}/{wvid}/e/{eid}/variablestudioreferences": {
+      "get": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Get the Variable Studio references for an element.",
+        "operationId": "getVariableStudioReferences",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTVariableStudioReferenceListInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/variables/d/{did}/{wv}/{wvid}/e/{eid}/variablestudioscope": {
+      "get": {
+        "tags": [
+          "Variables"
+        ],
+        "summary": "Get the scope of a Variable Studio.",
+        "operationId": "getVariableStudioScope",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTVariableStudioScopeInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTVariableParams": {
+        "required": [
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "configuredDescription": {
+            "$ref": "#/components/schemas/BTConfiguredValue"
+          },
+          "configuredExpression": {
+            "$ref": "#/components/schemas/BTConfiguredValue"
+          },
+          "description": {
+            "type": "string",
+            "description": "Variable description, if not configured"
+          },
+          "expression": {
+            "type": "string",
+            "description": "Variable definition expression, if not configured"
+          },
+          "name": {
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+            "type": "string",
+            "description": "Variable name"
+          },
+          "type": {
+            "type": "string",
+            "description": "VariableType name, from FeatureScript VariableType"
+          }
+        }
+      },
+      "BTVariableStudioReferenceListInfo": {
+        "type": "object",
+        "properties": {
+          "references": {
+            "type": "array",
+            "description": "List of variable studio references",
+            "items": {
+              "$ref": "#/components/schemas/BTVariableStudioReferenceInfo"
+            }
+          }
+        }
+      },
+      "BTVariableStudioScopeInfo": {
+        "required": [
+          "isAutomaticallyInserted"
+        ],
+        "type": "object",
+        "properties": {
+          "isAutomaticallyInserted": {
+            "type": "boolean",
+            "description": "Whether variable studio is automatically inserted into part studios and assemblies in the workspace"
+          }
+        }
+      },
+      "BTModelElementParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDocumentElementInfo": {
+        "type": "object",
+        "properties": {
+          "accelerationUnits": {
+            "type": "string"
+          },
+          "angleUnits": {
+            "type": "string"
+          },
+          "angularVelocityUnits": {
+            "type": "string"
+          },
+          "applicationTarget": {
+            "$ref": "#/components/schemas/BTApplicationTargetInfo"
+          },
+          "areaUnits": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "densityUnits": {
+            "type": "string"
+          },
+          "elementType": {
+            "$ref": "#/components/schemas/GBTElementType"
+          },
+          "energyUnits": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "forceUnits": {
+            "type": "string"
+          },
+          "foreignDataId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lengthUnits": {
+            "type": "string"
+          },
+          "massUnits": {
+            "type": "string"
+          },
+          "microversionId": {
+            "type": "string"
+          },
+          "momentUnits": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pressureUnits": {
+            "type": "string"
+          },
+          "prettyType": {
+            "type": "string"
+          },
+          "safeToShow": {
+            "type": "boolean"
+          },
+          "specifiedUnit": {
+            "type": "string"
+          },
+          "thumbnailInfo": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "thumbnails": {
+            "type": "string",
+            "format": "uri"
+          },
+          "timeUnits": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "unupdatable": {
+            "type": "boolean"
+          },
+          "volumeUnits": {
+            "type": "string"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/BTZipFileInfo"
+          }
+        }
+      },
+      "BTVariableTableInfo": {
+        "required": [
+          "variables"
+        ],
+        "type": "object",
+        "properties": {
+          "variableStudioReference": {
+            "$ref": "#/components/schemas/BTVariableStudioReferenceInfo"
+          },
+          "variables": {
+            "type": "array",
+            "description": "Variables in the VariableTable",
+            "items": {
+              "$ref": "#/components/schemas/BTVariableInfo"
+            }
+          }
+        }
+      },
+      "BTConfiguredValue": {
+        "type": "object",
+        "properties": {
+          "configurationParameterId": {
+            "type": "string",
+            "description": "The configuration parameter configuring this value, if configured"
+          },
+          "configurationToValue": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "description": "Configuration to value, required if configuration parameter id is specified"
+            },
+            "description": "Configuration to value, required if configuration parameter id is specified"
+          }
+        },
+        "description": "Configured variable description, if configured"
+      },
+      "BTVariableStudioReferenceInfo": {
+        "required": [
+          "referenceElementId"
+        ],
+        "type": "object",
+        "properties": {
+          "configurationIdToValue": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BTOptionallyConfiguredValue"
+            },
+            "description": "Optional map of configuration parameter id to value"
+          },
+          "entireVariableStudio": {
+            "type": "boolean",
+            "description": "Whether all variables in the referenced variable studio are included"
+          },
+          "referenceDocumentId": {
+            "type": "string",
+            "description": "DocumentId of referenced variable studio, blank for intra-workspace references"
+          },
+          "referenceElementId": {
+            "type": "string",
+            "description": "ElementId of referenced variable studio"
+          },
+          "referenceVersionId": {
+            "type": "string",
+            "description": "VersionId of referenced variable studio, blank for intra-workspace references"
+          },
+          "variableNames": {
+            "type": "array",
+            "description": "Optional list of selected variables",
+            "items": {
+              "type": "string",
+              "description": "Optional list of selected variables"
+            }
+          }
+        },
+        "description": "List of variable studio references"
+      },
+      "BTApplicationTargetInfo": {
+        "type": "object",
+        "properties": {
+          "baseHref": {
+            "type": "string",
+            "format": "uri"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "supportsCollaboration": {
+            "type": "boolean"
+          },
+          "tabIconHref": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "GBTElementType": {
+        "type": "string",
+        "enum": [
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "DRAWING",
+          "FEATURESTUDIO",
+          "BLOB",
+          "APPLICATION",
+          "TABLE",
+          "BILLOFMATERIALS",
+          "VARIABLESTUDIO",
+          "PUBLICATIONITEM",
+          "UNKNOWN"
+        ]
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTZipFileInfo": {
+        "type": "object",
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTVariableInfo": {
+        "required": [
+          "expression",
+          "name",
+          "type",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Variable description"
+          },
+          "expression": {
+            "type": "string",
+            "description": "Variable expression"
+          },
+          "name": {
+            "type": "string",
+            "description": "Variable name"
+          },
+          "type": {
+            "$ref": "#/components/schemas/GBTVariableType"
+          },
+          "value": {
+            "type": "string",
+            "description": "Variable formatted value"
+          }
+        },
+        "description": "Variables in the VariableTable"
+      },
+      "BTOptionallyConfiguredValue": {
+        "type": "object",
+        "properties": {
+          "configuredValue": {
+            "$ref": "#/components/schemas/BTConfiguredValue"
+          },
+          "value": {
+            "type": "string",
+            "description": "The string value, if not configured"
+          }
+        },
+        "description": "Optional map of configuration parameter id to value"
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "GBTVariableType": {
+        "type": "string",
+        "description": "Variable type name, from FeatureScript VariableType",
+        "enum": [
+          "LENGTH",
+          "ANGLE",
+          "NUMBER",
+          "ANY",
+          "UNKNOWN"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

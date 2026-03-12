@@ -1,0 +1,1038 @@
+{
+  "Context": {
+    "module": "context.fs",
+    "category": "Modeling"
+  },
+  "Id": {
+    "module": "context.fs",
+    "category": "Modeling"
+  },
+  "CurveOnFaceDefinition": {
+    "module": "geomOperations.fs",
+    "category": "Modeling"
+  },
+  "SplitFaceResult": {
+    "module": "geomOperations.fs",
+    "category": "Modeling"
+  },
+  "SplitByIsoclineResult": {
+    "module": "geomOperations.fs",
+    "category": "Modeling"
+  },
+  "SplitBySelfShadowResult": {
+    "module": "geomOperations.fs",
+    "category": "Modeling"
+  },
+  "Sketch": {
+    "module": "sketch.fs",
+    "category": "Modeling"
+  },
+  "Query": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "BodyType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "EntityType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "AdjacencyType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "GeometryType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "CapType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "ConstructionObject": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "SMFlatType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "SMFormType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "AllowMeshGeometry": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "AllowFlattenedGeometry": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "ActiveSheetMetal": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "SheetMetalDefinitionEntityType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "ModifiableEntityOnly": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "AllowEdgePoint": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "MeshGeometry": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "SketchObject": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "QueryFilterCompound": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "CompareType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "Consumed": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "CompositePartType": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "InContextObject": {
+    "module": "query.fs",
+    "category": "Modeling"
+  },
+  "MassProperties": {
+    "module": "evaluate.fs",
+    "category": "Modeling"
+  },
+  "DistanceResult": {
+    "module": "evaluate.fs",
+    "category": "Modeling"
+  },
+  "RaycastResult": {
+    "module": "evaluate.fs",
+    "category": "Modeling"
+  },
+  "EdgeCurvatureResult": {
+    "module": "evaluate.fs",
+    "category": "Modeling"
+  },
+  "FaceCurvatureResult": {
+    "module": "evaluate.fs",
+    "category": "Modeling"
+  },
+  "Box3d": {
+    "module": "box.fs",
+    "category": "Math"
+  },
+  "CoordSystem": {
+    "module": "coordSystem.fs",
+    "category": "Math"
+  },
+  "Line": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "LineLineIntersection": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "Circle": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "Ellipse": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "KnotArray": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "BSplineCurve": {
+    "module": "curveGeometry.fs",
+    "category": "Math"
+  },
+  "Matrix": {
+    "module": "matrix.fs",
+    "category": "Math"
+  },
+  "MatrixWithUnits": {
+    "module": "matrixWithUnits.fs",
+    "category": "Math"
+  },
+  "PersistentCoordSystem": {
+    "module": "persistentCoordSystem.fs",
+    "category": "Math"
+  },
+  "ApproximationTarget": {
+    "module": "splineUtils.fs",
+    "category": "Math"
+  },
+  "Plane": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "LinePlaneIntersection": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "Cone": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "Cylinder": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "Torus": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "Sphere": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "ControlPointMatrix": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "BSplineSurface": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "MeshFaceParameter": {
+    "module": "surfaceGeometry.fs",
+    "category": "Math"
+  },
+  "Transform": {
+    "module": "transform.fs",
+    "category": "Math"
+  },
+  "TransformUV": {
+    "module": "transformUV.fs",
+    "category": "Math"
+  },
+  "ValueWithUnits": {
+    "module": "units.fs",
+    "category": "Math"
+  },
+  "Vector": {
+    "module": "vector.fs",
+    "category": "Math"
+  },
+  "CosmeticThreadData": {
+    "module": "cosmeticThreadUtils.fs",
+    "category": "Utilities"
+  },
+  "DecalData": {
+    "module": "decalUtils.fs",
+    "category": "Utilities"
+  },
+  "FeatureStatus": {
+    "module": "error.fs",
+    "category": "Utilities"
+  },
+  "SMExtrudeBoundingType": {
+    "module": "extrudeCommon.fs",
+    "category": "Utilities"
+  },
+  "FeatureList": {
+    "module": "featureList.fs",
+    "category": "Utilities"
+  },
+  "FlatOperationType": {
+    "module": "flatOperationType.fs",
+    "category": "Utilities"
+  },
+  "FrameTopologyType": {
+    "module": "frameAttributes.fs",
+    "category": "Utilities"
+  },
+  "FrameProfileAttribute": {
+    "module": "frameAttributes.fs",
+    "category": "Utilities"
+  },
+  "FrameTopologyAttribute": {
+    "module": "frameAttributes.fs",
+    "category": "Utilities"
+  },
+  "CutlistAttribute": {
+    "module": "frameAttributes.fs",
+    "category": "Utilities"
+  },
+  "HoleStyle": {
+    "module": "holeUtils.fs",
+    "category": "Utilities"
+  },
+  "HoleProfile": {
+    "module": "holeUtils.fs",
+    "category": "Utilities"
+  },
+  "HoleDefinition": {
+    "module": "holeUtils.fs",
+    "category": "Utilities"
+  },
+  "Instantiator": {
+    "module": "instantiator.fs",
+    "category": "Utilities"
+  },
+  "LibraryValidationProblems": {
+    "module": "libraryValidation.fs",
+    "category": "Utilities"
+  },
+  "Manipulator": {
+    "module": "manipulator.fs",
+    "category": "Utilities"
+  },
+  "Path": {
+    "module": "path.fs",
+    "category": "Utilities"
+  },
+  "PathDistanceInformation": {
+    "module": "path.fs",
+    "category": "Utilities"
+  },
+  "PatternType": {
+    "module": "patternCommon.fs",
+    "category": "Utilities"
+  },
+  "MirrorType": {
+    "module": "patternCommon.fs",
+    "category": "Utilities"
+  },
+  "Color": {
+    "module": "properties.fs",
+    "category": "Utilities"
+  },
+  "Material": {
+    "module": "properties.fs",
+    "category": "Utilities"
+  },
+  "PartStudioData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "ImageData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "TableData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "JSONData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "TextData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "CADImportData": {
+    "module": "tabReferences.fs",
+    "category": "Utilities"
+  },
+  "Table": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "TableColumnDefinition": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "TableRow": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "TableArray": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "TableCellError": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "TableCellWithInfo": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "StringToleranceComponent": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "StringWithTolerances": {
+    "module": "table.fs",
+    "category": "Utilities"
+  },
+  "ValueWithUnitsAndPrecision": {
+    "module": "templatestring.fs",
+    "category": "Utilities"
+  },
+  "TemplateString": {
+    "module": "templatestring.fs",
+    "category": "Utilities"
+  },
+  "ToleranceType": {
+    "module": "toleranceTypes.fs",
+    "category": "Utilities"
+  },
+  "ToleranceTypeExtended": {
+    "module": "toleranceTypes.fs",
+    "category": "Utilities"
+  },
+  "ToleranceInfo": {
+    "module": "toleranceTypes.fs",
+    "category": "Utilities"
+  },
+  "ToleranceFitInfo": {
+    "module": "toleranceTypes.fs",
+    "category": "Utilities"
+  },
+  "PrecisionType": {
+    "module": "toleranceTypes.fs",
+    "category": "Utilities"
+  },
+  "LengthBoundSpec": {
+    "module": "valueBounds.fs",
+    "category": "Utilities"
+  },
+  "AngleBoundSpec": {
+    "module": "valueBounds.fs",
+    "category": "Utilities"
+  },
+  "IntegerBoundSpec": {
+    "module": "valueBounds.fs",
+    "category": "Utilities"
+  },
+  "RealBoundSpec": {
+    "module": "valueBounds.fs",
+    "category": "Utilities"
+  },
+  "WrapSurface": {
+    "module": "wrapSurface.fs",
+    "category": "Utilities"
+  },
+  "BridgingCurveMatchType": {
+    "module": "bridgingCurve.fs",
+    "category": "Onshape features"
+  },
+  "SideQueries": {
+    "module": "bridgingCurve.fs",
+    "category": "Onshape features"
+  },
+  "SideData": {
+    "module": "bridgingCurve.fs",
+    "category": "Onshape features"
+  },
+  "TwoSidesData": {
+    "module": "bridgingCurve.fs",
+    "category": "Onshape features"
+  },
+  "BridgingSideData": {
+    "module": "bridgingCurve.fs",
+    "category": "Onshape features"
+  },
+  "BSurfEndDerivativeType": {
+    "module": "bsurf.fs",
+    "category": "Onshape features"
+  },
+  "BSurfComputationType": {
+    "module": "bsurf.fs",
+    "category": "Onshape features"
+  },
+  "ConstrainedSurfaceType": {
+    "module": "constrainedSurface.fs",
+    "category": "Onshape features"
+  },
+  "OptimizationMethod": {
+    "module": "constrainedSurface.fs",
+    "category": "Onshape features"
+  },
+  "CPlaneType": {
+    "module": "cplane.fs",
+    "category": "Onshape features"
+  },
+  "CurvePatternSpacingType": {
+    "module": "curvePattern.fs",
+    "category": "Onshape features"
+  },
+  "CompositePartDeleteOptions": {
+    "module": "deleteBodies.fs",
+    "category": "Onshape features"
+  },
+  "DeleteFaceType": {
+    "module": "deleteFace.fs",
+    "category": "Onshape features"
+  },
+  "DraftFeatureType": {
+    "module": "draft.fs",
+    "category": "Onshape features"
+  },
+  "PartingLineSides": {
+    "module": "draft.fs",
+    "category": "Onshape features"
+  },
+  "PlaneReference": {
+    "module": "editCurve.fs",
+    "category": "Onshape features"
+  },
+  "ExtendBoundingType": {
+    "module": "extend.fs",
+    "category": "Onshape features"
+  },
+  "FitSplineType": {
+    "module": "fitSpline.fs",
+    "category": "Onshape features"
+  },
+  "GussetStyleType": {
+    "module": "gusset.fs",
+    "category": "Onshape features"
+  },
+  "GussetPosition": {
+    "module": "gusset.fs",
+    "category": "Onshape features"
+  },
+  "AxisType": {
+    "module": "helix.fs",
+    "category": "Onshape features"
+  },
+  "PathType": {
+    "module": "helix.fs",
+    "category": "Onshape features"
+  },
+  "StartType": {
+    "module": "helix.fs",
+    "category": "Onshape features"
+  },
+  "EndType": {
+    "module": "helix.fs",
+    "category": "Onshape features"
+  },
+  "Direction": {
+    "module": "helix.fs",
+    "category": "Onshape features"
+  },
+  "HoleEndStyle": {
+    "module": "hole.fs",
+    "category": "Onshape features"
+  },
+  "HoleEndStyleV2": {
+    "module": "hole.fs",
+    "category": "Onshape features"
+  },
+  "TipAngleStyle": {
+    "module": "hole.fs",
+    "category": "Onshape features"
+  },
+  "HoleStartStyle": {
+    "module": "hole.fs",
+    "category": "Onshape features"
+  },
+  "DerivedPlacementType": {
+    "module": "importDerived.fs",
+    "category": "Onshape features"
+  },
+  "BuildFunction": {
+    "module": "importDerived.fs",
+    "category": "Onshape features"
+  },
+  "ForeignId": {
+    "module": "importForeign.fs",
+    "category": "Onshape features"
+  },
+  "LoftEndDerivativeType": {
+    "module": "loft.fs",
+    "category": "Onshape features"
+  },
+  "LoftGuideDerivativeType": {
+    "module": "loft.fs",
+    "category": "Onshape features"
+  },
+  "ModifyFilletType": {
+    "module": "modifyFillet.fs",
+    "category": "Onshape features"
+  },
+  "OffsetCurveScope": {
+    "module": "offsetCurveOnFace.fs",
+    "category": "Onshape features"
+  },
+  "GapFill": {
+    "module": "offsetCurveOnFace.fs",
+    "category": "Onshape features"
+  },
+  "CurveProjectionType": {
+    "module": "projectCurves.fs",
+    "category": "Onshape features"
+  },
+  "SelectionType": {
+    "module": "queryVariable.fs",
+    "category": "Onshape features"
+  },
+  "SeedType": {
+    "module": "queryVariable.fs",
+    "category": "Onshape features"
+  },
+  "FilletCompare": {
+    "module": "queryVariable.fs",
+    "category": "Onshape features"
+  },
+  "BodyTypeOptions": {
+    "module": "queryVariable.fs",
+    "category": "Onshape features"
+  },
+  "RevolveBoundingType": {
+    "module": "revolve.fs",
+    "category": "Onshape features"
+  },
+  "RibExtrusionDirection": {
+    "module": "rib.fs",
+    "category": "Onshape features"
+  },
+  "RoutingCurveType": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "InputType": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "CurveStep": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "DerivativeAlignment": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "ReferenceType": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "SegmentEditType": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "OrthoCoordSystem": {
+    "module": "routingCurve.fs",
+    "category": "Onshape features"
+  },
+  "VertexOverrideType": {
+    "module": "ruledSurface.fs",
+    "category": "Onshape features"
+  },
+  "RuledSurfaceInterfaceType": {
+    "module": "ruledSurface.fs",
+    "category": "Onshape features"
+  },
+  "SMAttribute": {
+    "module": "sheetMetalAttribute.fs",
+    "category": "Onshape features"
+  },
+  "SMAssociationAttribute": {
+    "module": "sheetMetalAttribute.fs",
+    "category": "Onshape features"
+  },
+  "SMCornerBreak": {
+    "module": "sheetMetalAttribute.fs",
+    "category": "Onshape features"
+  },
+  "BendAlignment": {
+    "module": "sheetMetalBend.fs",
+    "category": "Onshape features"
+  },
+  "BendAngleControlType": {
+    "module": "sheetMetalBend.fs",
+    "category": "Onshape features"
+  },
+  "EdgeBlendType": {
+    "module": "sheetMetalCornerBreak.fs",
+    "category": "Onshape features"
+  },
+  "SMFlangeAlignment": {
+    "module": "sheetMetalFlange.fs",
+    "category": "Onshape features"
+  },
+  "SMPartialFlangeChainType": {
+    "module": "sheetMetalFlange.fs",
+    "category": "Onshape features"
+  },
+  "MakeJointType": {
+    "module": "sheetMetalMakeJoint.fs",
+    "category": "Onshape features"
+  },
+  "SMProcessType": {
+    "module": "sheetMetalStart.fs",
+    "category": "Onshape features"
+  },
+  "SMCornerStrategyType": {
+    "module": "sheetMetalStart.fs",
+    "category": "Onshape features"
+  },
+  "SMBendStrategyType": {
+    "module": "sheetMetalStart.fs",
+    "category": "Onshape features"
+  },
+  "SMBendCalculationType": {
+    "module": "sheetMetalStart.fs",
+    "category": "Onshape features"
+  },
+  "SMThicknessDirection": {
+    "module": "sheetMetalUtils.fs",
+    "category": "Onshape features"
+  },
+  "SplitType": {
+    "module": "splitpart.fs",
+    "category": "Onshape features"
+  },
+  "TagPurpose": {
+    "module": "tag.fs",
+    "category": "Onshape features"
+  },
+  "TransformType": {
+    "module": "transformCopy.fs",
+    "category": "Onshape features"
+  },
+  "VariableMode": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "VariableMeasurementMode": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "AxisWithCustom": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "VariableMinMaxSelection": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "AccessType": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "ResultType": {
+    "module": "variable.fs",
+    "category": "Onshape features"
+  },
+  "WrapResultType": {
+    "module": "wrap.fs",
+    "category": "Onshape features"
+  },
+  "AnnotationDimensionDirection": {
+    "module": "annotationdimensiondirection.gen.fs",
+    "category": "enums"
+  },
+  "BlendControlType": {
+    "module": "blendcontroltype.gen.fs",
+    "category": "enums"
+  },
+  "BodyDraftConcaveRepairType": {
+    "module": "bodydraftconcaverepairtype.gen.fs",
+    "category": "enums"
+  },
+  "BodyDraftCornerType": {
+    "module": "bodydraftcornertype.gen.fs",
+    "category": "enums"
+  },
+  "BodyDraftMatchFaceType": {
+    "module": "bodydraftmatchfacetype.gen.fs",
+    "category": "enums"
+  },
+  "BodyDraftSelectionType": {
+    "module": "bodydraftselectiontype.gen.fs",
+    "category": "enums"
+  },
+  "BooleanOperationType": {
+    "module": "booleanoperationtype.gen.fs",
+    "category": "enums"
+  },
+  "BoundingType": {
+    "module": "boundingtype.gen.fs",
+    "category": "enums"
+  },
+  "ChamferMethod": {
+    "module": "chamfermethod.gen.fs",
+    "category": "enums"
+  },
+  "ChamferType": {
+    "module": "chamfertype.gen.fs",
+    "category": "enums"
+  },
+  "ClashType": {
+    "module": "clashtype.gen.fs",
+    "category": "enums"
+  },
+  "ConstraintType": {
+    "module": "constrainttype.gen.fs",
+    "category": "enums"
+  },
+  "CoordinateSystemInferenceSelectionFilter": {
+    "module": "coordinatesysteminferenceselectionfilter.gen.fs",
+    "category": "enums"
+  },
+  "CurveExtensionEndCondition": {
+    "module": "curveextensionendcondition.gen.fs",
+    "category": "enums"
+  },
+  "CurveExtensionShape": {
+    "module": "curveextensionshape.gen.fs",
+    "category": "enums"
+  },
+  "CurvePatternOrientationType": {
+    "module": "curvepatternorientationtype.gen.fs",
+    "category": "enums"
+  },
+  "CurveType": {
+    "module": "curvetype.gen.fs",
+    "category": "enums"
+  },
+  "DebugColor": {
+    "module": "debugcolor.gen.fs",
+    "category": "enums"
+  },
+  "DimensionAlignment": {
+    "module": "dimensionalignment.gen.fs",
+    "category": "enums"
+  },
+  "DraftType": {
+    "module": "drafttype.gen.fs",
+    "category": "enums"
+  },
+  "EdgeConvexityType": {
+    "module": "edgeconvexitytype.gen.fs",
+    "category": "enums"
+  },
+  "EdgeTopology": {
+    "module": "edgetopology.gen.fs",
+    "category": "enums"
+  },
+  "EntityInferenceType": {
+    "module": "entityinferencetype.gen.fs",
+    "category": "enums"
+  },
+  "ExtendEndType": {
+    "module": "extendendtype.gen.fs",
+    "category": "enums"
+  },
+  "ExtendSheetShapeType": {
+    "module": "extendsheetshapetype.gen.fs",
+    "category": "enums"
+  },
+  "FaceBlendCrossSection": {
+    "module": "faceblendcrosssection.gen.fs",
+    "category": "enums"
+  },
+  "FaceBlendCrossSectionShape": {
+    "module": "faceblendcrosssectionshape.gen.fs",
+    "category": "enums"
+  },
+  "FaceBlendPropagation": {
+    "module": "faceblendpropagation.gen.fs",
+    "category": "enums"
+  },
+  "FaceBlendTrimType": {
+    "module": "faceblendtrimtype.gen.fs",
+    "category": "enums"
+  },
+  "FaceCurveCreationType": {
+    "module": "facecurvecreationtype.gen.fs",
+    "category": "enums"
+  },
+  "FaultType": {
+    "module": "faulttype.gen.fs",
+    "category": "enums"
+  },
+  "FeatureDimensionType": {
+    "module": "featuredimensiontype.gen.fs",
+    "category": "enums"
+  },
+  "FieldWeldFlag": {
+    "module": "fieldweldflag.gen.fs",
+    "category": "enums"
+  },
+  "FilletCrossSection": {
+    "module": "filletcrosssection.gen.fs",
+    "category": "enums"
+  },
+  "FixedParameterPosition": {
+    "module": "fixedparameterposition.gen.fs",
+    "category": "enums"
+  },
+  "GeometricContinuity": {
+    "module": "geometriccontinuity.gen.fs",
+    "category": "enums"
+  },
+  "HolePositionReference": {
+    "module": "holepositionreference.gen.fs",
+    "category": "enums"
+  },
+  "HoleProfileType": {
+    "module": "holeprofiletype.gen.fs",
+    "category": "enums"
+  },
+  "Icon": {
+    "module": "icon.gen.fs",
+    "category": "enums"
+  },
+  "LoftTopology": {
+    "module": "lofttopology.gen.fs",
+    "category": "enums"
+  },
+  "LookupTablePath": {
+    "module": "lookupTablePath.fs",
+    "category": "enums"
+  },
+  "ManipulatorDragTypeEnum": {
+    "module": "manipulatordragtypeenum.gen.fs",
+    "category": "enums"
+  },
+  "ManipulatorStyleEnum": {
+    "module": "manipulatorstyleenum.gen.fs",
+    "category": "enums"
+  },
+  "ManipulatorType": {
+    "module": "manipulatortype.gen.fs",
+    "category": "enums"
+  },
+  "MateConnectorAxisType": {
+    "module": "mateconnectoraxistype.gen.fs",
+    "category": "enums"
+  },
+  "MateDOFType": {
+    "module": "matedoftype.gen.fs",
+    "category": "enums"
+  },
+  "MoveCurveBoundaryType": {
+    "module": "movecurveboundarytype.gen.fs",
+    "category": "enums"
+  },
+  "OffsetCurveType": {
+    "module": "offsetcurvetype.gen.fs",
+    "category": "enums"
+  },
+  "OriginCreationType": {
+    "module": "origincreationtype.gen.fs",
+    "category": "enums"
+  },
+  "PartStudioItemType": {
+    "module": "partstudioitemtype.gen.fs",
+    "category": "enums"
+  },
+  "ProfileControlMode": {
+    "module": "profilecontrolmode.gen.fs",
+    "category": "enums"
+  },
+  "ProjectionType": {
+    "module": "projectiontype.gen.fs",
+    "category": "enums"
+  },
+  "PropertyType": {
+    "module": "propertytype.gen.fs",
+    "category": "enums"
+  },
+  "RecordPatternType": {
+    "module": "recordpatterntype.gen.fs",
+    "category": "enums"
+  },
+  "RotationType": {
+    "module": "rotationtype.gen.fs",
+    "category": "enums"
+  },
+  "RuledSurfaceCornerType": {
+    "module": "ruledsurfacecornertype.gen.fs",
+    "category": "enums"
+  },
+  "RuledSurfaceType": {
+    "module": "ruledsurfacetype.gen.fs",
+    "category": "enums"
+  },
+  "SideGeometryRule": {
+    "module": "sidegeometryrule.gen.fs",
+    "category": "enums"
+  },
+  "SMCornerType": {
+    "module": "smcornertype.gen.fs",
+    "category": "enums"
+  },
+  "SplitOperationKeepType": {
+    "module": "splitoperationkeeptype.gen.fs",
+    "category": "enums"
+  },
+  "SurfaceType": {
+    "module": "surfacetype.gen.fs",
+    "category": "enums"
+  },
+  "TableTextAlignment": {
+    "module": "tabletextalignment.gen.fs",
+    "category": "enums"
+  },
+  "TessellatedLoftReturnStatus": {
+    "module": "tessellatedloftreturnstatus.gen.fs",
+    "category": "enums"
+  },
+  "ToleranceSchemaClass": {
+    "module": "toleranceschemaclass.gen.fs",
+    "category": "enums"
+  },
+  "MoveFaceType": {
+    "module": "tool.fs",
+    "category": "enums"
+  },
+  "ToolBodyType": {
+    "module": "tool.fs",
+    "category": "enums"
+  },
+  "ExtendedToolBodyType": {
+    "module": "tool.fs",
+    "category": "enums"
+  },
+  "NewBodyOperationType": {
+    "module": "tool.fs",
+    "category": "enums"
+  },
+  "NewSurfaceOperationType": {
+    "module": "tool.fs",
+    "category": "enums"
+  },
+  "UIHint": {
+    "module": "uihint.gen.fs",
+    "category": "enums"
+  },
+  "VariableType": {
+    "module": "variabletype.gen.fs",
+    "category": "enums"
+  },
+  "VolumeAccuracy": {
+    "module": "volumeaccuracy.gen.fs",
+    "category": "enums"
+  },
+  "WeldFinishing": {
+    "module": "weldfinishing.gen.fs",
+    "category": "enums"
+  },
+  "WeldStandard": {
+    "module": "weldstandard.gen.fs",
+    "category": "enums"
+  },
+  "WrapType": {
+    "module": "wraptype.gen.fs",
+    "category": "enums"
+  }
+}

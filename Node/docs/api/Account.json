@@ -1,0 +1,1091 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Account",
+    "description": "Manage user purchases, subscriptions, and consumables.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account",
+      "description": "Manage user purchases, subscriptions, and consumables."
+    }
+  ],
+  "paths": {
+    "/accounts/plans/{planId}/purchases": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Get a list of all app purchases made for the specified plan.",
+        "operationId": "getPlanPurchases",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTPurchaseInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/accounts/purchases": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Get a list of all app purchases made by the current user.",
+        "description": "This API should be used within the context of an OAuth-enabled application.",
+        "operationId": "getPurchases",
+        "parameters": [
+          {
+            "name": "all",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "ownPurchaseOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTPurchaseInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/accounts/purchases/{pid}/consume": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Mark a purchase as consumed by the current user.",
+        "operationId": "consumePurchase",
+        "parameters": [
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTPurchaseIdentityParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTPurchaseInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Purchase"
+            ],
+            "BasicAuth": [
+              "OAuth2Purchase"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/accounts/{aid}/purchases/{pid}": {
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Cancel a recurring subscription for the specified account ID and purchase ID.",
+        "operationId": "cancelPurchaseNew",
+        "parameters": [
+          {
+            "name": "aid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cancelImmediately",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Purchase"
+            ],
+            "BasicAuth": [
+              "OAuth2Purchase"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTPurchaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTPurchaseInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTPurchaseInfo": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string"
+          },
+          "actualAmountPaidCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amountCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "apiAllocationByPlan": {
+            "type": "integer",
+            "description": "Represents the default annual API call allocation defined by the user's Onshape billing plan.",
+            "format": "int64"
+          },
+          "apiAllocationEndDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "apiAllocationOverride": {
+            "type": "integer",
+            "description": "Manual override set by Onshape admin; when non-zero takes precedence over apiAllocationByPlan.",
+            "format": "int64"
+          },
+          "apiAllocationStartDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "application": {
+            "$ref": "#/components/schemas/BTAPIApplicationSummaryInfo"
+          },
+          "canceledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "card": {
+            "$ref": "#/components/schemas/BTCardInfo"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "couponAmountOff": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "couponPercentOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "durationMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "group": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "lastModified": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedBy": {
+            "type": "string"
+          },
+          "lightSeats": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "nextCharge": {
+            "$ref": "#/components/schemas/NextCharge"
+          },
+          "overageEnabled": {
+            "type": "boolean"
+          },
+          "paymentType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingCancelation": {
+            "type": "boolean"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/BTBillingPlanInfo"
+          },
+          "planId": {
+            "type": "string"
+          },
+          "planName": {
+            "type": "string"
+          },
+          "planType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "preTrialPlanId": {
+            "type": "string"
+          },
+          "proratedCharges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProratedCharges"
+            }
+          },
+          "proratedTotal": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resellerName": {
+            "type": "string"
+          },
+          "seats": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTPlanSubscriberInfo"
+            }
+          },
+          "subscriptionBeginAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "subscriptionEndAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "subscriptionId": {
+            "type": "string"
+          },
+          "subscriptionType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "taxAmountCents": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trialEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trialInitiatedBy": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTPurchaseIdentityParams": {
+        "type": "object",
+        "properties": {
+          "consumedQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "identityId": {
+            "type": "string"
+          },
+          "identityType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "purchaseId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTAPIApplicationSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "applicationOwnerType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTCardInfo": {
+        "type": "object",
+        "properties": {
+          "billingAddress": {
+            "$ref": "#/components/schemas/BTAddressInfo"
+          },
+          "expMonth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "expYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "last4": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "NextCharge": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currentPeriodEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "interval": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "BTBillingPlanInfo": {
+        "type": "object",
+        "properties": {
+          "amountCents": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicationId": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "companyPlan": {
+            "type": "boolean"
+          },
+          "consumableQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deprecated": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "discountInfo": {
+            "$ref": "#/components/schemas/BTDiscountInfo"
+          },
+          "group": {
+            "type": "string"
+          },
+          "hidden": {
+            "type": "boolean"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "interval": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "onshapePlan": {
+            "type": "boolean"
+          },
+          "planType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trialPeriodDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "ProratedCharges": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "BTPlanSubscriberInfo": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTAddressInfo": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "stateCode": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDiscountInfo": {
+        "type": "object",
+        "properties": {
+          "accountBalance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amountOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "couponType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "couponValidMonths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "percentOff": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planId": {
+            "type": "string"
+          },
+          "trialEndDate": {
+            "type": "string"
+          },
+          "usedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

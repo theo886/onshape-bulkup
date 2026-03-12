@@ -1,0 +1,1308 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - FeatureStudio",
+    "description": "Access and manage Feature Studio Elements.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "FeatureStudio",
+      "description": "Access and manage Feature Studio Elements."
+    }
+  ],
+  "paths": {
+    "/featurestudios/d/{did}/w/{wid}": {
+      "post": {
+        "tags": [
+          "FeatureStudio"
+        ],
+        "summary": "Create a new Feature Studio tab in a document.",
+        "description": "Specify the name for the new tab in the request body.",
+        "operationId": "createFeatureStudio",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTModelElementParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTDocumentElementInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/featurestudios/d/{did}/{wvm}/{wvmid}/e/{eid}": {
+      "get": {
+        "tags": [
+          "FeatureStudio"
+        ],
+        "summary": "Get the text for a Feature Studio element.",
+        "operationId": "getFeatureStudioContents",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTFeatureStudioContents-2239"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "FeatureStudio"
+        ],
+        "summary": "Update the text for a Feature Studio element.",
+        "operationId": "updateFeatureStudioContents",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTFeatureStudioContents-2239"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTFeatureStudioContents-2239"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/featurestudios/d/{did}/{wvm}/{wvmid}/e/{eid}/featurespecs": {
+      "get": {
+        "tags": [
+          "FeatureStudio"
+        ],
+        "summary": "Get the feature specs for a Feature Studio element.",
+        "operationId": "getFeatureStudioSpecs",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTFeatureSpecsResponse-664"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTModelElementParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDocumentElementInfo": {
+        "type": "object",
+        "properties": {
+          "accelerationUnits": {
+            "type": "string"
+          },
+          "angleUnits": {
+            "type": "string"
+          },
+          "angularVelocityUnits": {
+            "type": "string"
+          },
+          "applicationTarget": {
+            "$ref": "#/components/schemas/BTApplicationTargetInfo"
+          },
+          "areaUnits": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "densityUnits": {
+            "type": "string"
+          },
+          "elementType": {
+            "$ref": "#/components/schemas/GBTElementType"
+          },
+          "energyUnits": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "forceUnits": {
+            "type": "string"
+          },
+          "foreignDataId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lengthUnits": {
+            "type": "string"
+          },
+          "massUnits": {
+            "type": "string"
+          },
+          "microversionId": {
+            "type": "string"
+          },
+          "momentUnits": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pressureUnits": {
+            "type": "string"
+          },
+          "prettyType": {
+            "type": "string"
+          },
+          "safeToShow": {
+            "type": "boolean"
+          },
+          "specifiedUnit": {
+            "type": "string"
+          },
+          "thumbnailInfo": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "thumbnails": {
+            "type": "string",
+            "format": "uri"
+          },
+          "timeUnits": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "unupdatable": {
+            "type": "boolean"
+          },
+          "volumeUnits": {
+            "type": "string"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/BTZipFileInfo"
+          }
+        }
+      },
+      "BTFeatureStudioContents-2239": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTFeatureApiBase-1430"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "btType": {
+                "type": "string"
+              },
+              "contents": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTFeatureSpecsResponse-664": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "featureSpecs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTFeatureSpec-129"
+            }
+          },
+          "libraryVersion": {
+            "type": "integer",
+            "description": "FeatureScript version used in the Part Studio. Do not modify.",
+            "format": "int32"
+          },
+          "microversionSkew": {
+            "type": "boolean",
+            "description": "On output, `true` indicates a microversion mismatch was encountered."
+          },
+          "rejectMicroversionSkew": {
+            "type": "boolean",
+            "description": "If `true`, the call will refuse to make the addition if the current microversion for the document does not match the source microversion. If `false`, a best-effort attempt is made to re-interpret the feature addition in the context of a newer document microversion."
+          },
+          "serializationVersion": {
+            "type": "string",
+            "description": "Version of the structure serialization rules used to encode the output. This enables incompatibility detection during software updates."
+          },
+          "sourceMicroversion": {
+            "type": "string",
+            "description": "The state from which the result was extracted. Geometry ID interpretation is dependent on this document microversion."
+          }
+        }
+      },
+      "BTApplicationTargetInfo": {
+        "type": "object",
+        "properties": {
+          "baseHref": {
+            "type": "string",
+            "format": "uri"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "supportsCollaboration": {
+            "type": "boolean"
+          },
+          "tabIconHref": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "GBTElementType": {
+        "type": "string",
+        "enum": [
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "DRAWING",
+          "FEATURESTUDIO",
+          "BLOB",
+          "APPLICATION",
+          "TABLE",
+          "BILLOFMATERIALS",
+          "VARIABLESTUDIO",
+          "PUBLICATIONITEM",
+          "UNKNOWN"
+        ]
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTZipFileInfo": {
+        "type": "object",
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTFeatureApiBase-1430": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "libraryVersion": {
+            "type": "integer",
+            "description": "FeatureScript version used in the Part Studio. Do not modify.",
+            "format": "int32"
+          },
+          "microversionSkew": {
+            "type": "boolean",
+            "description": "On output, `true` indicates a microversion mismatch was encountered."
+          },
+          "rejectMicroversionSkew": {
+            "type": "boolean",
+            "description": "If `true`, the call will refuse to make the addition if the current microversion for the document does not match the source microversion. If `false`, a best-effort attempt is made to re-interpret the feature addition in the context of a newer document microversion."
+          },
+          "serializationVersion": {
+            "type": "string",
+            "description": "Version of the structure serialization rules used to encode the output. This enables incompatibility detection during software updates."
+          },
+          "sourceMicroversion": {
+            "type": "string",
+            "description": "The state from which the result was extracted. Geometry ID interpretation is dependent on this document microversion."
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTAssemblyFeatureListResponse-1174": "#/components/schemas/BTAssemblyFeatureListResponse-1174",
+            "BTConfigurationResponse-2019": "#/components/schemas/BTConfigurationResponse-2019",
+            "BTConfigurationUpdateCall-2933": "#/components/schemas/BTConfigurationUpdateCall-2933",
+            "BTFeatureDefinitionCall-1406": "#/components/schemas/BTFeatureDefinitionCall-1406",
+            "BTFeatureDefinitionResponse-1617": "#/components/schemas/BTFeatureDefinitionResponse-1617",
+            "BTFeatureListResponse-2457": "#/components/schemas/BTFeatureListResponse-2457",
+            "BTFeatureScriptEvalCall-2377": "#/components/schemas/BTFeatureScriptEvalCall-2377",
+            "BTFeatureScriptEvalResponse-1859": "#/components/schemas/BTFeatureScriptEvalResponse-1859",
+            "BTFeatureSpecsResponse-664": "#/components/schemas/BTFeatureSpecsResponse-664",
+            "BTFeatureStudioContents-2239": "#/components/schemas/BTFeatureStudioContents-2239",
+            "BTSetFeatureRollbackCall-1899": "#/components/schemas/BTSetFeatureRollbackCall-1899",
+            "BTSetFeatureRollbackResponse-1042": "#/components/schemas/BTSetFeatureRollbackResponse-1042",
+            "BTUpdateFeaturesCall-1748": "#/components/schemas/BTUpdateFeaturesCall-1748",
+            "BTUpdateFeaturesResponse-1333": "#/components/schemas/BTUpdateFeaturesResponse-1333"
+          }
+        }
+      },
+      "BTFeatureSpec-129": {
+        "type": "object",
+        "properties": {
+          "additionalLocalizedStrings": {
+            "type": "integer",
+            "format": "int32",
+            "writeOnly": true
+          },
+          "allParameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTParameterSpec-6"
+            }
+          },
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "computedPartPropertySpec": {
+            "type": "boolean"
+          },
+          "descriptionImageUri": {
+            "type": "string"
+          },
+          "editingLogic": {
+            "$ref": "#/components/schemas/BTEditingLogic-2350"
+          },
+          "featureNameTemplate": {
+            "type": "string"
+          },
+          "featureType": {
+            "type": "string"
+          },
+          "featureTypeDescription": {
+            "type": "string"
+          },
+          "featureTypeName": {
+            "type": "string"
+          },
+          "filterSelectors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fullFeatureType": {
+            "type": "string"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTParameterGroupSpec-3469"
+            }
+          },
+          "iconUri": {
+            "type": "string"
+          },
+          "languageVersion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "linkedLocationName": {
+            "type": "string"
+          },
+          "localizableName": {
+            "type": "string"
+          },
+          "localizedName": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "locationInfos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTLocationInfo-226"
+            }
+          },
+          "manipulatorChangeFunction": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "namespaceIncludingEnums": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "namespaceTheSource": {
+            "type": "boolean"
+          },
+          "parameterIdToSpec": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BTParameterSpec-6"
+            }
+          },
+          "parameterLibraryDefinitionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTParameterSpec-6"
+            }
+          },
+          "signature": {
+            "type": "string"
+          },
+          "sourceLocation": {
+            "$ref": "#/components/schemas/BTLocationInfo-226"
+          },
+          "sourceMicroversionId": {
+            "type": "string"
+          },
+          "stringsToLocalize": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tableSpec": {
+            "type": "boolean"
+          },
+          "toleranceSpec": {
+            "type": "boolean"
+          },
+          "tooltipTemplate": {
+            "type": "string"
+          },
+          "uiHints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GBTUIHint"
+            }
+          },
+          "variableStudioReferenceSpec": {
+            "type": "boolean"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTComputedPartPropertySpec-1746": "#/components/schemas/BTComputedPartPropertySpec-1746",
+            "BTTableSpec-915": "#/components/schemas/BTTableSpec-915",
+            "BTToleranceSpec-3441": "#/components/schemas/BTToleranceSpec-3441",
+            "BTVariableStudioReferenceSpec-5278": "#/components/schemas/BTVariableStudioReferenceSpec-5278"
+          }
+        }
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTParameterSpec-6": {
+        "type": "object",
+        "properties": {
+          "additionalLocalizedStrings": {
+            "type": "integer",
+            "format": "int32",
+            "writeOnly": true
+          },
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "columnName": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "$ref": "#/components/schemas/BTMParameter-1"
+          },
+          "enumOptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "iconUri": {
+            "type": "string"
+          },
+          "localizableName": {
+            "type": "string"
+          },
+          "localizedName": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "parameterDescription": {
+            "type": "string"
+          },
+          "parameterId": {
+            "type": "string"
+          },
+          "parameterName": {
+            "type": "string"
+          },
+          "quantityType": {
+            "$ref": "#/components/schemas/GBTQuantityType"
+          },
+          "stringsToLocalize": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "uiHint": {
+            "type": "string"
+          },
+          "uiHints": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GBTUIHint"
+            }
+          },
+          "visibilityCondition": {
+            "$ref": "#/components/schemas/BTParameterVisibilityCondition-177"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTParameterSpecAppearance-1740": "#/components/schemas/BTParameterSpecAppearance-1740",
+            "BTParameterSpecArray-2600": "#/components/schemas/BTParameterSpecArray-2600",
+            "BTParameterSpecBoolean-170": "#/components/schemas/BTParameterSpecBoolean-170",
+            "BTParameterSpecButton-4111": "#/components/schemas/BTParameterSpecButton-4111",
+            "BTParameterSpecDatabase-1071": "#/components/schemas/BTParameterSpecDatabase-1071",
+            "BTParameterSpecDerived-736": "#/components/schemas/BTParameterSpecDerived-736",
+            "BTParameterSpecEnum-171": "#/components/schemas/BTParameterSpecEnum-171",
+            "BTParameterSpecFeatureList-703": "#/components/schemas/BTParameterSpecFeatureList-703",
+            "BTParameterSpecForeignId-172": "#/components/schemas/BTParameterSpecForeignId-172",
+            "BTParameterSpecLookupTablePath-761": "#/components/schemas/BTParameterSpecLookupTablePath-761",
+            "BTParameterSpecMaterial-2700": "#/components/schemas/BTParameterSpecMaterial-2700",
+            "BTParameterSpecMultiEnum-3118": "#/components/schemas/BTParameterSpecMultiEnum-3118",
+            "BTParameterSpecNullableQuantity-715": "#/components/schemas/BTParameterSpecNullableQuantity-715",
+            "BTParameterSpecQuantity-173": "#/components/schemas/BTParameterSpecQuantity-173",
+            "BTParameterSpecQuery-174": "#/components/schemas/BTParameterSpecQuery-174",
+            "BTParameterSpecReference-2789": "#/components/schemas/BTParameterSpecReference-2789",
+            "BTParameterSpecString-175": "#/components/schemas/BTParameterSpecString-175",
+            "BTReadOnlyParameterSpec-1889": "#/components/schemas/BTReadOnlyParameterSpec-1889"
+          }
+        }
+      },
+      "BTEditingLogic-2350": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "functionName": {
+            "type": "string"
+          },
+          "wantsClickedButton": {
+            "type": "boolean"
+          },
+          "wantsHiddenBodies": {
+            "type": "boolean"
+          },
+          "wantsIsCreating": {
+            "type": "boolean"
+          },
+          "wantsSpecifiedParameters": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTParameterGroupSpec-3469": {
+        "type": "object",
+        "properties": {
+          "additionalLocalizedStrings": {
+            "type": "integer",
+            "format": "int32",
+            "writeOnly": true
+          },
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "collapsedByDefault": {
+            "type": "boolean"
+          },
+          "drivingParameterId": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "string"
+          },
+          "groupName": {
+            "type": "string"
+          },
+          "groupOrParameterIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "localizableName": {
+            "type": "string"
+          },
+          "localizedName": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "stringsToLocalize": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTLocationInfo-226": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "character": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "column": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "document": {
+            "type": "string"
+          },
+          "elementMicroversion": {
+            "type": "string"
+          },
+          "endCharacter": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endColumn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endLine": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fromNode": {
+            "$ref": "#/components/schemas/BTPNode-7"
+          },
+          "fromTemplate": {
+            "$ref": "#/components/schemas/BTLocationInfo-226"
+          },
+          "languageVersion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "line": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moduleIds": {
+            "$ref": "#/components/schemas/BTDocumentVersionElementIds-1897"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "parseNodeId": {
+            "type": "string"
+          },
+          "parseNodeIdRaw": {
+            "$ref": "#/components/schemas/BTObjectId"
+          },
+          "topLevel": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "GBTUIHint": {
+        "type": "string",
+        "enum": [
+          "OPPOSITE_DIRECTION",
+          "ALWAYS_HIDDEN",
+          "SHOW_CREATE_SELECTION",
+          "CONTROL_VISIBILITY",
+          "NO_PREVIEW_PROVIDED",
+          "REMEMBER_PREVIOUS_VALUE",
+          "DISPLAY_SHORT",
+          "ALLOW_FEATURE_SELECTION",
+          "MATE_CONNECTOR_AXIS_TYPE",
+          "PRIMARY_AXIS",
+          "SHOW_EXPRESSION",
+          "OPPOSITE_DIRECTION_CIRCULAR",
+          "SHOW_LABEL",
+          "HORIZONTAL_ENUM",
+          "UNCONFIGURABLE",
+          "MATCH_LAST_ARRAY_ITEM",
+          "COLLAPSE_ARRAY_ITEMS",
+          "INITIAL_FOCUS_ON_EDIT",
+          "INITIAL_FOCUS",
+          "DISPLAY_CURRENT_VALUE_ONLY",
+          "READ_ONLY",
+          "PREVENT_CREATING_NEW_MATE_CONNECTORS",
+          "FIRST_IN_ROW",
+          "ALLOW_QUERY_ORDER",
+          "PREVENT_ARRAY_REORDER",
+          "VARIABLE_NAME",
+          "FOCUS_INNER_QUERY",
+          "SHOW_TOLERANCE",
+          "ALLOW_ARRAY_FOCUS",
+          "SHOW_INLINE_CONFIG_INPUTS",
+          "FOCUS_ON_VISIBLE",
+          "CAN_BE_TOLERANT",
+          "CAN_BE_TOLERANT_DIAMETER",
+          "PLUS_MINUS",
+          "ALWAYS_USE_DEPENDENCIES",
+          "NO_QUERY_VARIABLE",
+          "ALLOW_FLAT_SKETCH_SELECTION",
+          "QUERY_VARIABLE_NAME",
+          "UNKNOWN"
+        ]
+      },
+      "BTMParameter-1": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "importMicroversion": {
+            "type": "string",
+            "description": "Microversion that resulted from the import.",
+            "writeOnly": true
+          },
+          "libraryRelationType": {
+            "$ref": "#/components/schemas/GBTParameterLibraryRelationType"
+          },
+          "nodeId": {
+            "type": "string",
+            "description": "ID of the parameter's node."
+          },
+          "parameterId": {
+            "type": "string",
+            "description": "Unique ID of the parameter."
+          },
+          "parameterName": {
+            "type": "string"
+          },
+          "valueString": {
+            "type": "string"
+          }
+        },
+        "description": "A list of parameter values for instantiation of the feature spec. Parameters are present for all defined parameters, even if not used in a specific instantiation.",
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTMDatabaseParameter-2229": "#/components/schemas/BTMDatabaseParameter-2229",
+            "BTMParameterAppearance-627": "#/components/schemas/BTMParameterAppearance-627",
+            "BTMParameterArray-2025": "#/components/schemas/BTMParameterArray-2025",
+            "BTMParameterBlobReference-1679": "#/components/schemas/BTMParameterBlobReference-1679",
+            "BTMParameterBoolean-144": "#/components/schemas/BTMParameterBoolean-144",
+            "BTMParameterButton-5169": "#/components/schemas/BTMParameterButton-5169",
+            "BTMParameterConfigured-2222": "#/components/schemas/BTMParameterConfigured-2222",
+            "BTMParameterDerived-864": "#/components/schemas/BTMParameterDerived-864",
+            "BTMParameterEnum-145": "#/components/schemas/BTMParameterEnum-145",
+            "BTMParameterFeatureList-1749": "#/components/schemas/BTMParameterFeatureList-1749",
+            "BTMParameterForeignId-146": "#/components/schemas/BTMParameterForeignId-146",
+            "BTMParameterInvalid-1664": "#/components/schemas/BTMParameterInvalid-1664",
+            "BTMParameterLookupTablePath-1419": "#/components/schemas/BTMParameterLookupTablePath-1419",
+            "BTMParameterMaterial-1388": "#/components/schemas/BTMParameterMaterial-1388",
+            "BTMParameterMultiEnum-3411": "#/components/schemas/BTMParameterMultiEnum-3411",
+            "BTMParameterQuantity-147": "#/components/schemas/BTMParameterQuantity-147",
+            "BTMParameterQueryList-148": "#/components/schemas/BTMParameterQueryList-148",
+            "BTMParameterQueryWithOccurrenceList-67": "#/components/schemas/BTMParameterQueryWithOccurrenceList-67",
+            "BTMParameterReference-2434": "#/components/schemas/BTMParameterReference-2434",
+            "BTMParameterString-149": "#/components/schemas/BTMParameterString-149",
+            "BTMReadOnlyParameter-3800": "#/components/schemas/BTMReadOnlyParameter-3800"
+          }
+        }
+      },
+      "GBTQuantityType": {
+        "type": "string",
+        "enum": [
+          "UNKNOWN",
+          "INTEGER",
+          "REAL",
+          "LENGTH",
+          "ANGLE",
+          "MASS",
+          "TIME",
+          "TEMPERATURE",
+          "CURRENT",
+          "ANYTHING",
+          "ANYTHING_WITH_UNITS",
+          "FORCE",
+          "PRESSURE",
+          "MOMENT",
+          "ACCELERATION",
+          "ANGULAR_VELOCITY",
+          "ENERGY",
+          "AREA",
+          "VOLUME",
+          "BOOLEAN",
+          "STRING",
+          "DENSITY"
+        ]
+      },
+      "BTParameterVisibilityCondition-177": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "selfOrChildAlwaysVisible": {
+            "type": "boolean"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTParameterVisibilityAlwaysHidden-176": "#/components/schemas/BTParameterVisibilityAlwaysHidden-176",
+            "BTParameterVisibilityAlwaysShown-5487": "#/components/schemas/BTParameterVisibilityAlwaysShown-5487",
+            "BTParameterVisibilityInRange-2980": "#/components/schemas/BTParameterVisibilityInRange-2980",
+            "BTParameterVisibilityLogical-178": "#/components/schemas/BTParameterVisibilityLogical-178",
+            "BTParameterVisibilityOnEqual-180": "#/components/schemas/BTParameterVisibilityOnEqual-180"
+          }
+        }
+      },
+      "BTPNode-7": {
+        "type": "object",
+        "properties": {
+          "atomic": {
+            "type": "boolean"
+          },
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "documentationType": {
+            "$ref": "#/components/schemas/GBTPDefinitionType"
+          },
+          "endSourceLocation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "shortDescriptor": {
+            "type": "string"
+          },
+          "spaceAfter": {
+            "$ref": "#/components/schemas/BTPSpace-10"
+          },
+          "spaceBefore": {
+            "$ref": "#/components/schemas/BTPSpace-10"
+          },
+          "spaceDefault": {
+            "type": "boolean"
+          },
+          "startSourceLocation": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTPAnnotation-231": "#/components/schemas/BTPAnnotation-231",
+            "BTPArgumentDeclaration-232": "#/components/schemas/BTPArgumentDeclaration-232",
+            "BTPBuiltinIdentifier-233": "#/components/schemas/BTPBuiltinIdentifier-233",
+            "BTPLValue-249": "#/components/schemas/BTPLValue-249",
+            "BTPLiteralMapEntry-257": "#/components/schemas/BTPLiteralMapEntry-257",
+            "BTPModule-234": "#/components/schemas/BTPModule-234",
+            "BTPModuleId-235": "#/components/schemas/BTPModuleId-235",
+            "BTPName-261": "#/components/schemas/BTPName-261",
+            "BTPPropertyAccessor-23": "#/components/schemas/BTPPropertyAccessor-23",
+            "BTPStatement-269": "#/components/schemas/BTPStatement-269",
+            "BTPTopLevelNode-286": "#/components/schemas/BTPTopLevelNode-286",
+            "BTPTypeName-290": "#/components/schemas/BTPTypeName-290"
+          }
+        }
+      },
+      "BTDocumentVersionElementIds-1897": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTObjectId": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "GBTParameterLibraryRelationType": {
+        "type": "string",
+        "enum": [
+          "NONE",
+          "CONTROLLED",
+          "OVERRIDE",
+          "UNKNOWN"
+        ]
+      },
+      "GBTPDefinitionType": {
+        "type": "string",
+        "enum": [
+          "FUNCTION",
+          "PREDICATE",
+          "CONSTANT",
+          "ENUM",
+          "USER_TYPE",
+          "FEATURE_DEFINITION",
+          "FILE_HEADER",
+          "UNDOCUMENTABLE",
+          "CONST_LAMBDA",
+          "UNKNOWN"
+        ]
+      },
+      "BTPSpace-10": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

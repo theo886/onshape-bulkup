@@ -1,0 +1,714 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-SolidCreation",
+    "description": "Solid body creation — extrude, revolve, loft, sweep, thicken, rib, enclose",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-SolidCreation",
+  "modules": {
+    "enclose.fs": {
+      "name": "enclose",
+      "importPath": "onshape/std/enclose.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "enclose",
+          "kind": "function",
+          "id": "enclose-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opEnclose`."
+        }
+      ]
+    },
+    "extrude.fs": {
+      "name": "extrude",
+      "importPath": "onshape/std/extrude.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "extrude",
+          "kind": "function",
+          "id": "extrude-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create an extrude, as used in Onshape's extrude feature.\nInternally, performs an `opExtrude`, followed by an `opBoolean`, possibly followed by a `opDraft`, possibly in two directions. If creating a simple extrusion, prefer using `opExtrude` alone.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "bodyType",
+                  "type": "ExtendedToolBodyType",
+                  "typeRef": "#ExtendedToolBodyType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies a `SOLID` or `SURFACE` or `THIN` extrude. Default is `SOLID`."
+                },
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "bodyType is SOLID",
+                  "description": "Required if `bodyType` is `SOLID`The planar faces and/or sketch regions to extrude. \n Example: \n`qSketchRegion(id + \"sketch1\") specifies all sketch regions of a given sketch.`"
+                },
+                {
+                  "name": "surfaceEntities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "bodyType is SURFACE",
+                  "description": "Required if `bodyType` is `SURFACE`The sketch curves to extrude. \n Example: \n`qCreatedBy(id + \"sketch1\", EntityType.EDGE)`"
+                },
+                {
+                  "name": "endBound",
+                  "type": "BoundingType",
+                  "typeRef": "#BoundingType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe end bounding condition for the extrude. Default is `BLIND`."
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to flip the direction of the extrude to point opposite the face/sketch normal.`"
+                },
+                {
+                  "name": "depth",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "endBound is BLIND",
+                  "description": "Required if `endBound` is `BLIND`A length specifying the extrude depth. For a blind extrude, specifies the depth of the first extrude direction. For a symmetric extrude, specifies the full extrude depth. \n Example: \n`0.5 * inch`"
+                },
+                {
+                  "name": "endBoundEntityFace",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "endBound is UP_TO_SURFACE",
+                  "description": "Required if `endBound` is `UP_TO_SURFACE`Specifies the face or surface to bound the extrude."
+                },
+                {
+                  "name": "endBoundEntityBody",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "endBound is UP_TO_BODY",
+                  "description": "Required if `endBound` is `UP_TO_BODY`Specifies the surface or solid body to bound the extrude."
+                },
+                {
+                  "name": "endBoundEntityVertex",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "endBound is UP_TO_VERTEX",
+                  "description": "Required if `endBound` is `UP_TO_VERTEX`Specifies the vertex to bound the extrude."
+                },
+                {
+                  "name": "hasOffset",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to add a translational offset from the selected face, surface, solid body or vertex.`"
+                },
+                {
+                  "name": "offsetDistance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "offset is true",
+                  "description": "Required if `offset` is `true`The translational distance between the selected face, surface, solid body or vertex and the cap of the extrude. \n Example: \n`0.5 * inch`"
+                },
+                {
+                  "name": "offsetOppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`false to offset away from the selected end bound (default)` Example: \n`true to offset into the selected end bound`"
+                },
+                {
+                  "name": "hasDraft",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to add a draft to the extrude.`"
+                },
+                {
+                  "name": "draftAngle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "hasDraft is true",
+                  "description": "Required if `hasDraft` is `true`The angle, as measured from the extrude direction, at which to draft. \n Example: \n`10 * degree`"
+                },
+                {
+                  "name": "draftPullDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`false to draft outwards (default)` Example: \n`true to draft inwards`"
+                },
+                {
+                  "name": "hasSecondDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to specify a second direction.`"
+                },
+                {
+                  "name": "secondDirectionBound",
+                  "type": "BoundingType",
+                  "typeRef": "#BoundingType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalThe bounding type of the second direction. Can be different from the bounding type of the first direction."
+                },
+                {
+                  "name": "secondDirectionOppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true will flip the second end direction to align opposite the plane/face's normal.`"
+                },
+                {
+                  "name": "secondDirectionDepth",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "secondDirectionBound is BLIND",
+                  "description": "Required if `secondDirectionBound` is `BLIND`A length specifying the second direction's extrude depth."
+                },
+                {
+                  "name": "secondDirectionBoundEntityFace",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "secondDirectionBound is UP_TO_SURFACE",
+                  "description": "Required if `secondDirectionBound` is `UP_TO_SURFACE`specifies the face or surface to bound the extrude."
+                },
+                {
+                  "name": "secondDirectionBoundEntityBody",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "secondDirectionBound is UP_TO_BODY",
+                  "description": "Required if `secondDirectionBound` is `UP_TO_BODY`specifies the surface or solid body to bound the extrude."
+                },
+                {
+                  "name": "secondDirectionBoundEntityVertex",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "secondDirectionBound is UP_TO_VERTEX",
+                  "description": "Required if `secondDirectionBound` is `UP_TO_VERTEX`specifies the vertex to bound the extrude."
+                },
+                {
+                  "name": "hasSecondDirectionOffset",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to add a translational offset from the selected face, surface, solid body or vertex.`"
+                },
+                {
+                  "name": "secondDirectionOffsetDistance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "offset is true",
+                  "description": "Required if `offset` is `true`The translational distance between the selected face, surface, solid body or vertex and the cap of the extrude. \n Example: \n`0.5 * inch`"
+                },
+                {
+                  "name": "secondDirectionOffsetOppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`false to offset away from the selected second direction end bound (default)` Example: \n`true to offset into the selected second direction end bound`"
+                },
+                {
+                  "name": "hasSecondDirectionDraft",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to add a draft to the second direction extrude.`"
+                },
+                {
+                  "name": "secondDirectionDraftPullDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`false to draft the second direction outwards (default)` Example: \n`true to draft the second direction inwards`"
+                },
+                {
+                  "name": "operationType",
+                  "type": "NewBodyOperationType",
+                  "typeRef": "#NewBodyOperationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies how the newly created body will be merged with existing bodies."
+                },
+                {
+                  "name": "defaultScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to merge with all other bodies` Example: \n`false to merge with booleanScope`"
+                },
+                {
+                  "name": "booleanScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "defaultScope is false",
+                  "description": "Required if `defaultScope` is `false`The specified bodies to merge with."
+                },
+                {
+                  "name": "wallShape",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "bodyType is THIN",
+                  "description": "Required if `bodyType` is `THIN`The specified planar face or sketch edges defining the thin wall shape."
+                },
+                {
+                  "name": "thickness1",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "bodyType is THIN",
+                  "description": "Required if `bodyType` is `THIN`The outwards thickness of the thin wall."
+                },
+                {
+                  "name": "thickness2",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "bodyType is THIN",
+                  "description": "Required if `bodyType` is `THIN`The inwards thickness of the thin wall."
+                },
+                {
+                  "name": "flipWall",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to apply the first offset value instead of the second and vice versa`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "ExtendedToolBodyType",
+            "Query",
+            "BoundingType",
+            "ValueWithUnits",
+            "NewBodyOperationType"
+          ]
+        }
+      ]
+    },
+    "loft.fs": {
+      "name": "loft",
+      "importPath": "onshape/std/loft.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "LoftEndDerivativeType",
+          "kind": "enum",
+          "id": "LoftEndDerivativeType",
+          "returnType": null,
+          "description": "Specifies an end condition for one side of a loft.",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": null
+            },
+            {
+              "name": "NORMAL_TO_PROFILE",
+              "description": null
+            },
+            {
+              "name": "TANGENT_TO_PROFILE",
+              "description": null
+            },
+            {
+              "name": "MATCH_TANGENT",
+              "description": null
+            },
+            {
+              "name": "MATCH_CURVATURE",
+              "description": null
+            },
+            {
+              "name": "NORMAL_DIRECTION",
+              "description": null
+            },
+            {
+              "name": "TANGENT_DIRECTION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "LoftGuideDerivativeType",
+          "kind": "enum",
+          "id": "LoftGuideDerivativeType",
+          "returnType": null,
+          "description": "Specifies derivative condition for a guide",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": null
+            },
+            {
+              "name": "NORMAL_TO_GUIDE",
+              "description": null
+            },
+            {
+              "name": "TANGENT_TO_GUIDE",
+              "description": null
+            },
+            {
+              "name": "MATCH_TANGENT",
+              "description": null
+            },
+            {
+              "name": "MATCH_CURVATURE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "loft",
+          "kind": "function",
+          "id": "loft-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opLoft`."
+        }
+      ]
+    },
+    "revolve.fs": {
+      "name": "revolve",
+      "importPath": "onshape/std/revolve.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RevolveBoundingType",
+          "kind": "enum",
+          "id": "RevolveBoundingType",
+          "returnType": null,
+          "description": "Types of bounds allowed in revolve operation.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": null
+            },
+            {
+              "name": "UP_TO_NEXT",
+              "description": null
+            },
+            {
+              "name": "UP_TO_SURFACE",
+              "description": null
+            },
+            {
+              "name": "UP_TO_BODY",
+              "description": null
+            },
+            {
+              "name": "UP_TO_VERTEX",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "revolve",
+          "kind": "function",
+          "id": "revolve-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opRevolve`, followed by an `opBoolean`. For simple revolves, prefer using `opRevolve` directly."
+        }
+      ]
+    },
+    "rib.fs": {
+      "name": "rib",
+      "importPath": "onshape/std/rib.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RibExtrusionDirection",
+          "kind": "enum",
+          "id": "RibExtrusionDirection",
+          "returnType": null,
+          "description": "Specifies the direction of the rib extrusion starting from the profile going up to the part.",
+          "values": [
+            {
+              "name": "PARALLEL_TO_SKETCH_PLANE",
+              "description": "The direction of the rib extrusion goes parallel to the profile sketch plane."
+            },
+            {
+              "name": "NORMAL_TO_SKETCH_PLANE",
+              "description": "The direction of the rib extrusion goes normal to the profile sketch plane."
+            }
+          ]
+        },
+        {
+          "name": "rib",
+          "kind": "function",
+          "id": "rib-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates ribs from selected profiles. The ribs can be either free standing or merged with their mating part. Profiles must be non-construction sketch edges.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "profiles",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Edges which form the center lines of the ribs."
+                },
+                {
+                  "name": "parts",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Parts which form the boundary of the ribs."
+                },
+                {
+                  "name": "thickness",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Thickness of the ribs."
+                },
+                {
+                  "name": "ribExtrusionDirection",
+                  "type": "RibExtrusionDirection",
+                  "typeRef": "#RibExtrusionDirection",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether the rib is extruded perpendicular or parallel to the plane."
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether the ribs are extruded in the positive or negative direction."
+                },
+                {
+                  "name": "hasDraft",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to add a draft to the rib.`"
+                },
+                {
+                  "name": "draftAngle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "hasDraft is true",
+                  "description": "Required if `hasDraft` is `true`The angle of the draft with respect to the extruded direction of the rib. \n Example: \n`10 * degree`"
+                },
+                {
+                  "name": "draftPullDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`false to draft outwards (default)` Example: \n`true to draft inwards`"
+                },
+                {
+                  "name": "extendProfilesUpToPart",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether the ribs are extruded up to a boundary part."
+                },
+                {
+                  "name": "mergeRibs",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether the ribs are merged with the mating part."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "ValueWithUnits",
+            "RibExtrusionDirection"
+          ]
+        }
+      ]
+    },
+    "sweep.fs": {
+      "name": "sweep",
+      "importPath": "onshape/std/sweep.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sweep",
+          "kind": "function",
+          "id": "sweep-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opSweep`, followed by an `opBoolean`. For simple sweeps, prefer using `opSweep` directly."
+        }
+      ]
+    },
+    "thicken.fs": {
+      "name": "thicken",
+      "importPath": "onshape/std/thicken.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "thicken",
+          "kind": "function",
+          "id": "thicken-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature performing an `opThicken`, followed by an `opBoolean`. For simple thickens, prefer using `opThicken` directly."
+        }
+      ]
+    }
+  }
+}

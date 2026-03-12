@@ -1,0 +1,2183 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-SheetMetal",
+    "description": "Sheet metal features — start, flange, bend, corner, tab, joint, loft, formed",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-SheetMetal",
+  "modules": {
+    "sheetMetalAttribute.fs": {
+      "name": "sheetMetalAttribute",
+      "importPath": "onshape/std/sheetMetalAttribute.fs",
+      "description": "Modules prefixed with \"sheetMetal\" here and below control functionality related to working with sheet metal models in Onshape.Sheet metal models are created with the `sheetMetalStart` feature. The geometry of these models is not modifiable with ordinary geometry operations, and an operation which attempts to modify a sheet metal model will always throw the error `ErrorStringEnum.SHEET_METAL_PARTS_PROHIBITED`Onshape's sheet metal operations are instead encapsulated in features defined with `defineSheetMetalFeature`. These features directly modify the underlying sheet metal master body, a hidden surface body not accessible from other features. The master body (along with `SMAttribute`s set on its entities) provides the information necessary for `updateSheetMetalGeometry` to build both sheet metal bodies: the 3D folded body and the flat pattern. The result is simultaneous sheet metal editing, where geometry and errors are always available to the end user on both the folded and the flat sheet metal models.Most custom features will function only on bodies which are not active sheet metal, because the feature's effects are not readily translatable from the folded model back to the flattened master model. A custom feature's user will typically discover this when an operation within the custom feature throws a `SHEET_METAL_PARTS_PROHIBITED` error, giving the user-facing message \"Active sheet metal models are not allowed.\"Additionally, a custom feature's query parameter can disallow selection of entities from sheet metal bodies using the ActiveSheetMetal.NO filter. Any other query can be filtered for non-sheet-metal geometry using `separateSheetMetalQueries`.",
+      "symbols": [
+        {
+          "name": "SMAttribute",
+          "kind": "type",
+          "id": "SMAttribute",
+          "returnType": null,
+          "description": "Sheet metal object definition attribute type."
+        },
+        {
+          "name": "canBeSMAttribute",
+          "kind": "predicate",
+          "id": "canBeSMAttribute-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "parameters in SMAttribute (e.g. radius in BEND, angle in JOINT, thickness in MODEL) are specified as maps \n Example: \n\n```\n{\n value : {ValueWithUnits},\n canBeEdited : {boolean},\n controllingFeatureId : {string}, : feature to be edited when editing this parameter\n parameterIdInFeature : {string}\n }\n```"
+        },
+        {
+          "name": "smAttributeDefault",
+          "kind": "const",
+          "id": "smAttributeDefault",
+          "returnType": null,
+          "description": "Empty map as SMAttribute convenient for attribute lookup"
+        },
+        {
+          "name": "asSMAttribute",
+          "kind": "function",
+          "id": "asSMAttribute-map",
+          "signature": "(value is map)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": "map"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Attach SMAttribute type to a map. convenient for attribute lookup and queries."
+        },
+        {
+          "name": "makeSMJointAttribute",
+          "kind": "function",
+          "id": "makeSMJointAttribute-string",
+          "signature": "(attributeId is string)",
+          "signatureParams": [
+            {
+              "name": "attributeId",
+              "type": "string"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Start SMAttribute for joint."
+        },
+        {
+          "name": "makeSMWallAttribute",
+          "kind": "function",
+          "id": "makeSMWallAttribute-string",
+          "signature": "(attributeId is string)",
+          "signatureParams": [
+            {
+              "name": "attributeId",
+              "type": "string"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Start SMAttribute for wall."
+        },
+        {
+          "name": "makeSMCornerAttribute",
+          "kind": "function",
+          "id": "makeSMCornerAttribute-string",
+          "signature": "(attributeId is string)",
+          "signatureParams": [
+            {
+              "name": "attributeId",
+              "type": "string"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Start SMAttribute for corner."
+        },
+        {
+          "name": "getSmObjectTypeAttributes",
+          "kind": "function",
+          "id": "getSmObjectTypeAttributes-Context-Query-SMObjectType",
+          "signature": "(context is Context, topology is Query, objectType is SMObjectType)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "topology",
+              "type": "Query"
+            },
+            {
+              "name": "objectType",
+              "type": "SMObjectType"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": "Get attributes with matching objectType."
+        },
+        {
+          "name": "clearSmAttributes",
+          "kind": "function",
+          "id": "clearSmAttributes-Context-Query",
+          "signature": "(context is Context, entities is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Clear SM attributes from entities."
+        },
+        {
+          "name": "hasSheetMetalAttribute",
+          "kind": "function",
+          "id": "hasSheetMetalAttribute-Context-Query-SMObjectType",
+          "signature": "(context is Context, entities is Query, objectType is SMObjectType)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            },
+            {
+              "name": "objectType",
+              "type": "SMObjectType"
+            }
+          ],
+          "returnType": "boolean",
+          "returnTypeRef": "builtin:boolean",
+          "description": "Check for presence of SMAttribute types."
+        },
+        {
+          "name": "replaceSMAttribute",
+          "kind": "function",
+          "id": "replaceSMAttribute-Context-SMAttribute-SMAttribute",
+          "signature": "(context is Context, existingAttribute is SMAttribute, newAttribute is SMAttribute)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "existingAttribute",
+              "type": "SMAttribute"
+            },
+            {
+              "name": "newAttribute",
+              "type": "SMAttribute"
+            }
+          ],
+          "returnType": "Query",
+          "returnTypeRef": "#Query",
+          "description": "For all entities annotated with attribute matching existingAttribute pattern, replace it with newAttribute. Return query for entities whose attributes have been modified."
+        },
+        {
+          "name": "getSMDefinitionEntities",
+          "kind": "function",
+          "id": "getSMDefinitionEntities-Context-Query",
+          "signature": "(context is Context, selection is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "selection",
+              "type": "Query"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": "Find sheet metal master body entities corresponding to feature input."
+        },
+        {
+          "name": "getSMDefinitionEntities",
+          "kind": "function",
+          "id": "getSMDefinitionEntities-Context-Query-EntityType",
+          "signature": "(context is Context, selection is Query, entityType is EntityType)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "selection",
+              "type": "Query"
+            },
+            {
+              "name": "entityType",
+              "type": "EntityType"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": ""
+        },
+        {
+          "name": "isSheetMetalModelActive",
+          "kind": "function",
+          "id": "isSheetMetalModelActive-Context-Query",
+          "signature": "(context is Context, sheetMetalModel is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "sheetMetalModel",
+              "type": "Query"
+            }
+          ],
+          "returnType": "boolean",
+          "returnTypeRef": "builtin:boolean",
+          "description": "Check if sheet metal model is active."
+        },
+        {
+          "name": "areEntitiesFromSingleSheetMetalModel",
+          "kind": "function",
+          "id": "areEntitiesFromSingleSheetMetalModel-Context-Query",
+          "signature": "(context is Context, entities is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Check if all entities belong to the same sheet metal model"
+        },
+        {
+          "name": "areEntitiesFromSingleActiveSheetMetalModel",
+          "kind": "function",
+          "id": "areEntitiesFromSingleActiveSheetMetalModel-Context-Query",
+          "signature": "(context is Context, entities is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            }
+          ],
+          "returnType": "boolean",
+          "returnTypeRef": "builtin:boolean",
+          "description": "Check if all entities belong to the same active sheet metal model"
+        },
+        {
+          "name": "getWallAttribute",
+          "kind": "function",
+          "id": "getWallAttribute-Context-Query",
+          "signature": "(context is Context, wallFace is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "wallFace",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Get wall attribute on a single entity"
+        },
+        {
+          "name": "getJointAttribute",
+          "kind": "function",
+          "id": "getJointAttribute-Context-Query",
+          "signature": "(context is Context, jointEdge is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "jointEdge",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Get joint attribute on a single entity"
+        },
+        {
+          "name": "getCornerAttribute",
+          "kind": "function",
+          "id": "getCornerAttribute-Context-Query",
+          "signature": "(context is Context, cornerVertex is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "cornerVertex",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Get corner attribute on a single entity"
+        },
+        {
+          "name": "SMAssociationAttribute",
+          "kind": "type",
+          "id": "SMAssociationAttribute",
+          "returnType": null,
+          "description": "Used by sheet metal features to maintain correspondence between master sheet body entities and folded and flat solid body entities."
+        },
+        {
+          "name": "canBeSMAssociationAttribute",
+          "kind": "predicate",
+          "id": "canBeSMAssociationAttribute-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "Association attribute stores `attributeId`. The association is established by assigning the same attribute to associated entities. Every entity in sheet metal master sheet body has a distinct association attribute."
+        },
+        {
+          "name": "makeSMAssociationAttribute",
+          "kind": "function",
+          "id": "makeSMAssociationAttribute-string",
+          "signature": "(attributeId is string)",
+          "signatureParams": [
+            {
+              "name": "attributeId",
+              "type": "string"
+            }
+          ],
+          "returnType": "SMAssociationAttribute",
+          "returnTypeRef": "#SMAssociationAttribute",
+          "description": "Create an association attribute with the given `attributeId`."
+        },
+        {
+          "name": "assignSMAssociationAttributes",
+          "kind": "function",
+          "id": "assignSMAssociationAttributes-Context-Query",
+          "signature": "(context is Context, entities is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Assign new association attributes to entities using their transient queries to generate attribute ids."
+        },
+        {
+          "name": "smAssociationAttributePattern",
+          "kind": "const",
+          "id": "smAssociationAttributePattern",
+          "returnType": null,
+          "description": "An attribute pattern for finding attributes which are `SMAssociationAttribute`s.",
+          "references": [
+            "SMAssociationAttribute"
+          ]
+        },
+        {
+          "name": "getSMAssociationAttributes",
+          "kind": "function",
+          "id": "getSMAssociationAttributes-Context-Query",
+          "signature": "(context is Context, entities is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "entities",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Get all of the association attributes for a given set of `entities`."
+        },
+        {
+          "name": "SMCornerBreak",
+          "kind": "type",
+          "id": "SMCornerBreak",
+          "returnType": null,
+          "description": "Information corresponding to a single sheet metal corner break (fillet or chamfer)"
+        },
+        {
+          "name": "canBeSMCornerBreak",
+          "kind": "predicate",
+          "id": "canBeSMCornerBreak-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "Corner break must hold the break style, the range (radius and distance of fillet and chamfer respectively), and the wallId of the wall that owns the corner."
+        },
+        {
+          "name": "makeSMCornerBreak",
+          "kind": "function",
+          "id": "makeSMCornerBreak-SMCornerBreakStyle-ValueWithUnits-string",
+          "signature": "(cornerBreakStyle is SMCornerBreakStyle, range is ValueWithUnits, wallId is string)",
+          "signatureParams": [
+            {
+              "name": "cornerBreakStyle",
+              "type": "SMCornerBreakStyle"
+            },
+            {
+              "name": "range",
+              "type": "ValueWithUnits"
+            },
+            {
+              "name": "wallId",
+              "type": "string"
+            }
+          ],
+          "returnType": "SMCornerBreak",
+          "returnTypeRef": "#SMCornerBreak",
+          "description": "Create a corner break"
+        },
+        {
+          "name": "addCornerBreakToSMAttribute",
+          "kind": "function",
+          "id": "addCornerBreakToSMAttribute-SMAttribute-map",
+          "signature": "(attribute is SMAttribute, cornerBreakMap is map)",
+          "signatureParams": [
+            {
+              "name": "attribute",
+              "type": "SMAttribute"
+            },
+            {
+              "name": "cornerBreakMap",
+              "type": "map"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Adds an SMCornerBreak and any additional information to an SMAttribute, initializing the cornerBreaks array if necessary."
+        },
+        {
+          "name": "findCornerBreak",
+          "kind": "function",
+          "id": "findCornerBreak-SMAttribute-string",
+          "signature": "(attribute is SMAttribute, wallId is string)",
+          "signatureParams": [
+            {
+              "name": "attribute",
+              "type": "SMAttribute"
+            },
+            {
+              "name": "wallId",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Finds an SMCornerBreak in attribute corresponding to wallId, returns undefined if nothing found"
+        },
+        {
+          "name": "updateCornerAttribute",
+          "kind": "function",
+          "id": "updateCornerAttribute-Context-Query-SMAttribute",
+          "signature": "(context is Context, vertex is Query, attribute is SMAttribute)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "vertex",
+              "type": "Query"
+            },
+            {
+              "name": "attribute",
+              "type": "SMAttribute"
+            }
+          ],
+          "returnType": null,
+          "description": "Clears existing SMAttribute, sets new one only if non-trivial"
+        },
+        {
+          "name": "sanitizeControllingInformation",
+          "kind": "function",
+          "id": "sanitizeControllingInformation-Context-SMAttribute-boolean",
+          "signature": "(context is Context, attribute is SMAttribute, replaceExisting is boolean)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "attribute",
+              "type": "SMAttribute"
+            },
+            {
+              "name": "replaceExisting",
+              "type": "boolean"
+            }
+          ],
+          "returnType": "SMAttribute",
+          "returnTypeRef": "#SMAttribute",
+          "description": "Removes all controllingFeatureId and parameterIdInFeature information from an SMAttribute. Replaces the provided attribute with sanitized attribute if `replaceExisting` is true. Return the sanitized attribute\nFail if the attribute is a model attribute as a safety precaution, as removing the controllingFeatureId information from a model attribute would invalidate it from being the same model attribute as it was before"
+        }
+      ]
+    },
+    "sheetMetalBend.fs": {
+      "name": "sheetMetalBend",
+      "importPath": "onshape/std/sheetMetalBend.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BendAlignment",
+          "kind": "enum",
+          "id": "BendAlignment",
+          "returnType": null,
+          "description": "Values specifying the alignment of sheet metal after it is bent, relative to the line",
+          "values": [
+            {
+              "name": "BEND_LINE",
+              "description": null
+            },
+            {
+              "name": "HELD_EDGE",
+              "description": null
+            },
+            {
+              "name": "BENT_EDGE",
+              "description": null
+            },
+            {
+              "name": "BENT_INSIDE",
+              "description": null
+            },
+            {
+              "name": "BENT_OUTSIDE",
+              "description": null
+            },
+            {
+              "name": "BENT_MIDPLANE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "BendAngleControlType",
+          "kind": "enum",
+          "id": "BendAngleControlType",
+          "returnType": null,
+          "description": "Angle types for the bend",
+          "values": [
+            {
+              "name": "BEND_ANGLE",
+              "description": null
+            },
+            {
+              "name": "ALIGN_GEOMETRY",
+              "description": null
+            },
+            {
+              "name": "ANGLE_FROM_DIRECTION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "sheetMetalBend",
+          "kind": "function",
+          "id": "sheetMetalBend-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Bend a sheet metal model along a reference line, with additional bend control options."
+        }
+      ]
+    },
+    "sheetMetalBendRelief.fs": {
+      "name": "sheetMetalBendRelief",
+      "importPath": "onshape/std/sheetMetalBendRelief.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalBendRelief",
+          "kind": "function",
+          "id": "sheetMetalBendRelief-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Bend relief feature is used to override default bend relief of sheet metal model at individual bend end."
+        }
+      ]
+    },
+    "sheetMetalCorner.fs": {
+      "name": "sheetMetalCorner",
+      "importPath": "onshape/std/sheetMetalCorner.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalCorner",
+          "kind": "function",
+          "id": "sheetMetalCorner-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Corner feature is used to override default sheet metal model corner relief style or dimensions for an individual corner"
+        }
+      ]
+    },
+    "sheetMetalCornerBreak.fs": {
+      "name": "sheetMetalCornerBreak",
+      "importPath": "onshape/std/sheetMetalCornerBreak.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "EdgeBlendType",
+          "kind": "enum",
+          "id": "EdgeBlendType",
+          "returnType": null,
+          "description": "Specifies type of edge blend",
+          "values": [
+            {
+              "name": "FILLET",
+              "description": null
+            },
+            {
+              "name": "CHAMFER",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "sheetMetalCornerBreak",
+          "kind": "function",
+          "id": "sheetMetalCornerBreak-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Sheet metal specific feature combining functionality of edge fillet and chamfer. It calls `SMEdgeBlendImpl` to apply fillets or chamfers in flat and then change the definition surface accordingly As a result of this change rips corner/bend reliefs are also \"baked\" into the definition surface and flexibility of sheet metal model is lost. For this reason we recommend that this feature is used after sheet metal flanges, joints and reliefs are finalized."
+        }
+      ]
+    },
+    "sheetMetalEnd.fs": {
+      "name": "sheetMetalEnd",
+      "importPath": "onshape/std/sheetMetalEnd.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalEnd",
+          "kind": "function",
+          "id": "sheetMetalEnd-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Deactivate the sheet metal model of selected parts. Continued modeling on deactivated sheet metal parts will not be represented in the flat pattern or the table."
+        }
+      ]
+    },
+    "sheetMetalFlange.fs": {
+      "name": "sheetMetalFlange",
+      "importPath": "onshape/std/sheetMetalFlange.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SMFlangeAlignment",
+          "kind": "enum",
+          "id": "SMFlangeAlignment",
+          "returnType": null,
+          "description": "Describes the position of a virtual sharp with respect to \"flange face\", defined as the face that corresponds to the edge selected for flange in the underlying sheet.\nFor Middle alignment, the virtual sharp at the intersection of the existing sheet and the sheet that corresponds to the flange wall, lies in the middle of the flange face.\nFor Inner alignment, the virtual sharp at the intersection of the planes defined by the faces of the solid to the interior of the bend, lies coincident with the edge of the flange face closest to the bend.\nFor Outer alignment, the virtual sharp at the intersection of the planes defined by the faces of the solid to the exterior of the bend, lies coincident with the edge of the flange face farthest from the bend.",
+          "values": [
+            {
+              "name": "INNER",
+              "description": null
+            },
+            {
+              "name": "OUTER",
+              "description": null
+            },
+            {
+              "name": "MIDDLE",
+              "description": null
+            },
+            {
+              "name": "BEND",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SMPartialFlangeChainType",
+          "kind": "enum",
+          "id": "SMPartialFlangeChainType",
+          "returnType": null,
+          "description": "Sets the handling for chains of edges while creating a partial flange.",
+          "values": [
+            {
+              "name": "PER_EDGE",
+              "description": "The partial flange conditions will be applied to the ends of each individual edge."
+            },
+            {
+              "name": "PER_CHAIN",
+              "description": "The partial flange conditions will be applied to the ends of each chain of selected edges."
+            }
+          ]
+        },
+        {
+          "name": "sheetMetalFlange",
+          "kind": "function",
+          "id": "sheetMetalFlange-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create sheet metal flanges on selected edges of sheet metal parts. Length of flange may be defined by distance (as measured from the virtual sharp along outer edge of wall) or limiting entity. Bend angle may be flipped using the oppositeDirection flag. When auto-miter is not selected, flange sides are rotated by miter angle."
+        }
+      ]
+    },
+    "sheetMetalFormed.fs": {
+      "name": "sheetMetalFormed",
+      "importPath": "onshape/std/sheetMetalFormed.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalFormed",
+          "kind": "function",
+          "id": "sheetMetalFormed-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Creates forms of specified dimensions and style, based either on standard forms, or by user-defined forms. Each form's position and orientation are specified using sketch points or mate connectors. For sketch points sketch coordinate system specifies orientation."
+        }
+      ]
+    },
+    "sheetMetalInFlat.fs": {
+      "name": "sheetMetalInFlat",
+      "importPath": "onshape/std/sheetMetalInFlat.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SMFlatOp",
+          "kind": "function",
+          "id": "SMFlatOp-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Adds or removes material of sheet metal part as specified by faces attached to its its flat pattern Is the implementation of sheet metal extrude in flat.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "faces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Faces associated with sheet metal flat, typically sketch faces or region of sketch in flat"
+                },
+                {
+                  "name": "flatOperationType",
+                  "type": "FlatOperationType",
+                  "typeRef": "#FlatOperationType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "FlatOperationType"
+          ]
+        },
+        {
+          "name": "SMEdgeBlendImpl",
+          "kind": "function",
+          "id": "SMEdgeBlendImpl-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Applies a requested feature in sheet metal flat, changes definition surfaces to reflect this and updates sheet metal geometry Used by fillet and chamfer",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Sheet metal edges or vertices (flat selections are allowed) associated with vertices in definition"
+                },
+                {
+                  "name": "crossSection",
+                  "type": "FilletCrossSection",
+                  "typeRef": "#FilletCrossSection",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "chamferType",
+                  "type": "ChamferType",
+                  "typeRef": "#ChamferType",
+                  "required": false,
+                  "requiredIf": "crossSection is CHAMFER",
+                  "description": "Required if `crossSection` is `CHAMFER`"
+                },
+                {
+                  "name": "width",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "chamferType is EQUAL_OFFSETS or OFFSET_ANGLE.",
+                  "description": "Required if `chamferType` is `EQUAL_OFFSETS` or `OFFSET_ANGLE`."
+                },
+                {
+                  "name": "width1",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "chamferType is TWO_OFFSETS.",
+                  "description": "Required if `chamferType` is `TWO_OFFSETS`."
+                },
+                {
+                  "name": "width2",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "chamferType is TWO_OFFSETS.",
+                  "description": "Required if `chamferType` is `TWO_OFFSETS`."
+                },
+                {
+                  "name": "angle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "chamferType is OFFSET_ANGLE.",
+                  "description": "Required if `chamferType` is `OFFSET_ANGLE`."
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional"
+                },
+                {
+                  "name": "radius",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "crossSection is CIRCULAR or CONIC or CURVATURE.",
+                  "description": "Required if `crossSection` is `CIRCULAR` or `CONIC` or `CURVATURE`."
+                },
+                {
+                  "name": "isAsymmetric",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional"
+                },
+                {
+                  "name": "flipAsymmetric",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional"
+                },
+                {
+                  "name": "otherRadius",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "isAsymmetric is true.",
+                  "description": "Required if `isAsymmetric` is true."
+                },
+                {
+                  "name": "rho",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "crossSection is CONIC.",
+                  "description": "Required if `crossSection` is `CONIC`."
+                },
+                {
+                  "name": "magnitude",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "crossSection is CURVATURE.",
+                  "description": "Required if `crossSection` is `CURVATURE`."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "FilletCrossSection",
+            "ChamferType",
+            "ValueWithUnits"
+          ]
+        }
+      ]
+    },
+    "sheetMetalJoint.fs": {
+      "name": "sheetMetalJoint",
+      "importPath": "onshape/std/sheetMetalJoint.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalJoint",
+          "kind": "function",
+          "id": "sheetMetalJoint-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "sheetMetalJoint feature modifies sheet metal joint by changing its attribute."
+        }
+      ]
+    },
+    "sheetMetalLoft.fs": {
+      "name": "sheetMetalLoft",
+      "importPath": "onshape/std/sheetMetalLoft.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalLoft",
+          "kind": "function",
+          "id": "sheetMetalLoft-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create or add to existing sheet metal parts by selecting two profiles to loft. Adjust chordal tolerance to change loft resolution. Rips are automatically added to closed profiles. Operations on sheet metal models are automatically represented as a flat pattern, and joints and bends are listed in a table."
+        }
+      ]
+    },
+    "sheetMetalMakeJoint.fs": {
+      "name": "sheetMetalMakeJoint",
+      "importPath": "onshape/std/sheetMetalMakeJoint.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "MakeJointType",
+          "kind": "enum",
+          "id": "MakeJointType",
+          "returnType": null,
+          "description": "MakeJointType is a subset of SMJointType to restrict options visible in sheetMetalMakeJoint",
+          "values": [
+            {
+              "name": "BEND",
+              "description": null
+            },
+            {
+              "name": "RIP",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "sheetMetalMakeJoint",
+          "kind": "function",
+          "id": "sheetMetalMakeJoint-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Produces a sheet metal joint of type RIP or BEND by extending or trimming walls of selected edges. Rip is created as an edge joint by default."
+        }
+      ]
+    },
+    "sheetMetalStart.fs": {
+      "name": "sheetMetalStart",
+      "importPath": "onshape/std/sheetMetalStart.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SMProcessType",
+          "kind": "enum",
+          "id": "SMProcessType",
+          "returnType": null,
+          "description": "Method of initializing sheet metal model",
+          "values": [
+            {
+              "name": "CONVERT",
+              "description": null
+            },
+            {
+              "name": "EXTRUDE",
+              "description": null
+            },
+            {
+              "name": "THICKEN",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SMCornerStrategyType",
+          "kind": "enum",
+          "id": "SMCornerStrategyType",
+          "returnType": null,
+          "description": "Default corner relief style setting",
+          "values": [
+            {
+              "name": "SIZED_RECTANGLE",
+              "description": null
+            },
+            {
+              "name": "RECTANGLE",
+              "description": null
+            },
+            {
+              "name": "SIZED_ROUND",
+              "description": null
+            },
+            {
+              "name": "ROUND",
+              "description": null
+            },
+            {
+              "name": "CLOSED",
+              "description": null
+            },
+            {
+              "name": "SIMPLE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SMBendStrategyType",
+          "kind": "enum",
+          "id": "SMBendStrategyType",
+          "returnType": null,
+          "description": "Default bend relief style setting",
+          "values": [
+            {
+              "name": "RECTANGLE",
+              "description": null
+            },
+            {
+              "name": "OBROUND",
+              "description": null
+            },
+            {
+              "name": "TEAR",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "SMBendCalculationType",
+          "kind": "enum",
+          "id": "SMBendCalculationType",
+          "returnType": null,
+          "description": "Bend calculation setting",
+          "values": [
+            {
+              "name": "K_FACTOR",
+              "description": null
+            },
+            {
+              "name": "BEND_ALLOWANCE",
+              "description": null
+            },
+            {
+              "name": "BEND_DEDUCTION",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "CORNER_RELIEF_SCALE_BOUNDS",
+          "kind": "const",
+          "id": "CORNER_RELIEF_SCALE_BOUNDS",
+          "returnType": null,
+          "description": "Corner relief scale bounds"
+        },
+        {
+          "name": "BEND_RELIEF_DEPTH_SCALE_BOUNDS",
+          "kind": "const",
+          "id": "BEND_RELIEF_DEPTH_SCALE_BOUNDS",
+          "returnType": null,
+          "description": "Bend relief depth scale bounds"
+        },
+        {
+          "name": "BEND_RELIEF_WIDTH_SCALE_BOUNDS",
+          "kind": "const",
+          "id": "BEND_RELIEF_WIDTH_SCALE_BOUNDS",
+          "returnType": null,
+          "description": "Bend relief width scale bounds"
+        },
+        {
+          "name": "FLIP_DIRECTION_UP_MANIPULATOR_NAME",
+          "kind": "const",
+          "id": "FLIP_DIRECTION_UP_MANIPULATOR_NAME",
+          "returnType": null,
+          "description": "Manipulator name for the \"flip direction up\" manipulator"
+        },
+        {
+          "name": "sheetMetalModelParameters",
+          "kind": "predicate",
+          "id": "sheetMetalModelParameters-map",
+          "signature": "(definition is map)",
+          "signatureParams": [
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "A predicate containing the parameters required to define all parameters for a sheet metal model."
+        },
+        {
+          "name": "sheetMetalStart",
+          "kind": "function",
+          "id": "sheetMetalStart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Create and activate a sheet metal model by converting existing parts, extruding sketch curves or thickening. All operations on an active sheet metal model will automatically be represented in the flat pattern and the table. Sheet metal models may consist of multiple parts. Multiple sheet metal models can be active."
+        },
+        {
+          "name": "convertExistingPart",
+          "kind": "function",
+          "id": "convertExistingPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Convert an existing body into a sheet metal part. Definition should include all parameters from `sheetMetalModelParameters`.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "partToConvert",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The body to convert."
+                },
+                {
+                  "name": "facesToExclude",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Input faces to exclude from the sheet metal model."
+                },
+                {
+                  "name": "bendEdges",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Edges to represent as bends in the sheet metal model. All other nonlaminar edges will be converted to rips."
+                },
+                {
+                  "name": "clearance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Clearance from input."
+                },
+                {
+                  "name": "bendsIncluded",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "If `true`, bends will be included in clearance calculations."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "ValueWithUnits"
+          ]
+        }
+      ]
+    },
+    "sheetMetalTab.fs": {
+      "name": "sheetMetalTab",
+      "importPath": "onshape/std/sheetMetalTab.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sheetMetalTab",
+          "kind": "function",
+          "id": "sheetMetalTab-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature adding tabs to parallel sheet metal faces."
+        }
+      ]
+    },
+    "sheetMetalUtils.fs": {
+      "name": "sheetMetalUtils",
+      "importPath": "onshape/std/sheetMetalUtils.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "defineSheetMetalFeature",
+          "kind": "function",
+          "id": "defineSheetMetalFeature-function-map",
+          "signature": "(feature is function, defaults is map)",
+          "signatureParams": [
+            {
+              "name": "feature",
+              "type": "function"
+            },
+            {
+              "name": "defaults",
+              "type": "map"
+            }
+          ],
+          "returnType": "function",
+          "returnTypeRef": "builtin:function",
+          "description": "Exposes sheet metal definition sheet body to the queries within feature."
+        },
+        {
+          "name": "updateSheetMetalGeometry",
+          "kind": "function",
+          "id": "updateSheetMetalGeometry-Context-Id-map",
+          "signature": "(context is Context, id is Id, args is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "args",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Based on current state of sheet metal definition sheet body update solid bodies",
+          "parameters": [
+            {
+              "name": "args",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "sheet metal definition entities changed (or attributes changed) in this feature"
+                },
+                {
+                  "name": "deletedAttributes",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "associated attributes of deleted sheet metal definition entities"
+                },
+                {
+                  "name": "associatedChanges",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "sheet metal definition entities representing the change of this feature"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "SMThicknessDirection",
+          "kind": "enum",
+          "id": "SMThicknessDirection",
+          "returnType": null,
+          "description": "Direction of material from definition body. For old models (before V629_SM_MODEL_FRONT_N_BACK) It is BOTH, for new models FRONT/BACK depends on oppositeDirection in sheetMetalStart",
+          "values": [
+            {
+              "name": "BOTH",
+              "description": null
+            },
+            {
+              "name": "FRONT",
+              "description": null
+            },
+            {
+              "name": "BACK",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "setCylindricalBendAttribute",
+          "kind": "function",
+          "id": "setCylindricalBendAttribute-Context-Query-ValueWithUnits-ValueWithUnits-string",
+          "signature": "(context is Context, face is Query, frontThickness is ValueWithUnits, backThickness is ValueWithUnits, attributeId is string)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "face",
+              "type": "Query"
+            },
+            {
+              "name": "frontThickness",
+              "type": "ValueWithUnits"
+            },
+            {
+              "name": "backThickness",
+              "type": "ValueWithUnits"
+            },
+            {
+              "name": "attributeId",
+              "type": "string"
+            }
+          ],
+          "returnType": null,
+          "description": "Set a bend attribute on a cylindrical face",
+          "parameters": [
+            {
+              "name": "face",
+              "type": "Query",
+              "typeRef": "#Query",
+              "required": true,
+              "requiredIf": null,
+              "description": "face to set bend attribute on"
+            },
+            {
+              "name": "attributeId",
+              "type": "string",
+              "typeRef": "builtin:string",
+              "required": true,
+              "requiredIf": null,
+              "description": "id of new bend attribute"
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "annotateSmSurfaceBodies",
+          "kind": "function",
+          "id": "annotateSmSurfaceBodies-Context-Id-map-number",
+          "signature": "(context is Context, id is Id, args is map, objectCount is number)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "args",
+              "type": "map"
+            },
+            {
+              "name": "objectCount",
+              "type": "number"
+            }
+          ],
+          "returnType": "number",
+          "returnTypeRef": "builtin:number",
+          "description": "Assign SMAttributes to topology of sheet metal definition sheet body",
+          "parameters": [
+            {
+              "name": "args",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "surfaceBodies",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "bendEdgesAndFaces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "specialRadiiBends",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "array of pairs \"(edge, bendRadius)\""
+                },
+                {
+                  "name": "defaultRadius",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "bend radius to be applied to edges in bendEdgesAndFaces"
+                },
+                {
+                  "name": "controlsThickness",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "thickness",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "defaultCornerReliefScale",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "defaultRoundReliefDiameter",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "defaultSquareReliefWidth",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                },
+                {
+                  "name": "defaultBendReliefScale",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": null
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "ValueWithUnits"
+          ]
+        },
+        {
+          "name": "K_FACTOR_BOUNDS",
+          "kind": "const",
+          "id": "K_FACTOR_BOUNDS",
+          "returnType": null,
+          "description": "A `RealBoundSpec` for sheet metal K-factor between 0. and 1., defaulting to `.45`."
+        },
+        {
+          "name": "ROLLED_K_FACTOR_BOUNDS",
+          "kind": "const",
+          "id": "ROLLED_K_FACTOR_BOUNDS",
+          "returnType": null,
+          "description": "A `RealBoundSpec` for rolled sheet metal K-factor between 0. and 1., defaulting to `.5`."
+        },
+        {
+          "name": "SM_MINIMAL_CLEARANCE_BOUNDS",
+          "kind": "const",
+          "id": "SM_MINIMAL_CLEARANCE_BOUNDS",
+          "returnType": null,
+          "description": "A `LengthBoundSpec` for minimal clearance of sheet metal rips"
+        },
+        {
+          "name": "SM_BEND_RADIUS_BOUNDS",
+          "kind": "const",
+          "id": "SM_BEND_RADIUS_BOUNDS",
+          "returnType": null,
+          "description": "A `LengthBoundSpec` for bend radius in sheet metal features"
+        },
+        {
+          "name": "SM_THICKNESS_BOUNDS",
+          "kind": "const",
+          "id": "SM_THICKNESS_BOUNDS",
+          "returnType": null,
+          "description": "A `LengthBoundSpec` for thickness in sheet metal features. default to `(1/16)\"` (i.e. steel)"
+        },
+        {
+          "name": "SM_RELIEF_SIZE_BOUNDS",
+          "kind": "const",
+          "id": "SM_RELIEF_SIZE_BOUNDS",
+          "returnType": null,
+          "description": "A `LengthBoundSpec` for relief size, corners or bend relief, in sheet metal features."
+        },
+        {
+          "name": "partitionSheetMetalParts",
+          "kind": "function",
+          "id": "partitionSheetMetalParts-Context-Query",
+          "signature": "(context is Context, allParts is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "allParts",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Partitions allParts into non-sheet metal parts and sheet metal parts. To preserve existing behavior of code the returned non-sm query is exactly the same as what is passed in for non-sm cases and a query is returned for them. The sheet metal results will usually be iterated through and so are returned as a map with the keys being the sheet metal ID and the values being the parts associated with that model.\n See also: `separateSheetMetalQueries`"
+        },
+        {
+          "name": "getActiveSheetMetalId",
+          "kind": "function",
+          "id": "getActiveSheetMetalId-Context-Query",
+          "signature": "(context is Context, query is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "query",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Get the first id of active sheet metal model the entities of query belong to."
+        },
+        {
+          "name": "getModelParameters",
+          "kind": "function",
+          "id": "getModelParameters-Context-Query",
+          "signature": "(context is Context, model is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "model",
+              "type": "Query"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Extract sheet metal model parameters in a convenient form"
+        },
+        {
+          "name": "separateSheetMetalQueries",
+          "kind": "function",
+          "id": "separateSheetMetalQueries-Context-Query",
+          "signature": "(context is Context, targets is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "targets",
+              "type": "Query"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Separates queries which are part of an active sheet metal model (either in the folded model or the flat pattern). \n See also: `partitionSheetMetalParts`",
+          "parameters": [
+            {
+              "name": null,
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "sheetMetalQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are part of an active sheet metal model"
+                },
+                {
+                  "name": "nonSheetMetalQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are not part of an active sheet metal model"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "sheetMetalExtendSheetBodyCall",
+          "kind": "function",
+          "id": "sheetMetalExtendSheetBodyCall-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Wrapper around opExtendSheetBody used in sheet metal operations to handle remapping of cornerBreak data"
+        },
+        {
+          "name": "sheetMetalEdgeChangeCall",
+          "kind": "function",
+          "id": "sheetMetalEdgeChangeCall-Context-Id-Query-map",
+          "signature": "(context is Context, id is Id, edges is Query, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "edges",
+              "type": "Query"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Wrapper around opEdgeChange used in sheet metal operations to handle remapping of cornerBreak data"
+        },
+        {
+          "name": "getOwnerSMModel",
+          "kind": "function",
+          "id": "getOwnerSMModel-Context-Query",
+          "signature": "(context is Context, selection is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "selection",
+              "type": "Query"
+            }
+          ],
+          "returnType": "array",
+          "returnTypeRef": "builtin:array",
+          "description": "Returns an array of sm models associated with selection in a way that works outside of sheet metal features."
+        },
+        {
+          "name": "getSMCorrespondingInPart",
+          "kind": "function",
+          "id": "getSMCorrespondingInPart-Context-Query-EntityType",
+          "signature": "(context is Context, selection is Query, entityType is EntityType)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "selection",
+              "type": "Query"
+            },
+            {
+              "name": "entityType",
+              "type": "EntityType"
+            }
+          ],
+          "returnType": "Query",
+          "returnTypeRef": "#Query",
+          "description": "Returns a query for all sheet metal part entities of entityType related to the input sheet metal model entities."
+        },
+        {
+          "name": "collectCornerBreakTracking",
+          "kind": "function",
+          "id": "collectCornerBreakTracking-Context-Query",
+          "signature": "(context is Context, bodies is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "bodies",
+              "type": "Query"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Collect information before adding material which may merge sheet metal walls. The map returned by this function should be passed directly into `remapCornerBreaks` after making the desired geometry changes.\nOnly walls which have broken corners are tracked.",
+          "parameters": [
+            {
+              "name": null,
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "wallIdToPersistentWall",
+                  "type": "map",
+                  "typeRef": "builtin:map",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "a map from wall id to a tracked query for the wall"
+                },
+                {
+                  "name": "wallIdToVerticesWithBreaks",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "a map from wall id to an array of tracked vertices which break the wall"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "remapCornerBreaks",
+          "kind": "function",
+          "id": "remapCornerBreaks-Context-map",
+          "signature": "(context is Context, cornerBreakTracking is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "cornerBreakTracking",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Remap corner breaks on walls whose wall id has changed. Takes the output of `collectCornerBreakTracking` as `cornerBreakTracking`."
+        },
+        {
+          "name": "getSelectionsForSMDefinitionEntities",
+          "kind": "function",
+          "id": "getSelectionsForSMDefinitionEntities-Context-Query-Query",
+          "signature": "(context is Context, definitionEntities is Query, originalSelections is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "definitionEntities",
+              "type": "Query"
+            },
+            {
+              "name": "originalSelections",
+              "type": "Query"
+            }
+          ],
+          "returnType": null,
+          "description": "Map a group of sheet metal definition entities back to the original entities selected by the user."
+        },
+        {
+          "name": "separateByModelVersion",
+          "kind": "function",
+          "id": "separateByModelVersion-Context-Query-FeatureScriptVersionNumber",
+          "signature": "(context is Context, targets is Query, version is FeatureScriptVersionNumber)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "targets",
+              "type": "Query"
+            },
+            {
+              "name": "version",
+              "type": "FeatureScriptVersionNumber"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Separates queries which are part of an active sheet metal model (either in the folded model or the flat pattern) with additional separation of active sheet metal queries based on feature script version of the corresponding sheet metal model. \n See also: `separateSheetMetalQueries`",
+          "parameters": [
+            {
+              "name": null,
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "sheetMetalQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are part of an active sheet metal model"
+                },
+                {
+                  "name": "nonSheetMetalQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are not part of an active sheet metal model"
+                },
+                {
+                  "name": "legacyModelQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are part of an active sheet metal model with fsVersion earlier than `version`"
+                },
+                {
+                  "name": "newModelQueries",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "`targets` which are part of an active sheet metal model with fsVersion equal or later than `version`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "prepareInitialArcSketch",
+          "kind": "function",
+          "id": "prepareInitialArcSketch-boolean-map-ValueWithUnits-ValueWithUnits",
+          "signature": "(wrapAroundFront is boolean, modelParameters is map, innerRadius is ValueWithUnits, angle is ValueWithUnits)",
+          "signatureParams": [
+            {
+              "name": "wrapAroundFront",
+              "type": "boolean"
+            },
+            {
+              "name": "modelParameters",
+              "type": "map"
+            },
+            {
+              "name": "innerRadius",
+              "type": "ValueWithUnits"
+            },
+            {
+              "name": "angle",
+              "type": "ValueWithUnits"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Prepare to sketch the initial arc of the hem or flange, starting at the selected edge and wrapping either around the front of the back of the sheet. Returns information about arc ids and arc end position."
+        },
+        {
+          "name": "getDefaultBendReliefWidth",
+          "kind": "function",
+          "id": "getDefaultBendReliefWidth-Context-Query",
+          "signature": "(context is Context, model is Query)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "model",
+              "type": "Query"
+            }
+          ],
+          "returnType": "ValueWithUnits",
+          "returnTypeRef": "#ValueWithUnits",
+          "description": "Returns the width of a default bend relief for a sheet metal model. In the case of a tear, returns the minimal clearance."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,529 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Folder",
+    "description": "Access and modify folder sharing permissions.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Folder",
+      "description": "Access and modify folder sharing permissions."
+    }
+  ],
+  "paths": {
+    "/folders/{fid}/acl": {
+      "get": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Get the Access Control List (ACL) for a folder to view permissions.",
+        "description": "Returns the ACL of permission objects. Each object contains: \n* The type of entity  \n    * 0 (User)  \n    * 1 (Company) \n    * 2 (Team) \n    * 3 (Document) \n    * 4 (Application) \n * The ID of the entity for the specified type. \n* The permissions for that entity. \n    *  OWNER (100): All permissions, including those not listed, such as permission to transfer ownership. \n    * DELETE (90) \n    * RESHARE (80) \n    * WRITE (70) \n    * READ (60) \n    * LINK (50) \n    * COPY (30): Can copy workspace \n    * EXPORT (20): Can export geometry \n    * COMMENT (10) \n    * ANONYMOUS_ACCESS (5): Special, restricted read access",
+        "operationId": "getFolderAcl",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAclInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/folders/{fid}/share": {
+      "post": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Share folder with an entity.",
+        "description": "* Specify the type of entity to share with using `entries.entryType`: \n    * 0 (User)  \n    * 1 (Company) \n    * 2 (Team) \n    * 3 (Document) \n    * 4 (Application) \n* Provide one of the identifiers in the `entries` object in the request body.  \n    * You can share with non-Onshape users with the `email` field when `entryType=0`.  \n * Provide the string for the permission set. Do not include the integer in parentheses: \n    * OWNER (100): Object owner. Implies all permissions including those not listed such as permission to transfer ownership. \n    * DELETE (90) \n    * RESHARE (80) \n    * WRITE (70) \n    * READ (60) \n    * LINK (50) \n    * COPY (30): Can copy workspace \n    * EXPORT (20): Can export geometry \n    * COMMENT (10) \n    * ANONYMOUS_ACCESS (5): Special, restricted read access",
+        "operationId": "share",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTShareParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAclInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read",
+              "OAuth2Share"
+            ],
+            "BasicAuth": [
+              "OAuth2Read",
+              "OAuth2Share"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/folders/{fid}/share/{eid}": {
+      "delete": {
+        "tags": [
+          "Folder"
+        ],
+        "summary": "Remove permissions from the folder for the specified Access Control List (ACL) entry.",
+        "description": "* Provide the folder ID for the folder to unshare.  \n * Provide the `entityType` for the type of entity to remove. \n    * 0 (User)  \n    * 1 (Company) \n    * 2 (Team) \n    * 3 (Document) \n    * 4 (Application) \n* Provide the entity ID in the `eid` param.",
+        "operationId": "unShare",
+        "parameters": [
+          {
+            "name": "fid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entryType",
+            "in": "query",
+            "schema": {
+              "maximum": 5,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read",
+              "OAuth2Share"
+            ],
+            "BasicAuth": [
+              "OAuth2Read",
+              "OAuth2Share"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTAclInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAclEntryInfo"
+            }
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "inheritedAcls": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTInheritedAclInfo"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "public": {
+            "type": "boolean"
+          },
+          "sharedWithSupport": {
+            "type": "boolean"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "visibility": {
+            "type": "string"
+          }
+        }
+      },
+      "BTShareParams": {
+        "type": "object",
+        "properties": {
+          "connectionId": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "encodedConfiguration": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTShareEntryParams"
+            }
+          },
+          "folderId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "permission": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "permissionSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "update": {
+            "type": "boolean"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTAclEntryInfo": {
+        "type": "object",
+        "properties": {
+          "acceptOwnerTransfer": {
+            "type": "boolean"
+          },
+          "canConnectionUserEdit": {
+            "type": "boolean"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "connectionId": {
+            "type": "string"
+          },
+          "connectionName": {
+            "type": "string"
+          },
+          "connectionUser": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "enterpriseMember": {
+            "type": "boolean"
+          },
+          "entryId": {
+            "type": "string"
+          },
+          "entryState": {
+            "$ref": "#/components/schemas/BTUserState"
+          },
+          "entryType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "pendingOwnerTransfer": {
+            "type": "boolean"
+          },
+          "permission": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "permissionSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "proCompanySubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamName": {
+            "type": "string"
+          }
+        }
+      },
+      "BTInheritedAclInfo": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAclEntryInfo"
+            }
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "objectName": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "public": {
+            "type": "boolean"
+          },
+          "sharedWithSupport": {
+            "type": "boolean"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "visibility": {
+            "type": "string"
+          }
+        }
+      },
+      "BTOwnerInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "isEnterpriseOwnedResource": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTShareEntryParams": {
+        "type": "object",
+        "properties": {
+          "applicationId": {
+            "type": "string"
+          },
+          "companyId": {
+            "type": "string"
+          },
+          "connectionId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "entryType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUserState": {
+        "type": "string",
+        "enum": [
+          "DELETED",
+          "ACTIVE",
+          "INACTIVE",
+          "REQUESTED",
+          "APPROVED",
+          "REQUEST_EXPIRED",
+          "ALL",
+          "MARKED_FOR_DELETION"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -1,0 +1,3416 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - AppElement",
+    "description": "Access and modify application elements.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "AppElement",
+      "description": "Access and modify application elements."
+    }
+  ],
+  "paths": {
+    "/appelements/d/{did}/w/{wid}": {
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Create a new application element.",
+        "description": "See [API Guide: Structured Storage](https://onshape-public.github.io/docs/app-dev/structuredstorage/) for more information.",
+        "operationId": "createElement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/w/{wid}/bulkcreate": {
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Create multiple empty application elements at once.",
+        "description": "Call this faster API instead of creating multiple app elements one at a time or in parallel.",
+        "operationId": "bulkCreateElement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementBulkCreateParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementBulkCreateInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/w/{wid}/e/{eid}/blob/{bid}": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Download the blob element (i.e., a file) stored in an app element in a document's workspace.",
+        "description": "The downloaded file can be used to retrieve stored subelements.",
+        "operationId": "downloadBlobSubelementWorkspace",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentDisposition",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-None-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "File download.",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Create a new blob subelement from an uploaded file.",
+        "description": "Request body parameters are multipart fields, so you must use `\"Content-Type\":\"multipart/form-data\"` in the request header.",
+        "operationId": "uploadBlobSubelement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "transactionId": {
+                    "type": "string"
+                  },
+                  "parentChangeId": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "object",
+                    "description": "File to upload.",
+                    "format": "binary"
+                  },
+                  "fileContentLength": {
+                    "type": "integer",
+                    "format": "int64",
+                    "default": -1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Delete a blob subelement from an app element.",
+        "operationId": "deleteBlobSubelement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/w/{wid}/e/{eid}/transactions": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get a list of all transactions performed on an element.",
+        "operationId": "getElementTransactions",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementTransactionsInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Start a transaction",
+        "description": "Creates a microbranch (i.e., a branch for a new microversion).",
+        "operationId": "startTransaction",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementStartTransactionParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/w/{wid}/e/{eid}/transactions/{tid}": {
+      "delete": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Abort a transaction.",
+        "description": "Deletes a microbranch (i.e., the branch with the microversion for the transaction).",
+        "operationId": "abortTransaction",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "returnError",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/w/{wid}/transactions": {
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Merge multiple transactions into one microversion.",
+        "description": "If successful, all transactions will be committed to a single microversion. If the call raises an error, nothing will be committed.",
+        "operationId": "commitTransactions",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "description": "The id of the workspace in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementCommitTransactionParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementBulkModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{vm}/{vmid}/e/{eid}/blob/{bid}": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Download a blob subelement from the specified app element.",
+        "description": "Download a blob subelement as a file.",
+        "operationId": "downloadBlobSubelement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "contentDisposition",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "If-None-Match",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "File download.",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/blob": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get a list of all blob subelement IDs for the specified workspace, version, or microversion.",
+        "operationId": "getBlobSubelementIds",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementIdsInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/compare": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Compare app element JSON trees between workspaces/versions/microversions in a document.",
+        "description": "Specify the source workspace/version/microversion in the URL and specify the target workspace/version/microversion in the query parameters.",
+        "operationId": "compareAppElementJson",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "workspaceId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "microversionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "jsonDifferenceFormat",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTDiffJsonResponse-2725"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get a list of all subelement IDs in a specified workspace/version/microversion.",
+        "operationId": "getSubElementContent",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "baseChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subelementId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementContentInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Update the content for the specified app element.",
+        "description": "See [API Guide: Structured Storage](https://onshape-public.github.io/docs/app-dev/structuredstorage/) for more information.",
+        "operationId": "updateAppElement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementUpdateParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read",
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Read",
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/history": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get the history of the specified all element.",
+        "operationId": "getAppElementHistory",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementHistoryInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/ids": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get a list of all subelement IDs in a specified workspace/version/microversion.",
+        "operationId": "getSubelementIds",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementIdsInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/json": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get the full JSON tree for the specified workspace/version/microversion.",
+        "operationId": "getJson",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTGetJsonResponse-2137"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/jsonpaths": {
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get the JSON at specified paths for an element.",
+        "description": "Use this endpoint to return the JSON at the specified path instead of returning the entire JSON for the element. This POST endpoint does not write any information.",
+        "operationId": "getJsonPaths",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTGetJsonPaths-1697"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTGetJsonPathsResponse-1544"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/subelements": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Get a list of multiple subelements by document ID, workspace or version or microversion ID, tab ID, and subelement IDs.",
+        "operationId": "getSubElementContentBatch",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "query",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "baseChangeId",
+            "in": "query",
+            "description": "The id of a change made prior to the specified or implied changeId. If specified, only changes made after the base changeId are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subelementIds",
+            "in": "query",
+            "description": "The array of subelementIds in format: `&subelementIds=ID1& &subelementIds=ID2...&subelementIds=IDn.`",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementContentInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Delete multiple subelements array by document ID, workspace or version or microversion ID, tab ID, and subelement IDs.",
+        "operationId": "deleteAppElementContentBatch",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subelementIds",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/content/subelements/{sid}": {
+      "delete": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Deletes the content from the specified app element.",
+        "operationId": "deleteAppElementContent",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementModifyInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/references": {
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Creates a reference to an app element.",
+        "operationId": "createReference",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementReferenceParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementReferenceInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/references/{rid}": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Resolves a single reference to an app element.",
+        "description": "For single operations only. Use `resolveReferences` for bulk operations.",
+        "operationId": "resolveReference",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeInternal",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementReferenceResolveInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Update an app element reference.",
+        "operationId": "updateReference",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTAppElementReferenceParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementReferenceInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Delete an app element reference.",
+        "operationId": "deleteReference",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementReferenceInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/e/{eid}/resolvereferences": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Resolves bulk app element references.",
+        "description": "For bulk operations only. Use `resolveReference` for a single operation.",
+        "operationId": "resolveReferences",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeInternal",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "referenceIds",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTAppElementReferencesResolveInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/appelements/d/{did}/{wvm}/{wvmid}/resolvereferences": {
+      "get": {
+        "tags": [
+          "AppElement"
+        ],
+        "summary": "Resolves bulk app element references.",
+        "description": "Resolve all references for all workspace elements. For bulk operations  only. Use `resolveReferences` for a single element.",
+        "operationId": "resolveAllElementReferences",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transactionId",
+            "in": "query",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parentChangeId",
+            "in": "query",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeInternal",
+            "in": "query",
+            "description": "Whether to include references that have been deleted or inactivated.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "referenceIds",
+            "in": "query",
+            "description": "Comma separated string of reference ids find.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "elementIds",
+            "in": "query",
+            "description": "Comma separated string of element ids to search for references in.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "drawingsOnly",
+            "in": "query",
+            "description": "Whether to find references for only Onshape drawing app elements.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/BTAppElementReferencesResolveInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTAppElementParams": {
+        "required": [
+          "formatId"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "formatId": {
+            "type": "string",
+            "description": "The data type of the application. This string allows an application to distinguish their elements from elements of another application."
+          },
+          "jsonTree": {
+            "type": "object",
+            "description": "Initialization data for the new element's json tree.",
+            "example": "{ 'stringKey': 'bar', 'arrayKey': [ 1, 2, 3 ], 'objectKey': { 'subKey': false } }"
+          },
+          "location": {
+            "$ref": "#/components/schemas/BTElementLocationParams"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the element being created. If blank, a name will be auto-generated."
+          },
+          "subelements": {
+            "type": "array",
+            "description": "Initialization data for the new element's subelements.",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementChangeParams"
+            }
+          }
+        }
+      },
+      "BTAppElementModifyInfo": {
+        "required": [
+          "changeId"
+        ],
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string",
+            "description": "The latest change id for the element, after the edit was committed."
+          },
+          "elementId": {
+            "type": "string",
+            "description": "The id of the edited element."
+          },
+          "elementIds": {
+            "type": "array",
+            "description": "The ids of the edited elements, if multiple elements were edited.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "jsonDifference": {
+            "$ref": "#/components/schemas/BTDiffJsonResponse-2725"
+          },
+          "parentChangeId": {
+            "type": "string",
+            "description": "The latest change id for the element, before the edit was made."
+          },
+          "propertyEditsMerged": {
+            "type": "boolean",
+            "description": "When committing a transaction, this field indicates if the properties of the application element were changed after the transaction was created."
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "The id of the transaction in which the edit was applied."
+          }
+        }
+      },
+      "BTAppElementBulkCreateParams": {
+        "required": [
+          "formatId"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "formatId": {
+            "type": "string",
+            "description": "The data type of the application. This string allows an application to distinguish their elements from elements of another application."
+          },
+          "location": {
+            "$ref": "#/components/schemas/BTElementLocationParams"
+          },
+          "names": {
+            "type": "array",
+            "description": "The name of the element being created. If blank, a name will be auto-generated.",
+            "items": {
+              "type": "string",
+              "description": "The name of the element being created. If blank, a name will be auto-generated."
+            }
+          }
+        }
+      },
+      "BTAppElementBulkCreateInfo": {
+        "required": [
+          "documentMicroversionId"
+        ],
+        "type": "object",
+        "properties": {
+          "documentMicroversionId": {
+            "type": "string",
+            "description": "The latest document microversion, after the edit was committed."
+          },
+          "elementIds": {
+            "type": "array",
+            "description": "The ids of the created elements.",
+            "items": {
+              "type": "string",
+              "description": "The ids of the created elements."
+            }
+          },
+          "elementMicroversions": {
+            "type": "array",
+            "description": "The microversion ids of the created elements, at creation time.",
+            "items": {
+              "type": "string",
+              "description": "The microversion ids of the created elements, at creation time."
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          }
+        }
+      },
+      "BTAppElementTransactionsInfo": {
+        "type": "object",
+        "properties": {
+          "elementTransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTElementTransaction"
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          }
+        }
+      },
+      "BTAppElementStartTransactionParams": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "parentChangeId": {
+            "type": "string"
+          },
+          "returnError": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTAppElementCommitTransactionParams": {
+        "type": "object",
+        "properties": {
+          "allowMerge": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "returnError": {
+            "type": "boolean"
+          },
+          "transactionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTAppElementBulkModifyInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string",
+            "description": "The latest change id for the element, after the edit was committed. Deprecated in favor of elementChangeResults.",
+            "deprecated": true
+          },
+          "documentMicroversionId": {
+            "type": "string",
+            "description": "The latest change id for the document, after the edit was committed."
+          },
+          "elementChangeResults": {
+            "type": "array",
+            "description": "The results of editing each element affected by the edit.",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementModifyInfo"
+            }
+          },
+          "elementId": {
+            "type": "string",
+            "description": "The id of the edited element, if a single element was edited. Deprecated in favor of elementChangeResults.",
+            "deprecated": true
+          },
+          "elementIds": {
+            "type": "array",
+            "description": "The ids of the edited elements. Deprecated in favor of elementChangeResults.",
+            "deprecated": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "parentChangeId": {
+            "type": "string",
+            "description": "The latest change id for the element, before the edit was made. Deprecated in favor of elementChangeResults.",
+            "deprecated": true
+          },
+          "parentDocumentMicroversionId": {
+            "type": "string",
+            "description": "The latest change id for the document, before the edit was made."
+          },
+          "propertyEditsMerged": {
+            "type": "boolean",
+            "description": "Whether the properties of any edited application element were changed after the transaction was created. Deprecated in favor of elementChangeResults.",
+            "deprecated": true
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "The id of the transaction in which the edit was applied. Deprecated in favor of elementChangeResults.",
+            "deprecated": true
+          }
+        }
+      },
+      "BTAppElementIdsInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "subelementIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTDiffJsonResponse-2725": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "change": {
+            "$ref": "#/components/schemas/BTJEdit-3734"
+          },
+          "patch": {
+            "type": "object",
+            "properties": {
+              "btType": {
+                "type": "string"
+              }
+            }
+          },
+          "sourceChangeId": {
+            "type": "string"
+          },
+          "targetChangeId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTAppElementContentInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementContentEntryInfo"
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          }
+        }
+      },
+      "BTAppElementUpdateParams": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "The label that will appear in the document's edit history for this operation. If blank, a value will be auto-generated."
+          },
+          "jsonPatch": {
+            "type": "string",
+            "description": "A json patch that will be applied to the application element's json data. The JSON patch format is as specified in RFC 6902 from the IETF."
+          },
+          "jsonTreeEdit": {
+            "$ref": "#/components/schemas/BTJEdit-3734"
+          },
+          "parentChangeId": {
+            "type": "string",
+            "description": "The id of the last change made to this application element. This can be retrieved from the response for any app element modification endpoint."
+          },
+          "propertyUpdates": {
+            "type": "array",
+            "description": "Edits to be applied to the element's metadata.",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataPropertyUpdateParams"
+            }
+          },
+          "returnError": {
+            "type": "boolean",
+            "description": "If true, errors in request processing will be returned in a 200 response with a meaningful description. Otherwise, errors will result in a relevant HTTP error response."
+          },
+          "returnJsonDifferenceFormat": {
+            "type": "string",
+            "description": "If specified, and jsonTreeEdit is non-empty, the json difference will be returned in this format, otherwise no json difference will be returned.",
+            "enum": [
+              "default",
+              "full_path",
+              "json_patch"
+            ]
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "The id of the transaction in which this operation should take place. Transaction ids can be generated through the AppElement startTransaction API."
+          }
+        },
+        "x-BTVisibility-properties": {
+          "changes": "INTERNAL"
+        }
+      },
+      "BTAppElementHistoryInfo": {
+        "type": "object",
+        "properties": {
+          "changes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementHistoryEntryInfo"
+            }
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          }
+        }
+      },
+      "BTGetJsonResponse-2137": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "changeId": {
+            "type": "string"
+          },
+          "tree": {
+            "type": "object",
+            "properties": {
+              "btType": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "btType": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BTGetJsonPaths-1697": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTGetJsonPathsResponse-1544": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "changeId": {
+            "type": "string"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTJsonMatch-2290"
+              }
+            }
+          }
+        }
+      },
+      "BTAppElementReferenceParams": {
+        "type": "object",
+        "properties": {
+          "hasDocumentMicroversions": {
+            "type": "boolean"
+          },
+          "idTag": {
+            "type": "string"
+          },
+          "idTagMicroversionId": {
+            "type": "string"
+          },
+          "isLocked": {
+            "type": "boolean"
+          },
+          "isSketchOnly": {
+            "type": "boolean"
+          },
+          "parentChangeId": {
+            "type": "string"
+          },
+          "parentViewId": {
+            "type": "string"
+          },
+          "partNumber": {
+            "type": "string"
+          },
+          "pureSketch": {
+            "type": "boolean"
+          },
+          "referenceType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "returnError": {
+            "type": "boolean"
+          },
+          "revision": {
+            "type": "string"
+          },
+          "sketchIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "targetConfiguration": {
+            "type": "string"
+          },
+          "targetDocumentId": {
+            "type": "string"
+          },
+          "targetElementId": {
+            "type": "string"
+          },
+          "targetMicroversionId": {
+            "type": "string"
+          },
+          "targetVersionId": {
+            "type": "string"
+          },
+          "trackNewVersions": {
+            "type": "boolean"
+          },
+          "transactionId": {
+            "type": "string"
+          },
+          "updateSketchInfo": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTAppElementReferenceInfo": {
+        "required": [
+          "changeId"
+        ],
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string",
+            "description": "The latest change id for the element, after the edit was committed."
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "parentChangeId": {
+            "type": "string",
+            "description": "The latest change id for the element, before the edit was made."
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "The id of the transaction in which the edit was applied."
+          }
+        }
+      },
+      "BTAppElementReferenceResolveInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string"
+          },
+          "errorCode": {
+            "type": "integer",
+            "description": "`0: OK (healthy) | 1: INFO | 2: WARNING | 3: ERROR (dangling or view generation call failed) | 4: UNKNOWN`",
+            "format": "int32"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "A human-readable value for the error that occurred, if one occurred."
+          },
+          "errorValue": {
+            "$ref": "#/components/schemas/BTAppElementErrorCode"
+          },
+          "idTag": {
+            "type": "string"
+          },
+          "idTagIsValid": {
+            "type": "boolean"
+          },
+          "isConfigurable": {
+            "type": "boolean"
+          },
+          "isFlattenedPart": {
+            "type": "boolean"
+          },
+          "isLocked": {
+            "type": "boolean"
+          },
+          "isSketchOnly": {
+            "type": "boolean"
+          },
+          "isSurface": {
+            "type": "boolean"
+          },
+          "latestElementMicroversionId": {
+            "type": "string"
+          },
+          "partIdentity": {
+            "type": "string"
+          },
+          "partNumber": {
+            "type": "string"
+          },
+          "referenceId": {
+            "type": "string"
+          },
+          "referenceType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resolvedConfiguration": {
+            "type": "string"
+          },
+          "resolvedDocumentMicroversionId": {
+            "type": "string"
+          },
+          "resolvedElementMicroversionId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "string"
+          },
+          "sketchIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceElementId": {
+            "type": "string"
+          },
+          "targetConfiguration": {
+            "type": "string"
+          },
+          "targetDocumentId": {
+            "type": "string"
+          },
+          "targetDocumentMicroversionId": {
+            "type": "string"
+          },
+          "targetElementId": {
+            "type": "string"
+          },
+          "targetElementMicroversionId": {
+            "type": "string"
+          },
+          "targetVersionId": {
+            "type": "string",
+            "description": "Reference to a part or assembly in a version; `NULL` when reference is in a workspace."
+          },
+          "trackNewVersions": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTAppElementReferencesResolveInfo": {
+        "type": "object",
+        "properties": {
+          "resolvedReferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementReferenceResolveInfo"
+            }
+          },
+          "unresolvedReferenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTElementLocationParams": {
+        "type": "object",
+        "properties": {
+          "elementId": {
+            "type": "string",
+            "description": "The id of an element which provides context for the position value specified."
+          },
+          "position": {
+            "type": "integer",
+            "description": "An indicator for the relative placement of the new element. If elementId is specified, a negative number indicates insertion prior to the element and a non-negative number indicates insertion following the element. If no elementId is specified, a negative value indicates insertion at the end of the element list and a non-negative number indicates insertion at the start of the element list.",
+            "format": "int32"
+          }
+        },
+        "description": "The location at which the new element should be inserted."
+      },
+      "BTAppElementChangeParams": {
+        "required": [
+          "subelementId"
+        ],
+        "type": "object",
+        "properties": {
+          "baseContent": {
+            "type": "string",
+            "description": "This base64-encoded data is treated as a full representation of the sub-element's data and all deltas previously added will no longer be returned.",
+            "format": "byte"
+          },
+          "delta": {
+            "type": "string",
+            "description": "This base64-encoded data is a delta which the application can apply to the last added baseContent data.",
+            "format": "byte"
+          },
+          "subelementId": {
+            "type": "string",
+            "description": "The id of the subelement to edit. The value is determined by the application."
+          }
+        }
+      },
+      "BTAppElementErrorCode": {
+        "type": "string",
+        "enum": [
+          "OK",
+          "TRANSACTION_CONFLICT",
+          "NOT_FOUND",
+          "INCONSISTENT_CHANGES"
+        ]
+      },
+      "BTElementTransaction": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "microbranchId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTJEdit-3734": {
+        "required": [
+          "btType"
+        ],
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          }
+        },
+        "description": "An edit that will be applied to the application element's json data.",
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTJEditChange-2636": "#/components/schemas/BTJEditChange-2636",
+            "BTJEditDelete-1992": "#/components/schemas/BTJEditDelete-1992",
+            "BTJEditInsert-2523": "#/components/schemas/BTJEditInsert-2523",
+            "BTJEditList-2707": "#/components/schemas/BTJEditList-2707",
+            "BTJEditMove-3245": "#/components/schemas/BTJEditMove-3245"
+          }
+        }
+      },
+      "BTAppElementContentEntryInfo": {
+        "type": "object",
+        "properties": {
+          "baseContent": {
+            "type": "string"
+          },
+          "deltas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTAppElementContentDeltaInfo"
+            }
+          },
+          "subelementId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataPropertyUpdateParams": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "string",
+            "description": "The id of the property that should be edited. This can be retrieved from MetadataCategory:getCategoryProperties."
+          },
+          "value": {
+            "type": "object",
+            "description": "The new value for the property."
+          }
+        }
+      },
+      "BTAppElementHistoryEntryInfo": {
+        "type": "object",
+        "properties": {
+          "changeId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "BTJsonMatch-2290": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "definiteJsonPath": {
+            "type": "string"
+          },
+          "node": {
+            "type": "object",
+            "properties": {
+              "btType": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "BTAppElementContentDeltaInfo": {
+        "type": "object",
+        "properties": {
+          "delta": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}
