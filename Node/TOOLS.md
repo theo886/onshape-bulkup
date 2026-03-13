@@ -41,6 +41,10 @@ Running `run` without arguments opens an interactive menu.
 | `deploy` | Deploy .fs FeatureScript files to Onshape Feature Studios | `deployFeatureScript.js` |
 | `featurescript-docs` | Parse FeatureScript Standard Library HTML into JSON reference docs | `splitFeatureScriptDocs.js` |
 | `inspect-features` | Detect assembly-level geometry features and export as SLDPRT | `PDM/inspectAssemblyFeatures.py` |
+| `pdm-sync-1` | PDM Sync Stage 1: Classify files, check Onshape status | `pdmSync1-analyze.js` |
+| `pdm-sync-2` | PDM Sync Stage 2: Pack & Go ZIPs for assemblies (Windows) | `pdmSync2-packgo.js` |
+| `pdm-sync-3` | PDM Sync Stage 3: Upload/replace files, set properties | `pdmSync3-upload.js` |
+| `pdm-sync-4` | PDM Sync Stage 4: Obsolete + release | `pdmSync4-release.js` |
 
 ## Common Workflows
 
@@ -69,6 +73,15 @@ run edit             # Update properties on existing elements
 run release          # Release unreleased documents
 run version          # Create versions without releasing
 run replace          # Replace files while keeping revision
+```
+
+### PDM Release Sync (4-stage pipeline)
+
+```cmd
+run pdm-sync-1       # Analyze: classify, check Onshape, assign levels
+run pdm-sync-2       # Pack & Go: generate ZIPs for assemblies (Windows)
+run pdm-sync-3       # Upload: upload/replace files, set properties
+run pdm-sync-4       # Release: obsolete old revisions + release
 ```
 
 ### Diagnostics

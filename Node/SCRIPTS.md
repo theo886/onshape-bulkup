@@ -15,6 +15,17 @@ Complete catalog of all scripts in the migration toolkit. Before writing a new s
 | `bulkUploadFromExcel.js` | Bulk upload with properties & release (older, pre-unified) | — |
 | `replaceFromExcel.js` | Replace files in-place keeping same revision | `replace` |
 
+### PDM Release Sync Pipeline
+
+4-stage pipeline for syncing PDM releases to Onshape. Each stage reads the previous stage's output.
+
+| Script | Purpose | run.bat |
+|--------|---------|---------|
+| `pdmSync1-analyze.js` | Classify files, check Onshape status, assign levels/folders | `pdm-sync-1` |
+| `pdmSync2-packgo.js` | Generate Pack & Go ZIPs for assemblies (Windows only) | `pdm-sync-2` |
+| `pdmSync3-upload.js` | Upload/replace files, set properties | `pdm-sync-3` |
+| `pdmSync4-release.js` | Obsolete old revisions, release all items | `pdm-sync-4` |
+
 ### Properties & Metadata
 
 | Script | Purpose | run.bat |
@@ -933,3 +944,109 @@ node updateAsmrefWithParts.js -i <excel-file> [-a <asmref.json>] [--sheet <name>
 **Optional Excel columns**: `onshape:workspaceId`
 
 **No API calls** — purely local JSON transformation.
+
+---
+
+## PDM Release Sync Pipeline
+
+4-stage pipeline for syncing PDM releases to Onshape. Each stage reads the previous stage's output Excel and adds new `sync:*` columns.
+
+```
+PDM Releases.xlsx → pdmSync1-analyze.js → pdm_releases_s1.xlsx
+                   → pdmSync2-packgo.js → pdm_releases_s2.xlsx
+                   → pdmSync3-upload.js → pdm_releases_s3.xlsx
+                   → pdmSync4-release.js → pdm_releases_s4.xlsx
+```
+
+### pdmSync1-analyze.js
+
+**Purpose**: Classify every row from PDM Releases.xlsx — check Onshape revision status, assign folders and upload levels.
+
+**Usage**:
+```bash
+node pdmSync1-analyze.js -i "PDM Releases.xlsx" [-o pdm_releases_s1.xlsx] [-r PDM/references.csv]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-i, --input` | Input Excel file (required) | — |
+| `-o, --output` | Output Excel file | `pdm_releases_s1.xlsx` |
+| `-r, --references` | PDM references CSV (for assembly levels) | `PDM/references.csv` |
+
+**Required input columns**: `Name`, `Found In`, `Revision`, `Description`
+
+**Output columns added**: `sync:action`, `sync:level`, `sync:folder`, `sync:documentName`, `sync:pdmRevision`, `sync:onshapeRevision`, `sync:documentId`, `sync:workspaceId`, `sync:elementId`, `sync:revisionId`, `sync:filePath`
+
+**Crash-safe sidecar**: `pdm_sync1_status.json` — saves after each API call, skips cached rows on re-run.
+
+---
+
+### pdmSync2-packgo.js
+
+**Purpose**: Generate Pack & Go ZIPs for assemblies that need uploading/replacing. Windows only.
+
+**Usage**:
+```bash
+node pdmSync2-packgo.js -i pdm_releases_s1.xlsx [-o pdm_releases_s2.xlsx] [--zip-dir temp-pack-and-go/]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-i, --input` | Stage 1 output Excel (required) | — |
+| `-o, --output` | Output Excel | `pdm_releases_s2.xlsx` |
+| `--zip-dir` | ZIP output directory | `temp-pack-and-go/` |
+
+**Requires**: Windows + SolidWorks + `PDM/packAndGoSingle.ps1`
+
+**Output columns added**: `sync:zipPath`, `sync:packStatus`
+
+---
+
+### pdmSync3-upload.js
+
+**Purpose**: Upload new files and replace existing files in Onshape. Sets properties. Does NOT release.
+
+**Usage**:
+```bash
+node pdmSync3-upload.js -i pdm_releases_s2.xlsx [-o pdm_releases_s3.xlsx] [-s pdm_sync3_status.json] [--dry-run]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-i, --input` | Stage 2 output Excel (required) | — |
+| `-o, --output` | Output Excel | `pdm_releases_s3.xlsx` |
+| `-s, --status` | Status JSON sidecar | `pdm_sync3_status.json` |
+| `--dry-run` | Preview without executing | — |
+
+**Key behaviors**:
+- Processes rows sorted by `sync:level` (blobs → parts → assemblies)
+- New files: creates document, uploads, sets properties
+- Replacement files (same-rev/new-rev): updates in-place preserving element IDs
+- Assemblies: relinks to master parts after upload
+
+**Output columns added**: `sync:newDocumentId`, `sync:newWorkspaceId`, `sync:newElementId`, `sync:uploadStatus`, `sync:uploadError`
+
+---
+
+### pdmSync4-release.js
+
+**Purpose**: Obsolete old revisions (same-rev only) and release all items.
+
+**Usage**:
+```bash
+node pdmSync4-release.js -i pdm_releases_s3.xlsx [-o pdm_releases_s4.xlsx] [-s pdm_sync4_status.json] [--dry-run]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-i, --input` | Stage 3 output Excel (required) | — |
+| `-o, --output` | Output Excel | `pdm_releases_s4.xlsx` |
+| `-s, --status` | Status JSON sidecar | `pdm_sync4_status.json` |
+| `--dry-run` | Preview without executing | — |
+
+**Key behaviors**:
+- `same-rev`: obsoletes existing revision (with re-releasable flag), then re-releases at same revision
+- `new-rev` / `new`: releases at the PDM revision number
+- Processes in `sync:level` order
+
+**Output columns added**: `sync:versionId`, `sync:releaseStatus`, `sync:releaseError`
