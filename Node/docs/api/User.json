@@ -1,0 +1,1240 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - User",
+    "description": "Access user information.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "Access user information."
+    }
+  ],
+  "paths": {
+    "/users/session": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Authenticate a user's Onshape credentials, and create a session.",
+        "description": "Returned information depends on caller's `OAuth2ReadPll` scope.",
+        "operationId": "session",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTLoginParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/users/sessioninfo": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get the session information for an authenticated (signed-in) user.",
+        "description": "Returned information depends on caller's `OAuth2ReadPll` scope.",
+        "operationId": "sessionInfo",
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTUserOAuth2SummaryInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/users/settings": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get the user settings for the signed-in user (i.e., you) for the current session.",
+        "description": "* Non-admins can call this API for their own user ID. \n* Mouse button settings are contained in `reverseScrollWheelZoomDirection` and `viewManipulationMouseKeyMapping`. \n* For each action in `viewManipulationMouseKeyMapping`, an array of modifier key/mouse combos is provided that performs that action. \n* Possible modifier keys include `SHIFT` and `CTRL`. \n* Possible mouse buttons include `MMB` (middle mouse button), `RMB` (right mouse button), and `SCROLLWHEEL`. \n* Scrolling forward zooms in, unless `reverseScrollWheelZoomDirection` is set to `true`.",
+        "operationId": "getUserSettingsCurrentLoggedInUser",
+        "parameters": [
+          {
+            "name": "includematerials",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTUserSettingsInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/users/{uid}/settings": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get the user settings for any user in your organization (admins only).",
+        "description": "* Mouse button settings are contained in `reverseScrollWheelZoomDirection` and `viewManipulationMouseKeyMapping`. \n* For each action in `viewManipulationMouseKeyMapping`, an array of modifier key/mouse combos is provided that performs that action. \n* Possible modifier keys include `SHIFT` and `CTRL`. \n* Possible mouse buttons include `MMB` (middle mouse button), `RMB` (right mouse button), and `SCROLLWHEEL`. \n* Scrolling forward zooms in, unless `reverseScrollWheelZoomDirection` is set to `true`.",
+        "operationId": "getUserSettings",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includematerials",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTUserSettingsInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTLoginParams": {
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "enableTotp": {
+            "type": "boolean"
+          },
+          "isRecaptchaV3": {
+            "type": "boolean"
+          },
+          "password": {
+            "type": "string"
+          },
+          "randomToken": {
+            "type": "string"
+          },
+          "recaptchaToken": {
+            "type": "string"
+          },
+          "rememberTotp": {
+            "type": "boolean"
+          },
+          "rendererPerformanceMeasurement": {
+            "$ref": "#/components/schemas/BTWebRendererPerformanceMeasurementParams"
+          },
+          "totp": {
+            "type": "string"
+          },
+          "webClientCapabilities": {
+            "$ref": "#/components/schemas/BTWebClientCapabilitiesParams"
+          }
+        }
+      },
+      "BTUserOAuth2SummaryInfo": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "clientId": {
+                "type": "string"
+              },
+              "companyPlan": {
+                "type": "boolean"
+              },
+              "oauth2Scopes": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "planGroup": {
+                "type": "string"
+              },
+              "role": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "roles": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BTRole"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "BTUserSettingsInfo": {
+        "type": "object",
+        "properties": {
+          "axisRotationLock": {
+            "type": "boolean"
+          },
+          "commonUnits": {
+            "$ref": "#/components/schemas/BTCommonUnitsInfo"
+          },
+          "customColors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultUnits": {
+            "$ref": "#/components/schemas/BTDefaultUnitsInfo"
+          },
+          "displayAssemblyProperties": {
+            "type": "boolean"
+          },
+          "drawingBackgroundId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "enforceApplicationAcl": {
+            "type": "boolean"
+          },
+          "exportDrawingOptions": {
+            "type": "string"
+          },
+          "exportSolidOptions": {
+            "type": "string"
+          },
+          "graphicsRenderMode": {
+            "type": "string"
+          },
+          "graphicsSmoothEdge": {
+            "type": "string"
+          },
+          "highlightLaminarEdges": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "importOptions": {
+            "type": "string"
+          },
+          "isolateEnableSelectionDesire": {
+            "type": "boolean"
+          },
+          "isolateHideTransparent": {
+            "type": "string"
+          },
+          "isolateOpacitySliderValue": {
+            "type": "number",
+            "format": "float"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "makeTransparentEnableSelectionDesire": {
+            "type": "boolean"
+          },
+          "makeTransparentOpacitySliderValue": {
+            "type": "number",
+            "format": "float"
+          },
+          "materialLibrarySettings": {
+            "$ref": "#/components/schemas/BTMaterialLibrarySettingsInfo"
+          },
+          "miniToolbarSettings": {
+            "type": "string"
+          },
+          "mouseActions": {
+            "type": "string"
+          },
+          "perspectiveModeOn": {
+            "type": "string"
+          },
+          "previousSketchFont": {
+            "type": "string"
+          },
+          "reverseScrollWheelZoomDirection": {
+            "type": "boolean"
+          },
+          "selectItemViewStateInfos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTSelectItemViewStateInfo"
+            }
+          },
+          "sketchShowConstraints": {
+            "type": "boolean"
+          },
+          "sketchShowErrors": {
+            "type": "boolean"
+          },
+          "sketchShowExpressions": {
+            "type": "boolean"
+          },
+          "startupPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "substituteApprovers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTSubstituteApproverInfo"
+            }
+          },
+          "theme": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitsDisplayPrecision": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "unitsMaximumDisplayPrecision": {
+            "$ref": "#/components/schemas/BTUnitsMaximumDisplayPrecisionInfo"
+          },
+          "use24HourTime": {
+            "type": "boolean"
+          },
+          "useDecimalComma": {
+            "type": "boolean"
+          },
+          "viewManipulationMouseKeyMapping": {
+            "$ref": "#/components/schemas/BTViewManipulationMouseKeyMappingInfo"
+          },
+          "viewMappingId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "x-BTVisibility-properties": {
+          "hideAhaAppOnboarding": "INTERNAL"
+        }
+      },
+      "BTWebRendererPerformanceMeasurementParams": {
+        "type": "object",
+        "properties": {
+          "linesPerSecond": {
+            "type": "number",
+            "format": "float"
+          },
+          "renderer": {
+            "type": "string"
+          },
+          "trianglesPerSecond": {
+            "type": "number",
+            "format": "float"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWebClientCapabilitiesParams": {
+        "type": "object",
+        "properties": {
+          "angleInstancedArrays": {
+            "type": "boolean"
+          },
+          "clientBrowserStorageQuota": {
+            "type": "number",
+            "format": "double"
+          },
+          "clientBrowserStorageUsed": {
+            "type": "number",
+            "format": "double"
+          },
+          "compressedTextureS3tc": {
+            "type": "boolean"
+          },
+          "depthTexture": {
+            "type": "boolean"
+          },
+          "devicePixelRatio": {
+            "type": "number",
+            "format": "double"
+          },
+          "drawBuffers": {
+            "type": "boolean"
+          },
+          "extTextureFilterAnisotropic": {
+            "type": "boolean"
+          },
+          "has3dMouse": {
+            "type": "boolean"
+          },
+          "oesElementIndexUint": {
+            "type": "boolean"
+          },
+          "oesStandardDerivatives": {
+            "type": "boolean"
+          },
+          "oesTextureFloat": {
+            "type": "boolean"
+          },
+          "oesTextureFloatLinear": {
+            "type": "boolean"
+          },
+          "oesTextureHalfFloat": {
+            "type": "boolean"
+          },
+          "oesTextureHalfFloatLinear": {
+            "type": "boolean"
+          },
+          "oesVertexArrayObject": {
+            "type": "boolean"
+          },
+          "renderer": {
+            "type": "string"
+          },
+          "screenHeight": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "screenWidth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supportsWebGL2": {
+            "type": "boolean"
+          },
+          "supportsWebGPU": {
+            "type": "boolean"
+          },
+          "vendor": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTRole": {
+        "type": "string",
+        "enum": [
+          "ANONYMOUS",
+          "TOTPPENDINGUSER",
+          "USER",
+          "DEVELOPER",
+          "PARTNER",
+          "ONSHAPECOMPANYUSER",
+          "ADMIN",
+          "SERVICE"
+        ]
+      },
+      "BTCommonUnitsInfo": {
+        "type": "object",
+        "properties": {
+          "quantityTypeToBaseUnits": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTCommonUnitInfo"
+            }
+          }
+        }
+      },
+      "BTDefaultUnitsInfo": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "string"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTDefaultUnitInfo"
+            }
+          }
+        }
+      },
+      "BTMaterialLibrarySettingsInfo": {
+        "type": "object",
+        "properties": {
+          "companyLibraries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMaterialLibraryMetadataInfo"
+            }
+          },
+          "libraries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMaterialLibraryMetadataInfo"
+            }
+          }
+        }
+      },
+      "BTSelectItemViewStateInfo": {
+        "type": "object",
+        "properties": {
+          "activeSelectorId": {
+            "type": "string"
+          },
+          "documentSelectors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTDocumentSelectorInfo"
+            }
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      },
+      "BTSubstituteApproverInfo": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "identity": {
+            "$ref": "#/components/schemas/BTIdentityInfo"
+          }
+        }
+      },
+      "BTUnitsMaximumDisplayPrecisionInfo": {
+        "type": "object",
+        "properties": {
+          "unitsDisplayPrecision": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "BTViewManipulationMouseKeyMappingInfo": {
+        "type": "object",
+        "properties": {
+          "axisRotate3DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          },
+          "pan2DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          },
+          "pan3DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          },
+          "rotate3DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          },
+          "zoom2DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          },
+          "zoom3DMapping": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTKeyMouseValuesInfo"
+            }
+          }
+        }
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTCommonUnitInfo": {
+        "type": "object",
+        "properties": {
+          "abbreviation": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "unitName": {
+            "type": "string"
+          },
+          "unitType": {
+            "type": "string"
+          },
+          "valueInBaseUnits": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "BTDefaultUnitInfo": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The quantity type."
+          },
+          "value": {
+            "type": "string",
+            "description": "The unit that should be used."
+          }
+        },
+        "description": "Specifies which unit should be used for each supported quantity type."
+      },
+      "BTMaterialLibraryMetadataInfo": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "documentName": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "libraryName": {
+            "type": "string"
+          },
+          "ownerName": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDocumentSelectorInfo": {
+        "type": "object",
+        "properties": {
+          "parameters": {
+            "$ref": "#/components/schemas/BTDocumentSelectorParametersInfo"
+          },
+          "selectorId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTIdentityInfo": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/BTCompanySummaryInfo"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "identityType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "team": {
+            "$ref": "#/components/schemas/BTTeamSummaryInfo"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTKeyMouseValuesInfo": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mouseButtons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      },
+      "BTDocumentSelectorParametersInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "other-documents": "#/components/schemas/BTOtherDocumentSelectorParametersInfo"
+          }
+        }
+      },
+      "BTTeamSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "canMove": {
+            "type": "boolean"
+          },
+          "connectionName": {
+            "type": "string"
+          },
+          "connectionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isContainer": {
+            "type": "boolean"
+          },
+          "isEnterpriseOwned": {
+            "type": "boolean"
+          },
+          "isExternalConnectionResource": {
+            "type": "boolean"
+          },
+          "isMutable": {
+            "type": "boolean"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "predefinedTeam": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "predefinedTeamMutable": {
+            "type": "boolean"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "treeHref": {
+            "type": "string"
+          },
+          "unparentHref": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "team": "#/components/schemas/BTTeamInfo"
+          }
+        }
+      },
+      "BTBaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTOwnerInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "isEnterpriseOwnedResource": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

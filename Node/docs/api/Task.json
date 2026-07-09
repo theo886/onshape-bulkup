@@ -1,0 +1,2276 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Task",
+    "description": "Create, access, and modify Tasks and Action Items.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Task",
+      "description": "Create, access, and modify Tasks and Action Items."
+    }
+  ],
+  "paths": {
+    "/tasks": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Lists tasks assigned to the specified user",
+        "description": "Returns a list of tasks assigneed to the userId specified in the request. Only company admins can view tasks that were not created by them and are not assigned to them.",
+        "operationId": "getActionItems",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 2
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTaskListResponse"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Create a new task in a draft state.",
+        "operationId": "createTask",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTCreateTaskParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTaskInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/tasks/{tid}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Get a task by id.",
+        "operationId": "getTask",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTaskInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Update the task and its properties.",
+        "operationId": "updateTask",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTUpdateTaskParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTaskInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/tasks/{tid}/{transition}": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Execute a workflow transition.",
+        "operationId": "transitionTask",
+        "parameters": [
+          {
+            "name": "tid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transition",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTTaskInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTTaskListResponse": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          },
+          "taskTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskTypeInfo"
+            }
+          }
+        }
+      },
+      "BTCreateTaskParams": {
+        "required": [
+          "companyId"
+        ],
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "description": "Id of the company that owns the task."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the task."
+          },
+          "descriptionParamValue": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string",
+            "description": "Id of a document to associate the task to."
+          },
+          "itemParams": {
+            "type": "array",
+            "description": "References to include in the task.",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskItemParams"
+            }
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the task."
+          },
+          "nameParamValue": {
+            "type": "string"
+          },
+          "propertyValues": {
+            "type": "array",
+            "description": "Set Task metadata properties.",
+            "items": {
+              "$ref": "#/components/schemas/BTPropertyValueParam"
+            }
+          }
+        },
+        "x-BTVisibility-properties": {
+          "workflowId": "INTERNAL"
+        }
+      },
+      "BTTaskInfo": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "approverRole": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTCommentInfo"
+            }
+          },
+          "companyId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "deletable": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "documentName": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataPropertyInfo"
+            }
+          },
+          "publishedWorkflow": {
+            "$ref": "#/components/schemas/BTPublishedWorkflowInfo"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolvedBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskRbacRoleInfo"
+            }
+          },
+          "simpleName": {
+            "type": "string"
+          },
+          "sourceWorkspaceOrVersionName": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "taskItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskItemInfo"
+            }
+          },
+          "taskType": {
+            "type": "string"
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskTeamSummaryInfo"
+            }
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "transition": {
+            "type": "string"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskUserSummaryInfo"
+            }
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workflowInfo": {
+            "$ref": "#/components/schemas/BTWorkflowableObjectInfo"
+          },
+          "workflowableObjectType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUpdateTaskParams": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "description": "Use to transfer task ownership to the company."
+          },
+          "deleteItemIds": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "References to remove from the task.",
+            "items": {
+              "type": "string",
+              "description": "References to remove from the task."
+            }
+          },
+          "descriptionParamValue": {
+            "type": "string"
+          },
+          "itemParams": {
+            "type": "array",
+            "description": "References to add to the task.",
+            "items": {
+              "$ref": "#/components/schemas/BTTaskItemParams"
+            }
+          },
+          "nameParamValue": {
+            "type": "string"
+          },
+          "propertyValues": {
+            "type": "array",
+            "description": "Task metadata properties.",
+            "items": {
+              "$ref": "#/components/schemas/BTPropertyValueParam"
+            }
+          },
+          "workflowId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTTaskTypeInfo": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BTTaskItemParams": {
+        "type": "object",
+        "properties": {
+          "bodyType": {
+            "type": "string",
+            "description": "Body type to reference from a task."
+          },
+          "configuration": {
+            "type": "string",
+            "description": "Configuration of reference. Used to restrict a reference to a specific configuration of an element."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the reference."
+          },
+          "documentId": {
+            "type": "string",
+            "description": "Id of a document. Required to reference a document or anything contained within it."
+          },
+          "elementId": {
+            "type": "string",
+            "description": "Id of an element reference. Used when referencing an element."
+          },
+          "elementType": {
+            "type": "integer",
+            "description": "Type of element reference. Options are 0 (Part Studio), 1 (Assembly), 2 (Drawing), 3 (Feature Studio), 4 (Blob), 5 (Application), 6 (Table), 7 (Bill of Materials),  8 (Variable Studio), or 9 (Publication Item).",
+            "format": "int32"
+          },
+          "mimeType": {
+            "type": "string",
+            "description": "Mimetype of reference. Used when referencing blob elements."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the reference."
+          },
+          "partId": {
+            "type": "string",
+            "description": "Deterministic Id of a part. Used when referencing parts."
+          },
+          "revisionId": {
+            "type": "string",
+            "description": "Id of a revision to reference from a task."
+          },
+          "versionId": {
+            "type": "string",
+            "description": "Id of a document version. Used when referencing the version itself or an element or part in it."
+          },
+          "workspaceId": {
+            "type": "string",
+            "description": "Id of a document workspace. Used when referencing the workspace itself or an element or part in it."
+          }
+        },
+        "description": "References to add to the task.",
+        "x-BTVisibility-properties": {
+          "viewData": "INTERNAL",
+          "dataType": "INTERNAL",
+          "elementFeature": "INTERNAL",
+          "id": "INTERNAL",
+          "assemblyFeature": "INTERNAL",
+          "elementQuery": "INTERNAL",
+          "elementOccurrence": "INTERNAL"
+        }
+      },
+      "BTPropertyValueParam": {
+        "type": "object",
+        "properties": {
+          "propertyId": {
+            "type": "string",
+            "description": "Id of the property to set."
+          },
+          "value": {
+            "type": "object",
+            "description": "Value to set for the property. User property values must be a list of `{ \"id\": \"idValue\" }` maps."
+          }
+        }
+      },
+      "BTCommentInfo": {
+        "type": "object",
+        "properties": {
+          "annotationId": {
+            "type": "string"
+          },
+          "annotationType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "assemblyFeatures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "assignee": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "attachment": {
+            "$ref": "#/components/schemas/BTCommentAttachmentInfo"
+          },
+          "canDelete": {
+            "type": "boolean"
+          },
+          "canResolveOrReopen": {
+            "type": "boolean"
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/CoordinatesInfo"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dimensionConstraintId": {
+            "type": "string"
+          },
+          "dimensionFeatureId": {
+            "type": "string"
+          },
+          "dimensionParameterId": {
+            "type": "string"
+          },
+          "dimensionPartQuery": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementFeature": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "elementOccurrences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "elementQuery": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "message": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "releasePackageId": {
+            "type": "string"
+          },
+          "reopenedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reopenedBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "replyCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolvedBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BTCommentAttachmentInfo"
+          },
+          "topLevel": {
+            "type": "boolean"
+          },
+          "user": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "userCompany": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewData": {
+            "$ref": "#/components/schemas/BTViewDataInfo"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTMetadataPropertyInfo": {
+        "type": "object",
+        "properties": {
+          "aggregationSkippedFilteredOutValues": {
+            "type": "boolean"
+          },
+          "computedAssemblyProperty": {
+            "type": "boolean"
+          },
+          "computedProperty": {
+            "type": "boolean"
+          },
+          "computedPropertyError": {
+            "type": "string"
+          },
+          "computedPropertyEvalInfo": {
+            "type": "string"
+          },
+          "dateFormat": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "object"
+          },
+          "dirty": {
+            "type": "boolean"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "editableInUi": {
+            "type": "boolean"
+          },
+          "enumValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataEnumValueInfo"
+            }
+          },
+          "initialValue": {
+            "type": "object"
+          },
+          "multivalued": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "propertyOverrideStatus": {
+            "type": "integer",
+            "description": "0: Unknown | 1: Not computed | 2: Computed without override | 3: Computed with override | 4: Computed with subassembly overrides | 5: Overridden",
+            "format": "int32"
+          },
+          "propertySource": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "schemaId": {
+            "type": "string"
+          },
+          "uiHints": {
+            "$ref": "#/components/schemas/BTMetadataPropertyUiHintsInfo"
+          },
+          "validator": {
+            "$ref": "#/components/schemas/BTMetadataPropertyValidatorInfo"
+          },
+          "value": {
+            "type": "object"
+          },
+          "valueType": {
+            "type": "string"
+          }
+        }
+      },
+      "BTPublishedWorkflowInfo": {
+        "type": "object",
+        "properties": {
+          "activeState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "imageSrc": {
+            "type": "string"
+          },
+          "isPickable": {
+            "type": "boolean"
+          },
+          "json": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ownerType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "publishedDate": {
+            "type": "string",
+            "description": "The date of publication of workflow",
+            "format": "date-time"
+          },
+          "usesExternalPlm": {
+            "type": "boolean",
+            "description": "Whether the workflow connects to an external PLM service like Arena"
+          },
+          "versionId": {
+            "type": "string"
+          }
+        },
+        "description": "Captures information about a published workflow"
+      },
+      "BTTaskRbacRoleInfo": {
+        "type": "object",
+        "properties": {
+          "acted": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "predefinedRole": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTTaskItemInfo": {
+        "type": "object",
+        "properties": {
+          "assemblyFeatures": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bodyType": {
+            "type": "string"
+          },
+          "configuration": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementFeature": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "elementOccurrences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "elementQuery": {
+            "type": "string"
+          },
+          "elementType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "partId": {
+            "type": "string"
+          },
+          "releaseState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revisionId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "viewData": {
+            "$ref": "#/components/schemas/BTViewDataInfo"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTTaskTeamSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "acted": {
+            "type": "boolean"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "canMove": {
+            "type": "boolean"
+          },
+          "connectionName": {
+            "type": "string"
+          },
+          "connectionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isContainer": {
+            "type": "boolean"
+          },
+          "isEnterpriseOwned": {
+            "type": "boolean"
+          },
+          "isExternalConnectionResource": {
+            "type": "boolean"
+          },
+          "isMutable": {
+            "type": "boolean"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/BTOwnerInfo"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "predefinedTeam": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "predefinedTeamMutable": {
+            "type": "boolean"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "treeHref": {
+            "type": "string"
+          },
+          "unparentHref": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTTaskUserSummaryInfo": {
+        "type": "object",
+        "properties": {
+          "acted": {
+            "type": "boolean"
+          },
+          "company": {
+            "$ref": "#/components/schemas/BTCompanySummaryInfo"
+          },
+          "documentationName": {
+            "type": "string"
+          },
+          "documentationNameOverride": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "globalPermissions": {
+            "$ref": "#/components/schemas/GlobalPermissionInfo"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "invitationState": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "isGuest": {
+            "type": "boolean"
+          },
+          "isLight": {
+            "type": "boolean"
+          },
+          "isOnshapeSupport": {
+            "type": "boolean"
+          },
+          "lastLoginTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "personalMessageAllowed": {
+            "type": "boolean"
+          },
+          "source": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTWorkflowableObjectInfo": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTWorkflowPropertyInfo"
+            }
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          },
+          "workflow": {
+            "$ref": "#/components/schemas/BTWorkflowSnapshotInfo"
+          },
+          "workflowError": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "workflowId": {
+            "$ref": "#/components/schemas/BTPublishedWorkflowId"
+          }
+        }
+      },
+      "BTCommentAttachmentInfo": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "thumbnailFor": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "CoordinatesInfo": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number",
+            "format": "float"
+          },
+          "y": {
+            "type": "number",
+            "format": "float"
+          },
+          "z": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "BTViewDataInfo": {
+        "type": "object",
+        "properties": {
+          "angle": {
+            "type": "number",
+            "format": "double"
+          },
+          "cameraViewport": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "isPerspective": {
+            "type": "boolean"
+          },
+          "viewMatrix": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        }
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTMetadataEnumValueInfo": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMetadataPropertyUiHintsInfo": {
+        "type": "object",
+        "properties": {
+          "multiline": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTMetadataPropertyValidatorInfo": {
+        "type": "object",
+        "properties": {
+          "max": {
+            "type": "number"
+          },
+          "maxCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "min": {
+            "type": "number"
+          },
+          "minCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "minLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "quantityType": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      },
+      "BTOwnerInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "isEnterpriseOwnedResource": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWorkflowPropertyInfo": {
+        "type": "object",
+        "properties": {
+          "aggregationSkippedFilteredOutValues": {
+            "type": "boolean"
+          },
+          "computedAssemblyProperty": {
+            "type": "boolean"
+          },
+          "computedProperty": {
+            "type": "boolean"
+          },
+          "computedPropertyError": {
+            "type": "string"
+          },
+          "computedPropertyEvalInfo": {
+            "type": "string"
+          },
+          "dateFormat": {
+            "type": "string"
+          },
+          "defaultValue": {
+            "type": "object"
+          },
+          "dirty": {
+            "type": "boolean"
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "editableInUi": {
+            "type": "boolean"
+          },
+          "enumValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMetadataEnumValueInfo"
+            }
+          },
+          "hideInUi": {
+            "type": "boolean"
+          },
+          "initialValue": {
+            "type": "object"
+          },
+          "isApproverProperty": {
+            "type": "boolean"
+          },
+          "isNotifierProperty": {
+            "type": "boolean"
+          },
+          "multivalued": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          },
+          "observers": {
+            "type": "array",
+            "writeOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/BTWorkflowableObjectObserver"
+            }
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "propertyOverrideStatus": {
+            "type": "integer",
+            "description": "0: Unknown | 1: Not computed | 2: Computed without override | 3: Computed with override | 4: Computed with subassembly overrides | 5: Overridden",
+            "format": "int32"
+          },
+          "propertySource": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "schemaId": {
+            "type": "string"
+          },
+          "teamsOnly": {
+            "type": "boolean"
+          },
+          "uiHints": {
+            "$ref": "#/components/schemas/BTMetadataPropertyUiHintsInfo"
+          },
+          "usersOnly": {
+            "type": "boolean"
+          },
+          "validator": {
+            "$ref": "#/components/schemas/BTMetadataPropertyValidatorInfo"
+          },
+          "value": {
+            "type": "object"
+          },
+          "valueType": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWorkflowSnapshotInfo": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTWorkflowActionInfo"
+            }
+          },
+          "approverIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "canBeDiscarded": {
+            "type": "boolean"
+          },
+          "currentStateDisplayName": {
+            "type": "string"
+          },
+          "debugMicroversionId": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "isCreator": {
+            "type": "boolean"
+          },
+          "isDiscarded": {
+            "type": "boolean"
+          },
+          "isFrozen": {
+            "type": "boolean"
+          },
+          "isSetup": {
+            "type": "boolean"
+          },
+          "metadataState": {
+            "type": "string"
+          },
+          "notifierIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "$ref": "#/components/schemas/BTWorkflowStateInfo"
+          },
+          "usesExternalPlm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTPublishedWorkflowId": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "workflowId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTBaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTWorkflowableObjectObserver": {
+        "type": "object",
+        "properties": {
+          "adminOverride": {
+            "type": "boolean"
+          },
+          "approvalDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approvalState": {
+            "$ref": "#/components/schemas/BTWorkflowObserverState"
+          },
+          "approverId": {
+            "type": "string"
+          },
+          "approverName": {
+            "type": "string"
+          },
+          "associatedStates": {
+            "type": "string"
+          },
+          "companyId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "creatorOverride": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "entryId": {
+            "type": "string"
+          },
+          "entryType": {
+            "$ref": "#/components/schemas/BTWorkflowObserverEntryType"
+          },
+          "id": {
+            "type": "string"
+          },
+          "isExternal": {
+            "type": "boolean"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedBy": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "new": {
+            "type": "boolean"
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "observationType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "propertyId": {
+            "type": "string"
+          },
+          "rejectionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "removable": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTWorkflowActionInfo": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "allowIfApprovers": {
+            "type": "boolean"
+          },
+          "allowIfNoApprovers": {
+            "type": "boolean"
+          },
+          "alwaysAllow": {
+            "type": "boolean"
+          },
+          "isAdminOverride": {
+            "type": "boolean"
+          },
+          "isApproverAction": {
+            "type": "boolean"
+          },
+          "isCreatorOverride": {
+            "type": "boolean"
+          },
+          "label": {
+            "type": "string"
+          },
+          "requiredProperties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tooltip": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/BTTransitionType"
+          },
+          "uiHint": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWorkflowStateInfo": {
+        "type": "object",
+        "properties": {
+          "approverSourceProperty": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "editPermissions": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "editableProperties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "nonEditableProperties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notifierSourceProperty": {
+            "type": "string"
+          },
+          "requiredItemProperties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiredProperties": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BTWorkflowObserverState": {
+        "type": "string",
+        "enum": [
+          "NONE",
+          "APPROVED",
+          "REJECTED",
+          "OVERRIDDEN"
+        ]
+      },
+      "BTWorkflowObserverEntryType": {
+        "type": "string",
+        "enum": [
+          "USER",
+          "TEAM",
+          "ROLE",
+          "ALIAS"
+        ]
+      },
+      "BTTransitionType": {
+        "type": "string",
+        "description": "Transition types(SUBMIT, APPROVE, REJECT)",
+        "enum": [
+          "DEFAULT",
+          "SUBMIT",
+          "APPROVE",
+          "APPROVE_DIRECT",
+          "REJECT",
+          "DELETE",
+          "COMMENT",
+          "REASSIGN_TASK"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -313,6 +313,35 @@ util.error(err);
 
 ---
 
+## lib/pdmSyncUtils.js
+
+**Purpose**: Shared pure functions for the PDM Release Sync pipeline (stages 1–4). All functions are deterministic and side-effect free (except `parseCSV`, which reads a file); extracted from `pdmSync1-analyze.js`, `pdmSync3-upload.js`, and `pdmSync4-release.js` for testability (see `test/pdmSyncUtils.test.js`).
+
+### Exported Functions
+
+| Function | Signature | Description |
+|----------|-----------|-------------|
+| `getFolderForPartNumber` | `(partNumber)` | Map part number to Onshape folder ID by 10000-range bucket (MISC if non-numeric) |
+| `getDocumentName` | `(filename)` | Derive document name (`NNNNN SRC`) from a filename |
+| `compareRevisions` | `(pdmRev, osRev)` | Compare revisions numerically, falling back to string compare |
+| `parseCSVLine` | `(line)` | Parse one CSV line with quoted-field handling |
+| `parseCSV` | `(filePath)` | Parse a PDM references CSV (strips BOM, auto-detects header row) |
+| `buildReferenceGraph` | `(references)` | Build assembly → children reference map from PDM reference rows |
+| `calculateAssemblyLevel` | `(filename, graph, levelCache)` | Recursive upload-level calculation, cycle-safe |
+| `extractError` | `(err)` | Extract a readable message from an Onshape API error object |
+| `buildProperties` | `(row, propertyIdMap)` | Build part number / revision / description property array |
+
+### Exported Constants
+
+| Constant | Description |
+|----------|-------------|
+| `FOLDER_MAP` | Part-number bucket → Onshape folder ID map |
+| `SKIP_EXTENSIONS` | Extensions excluded from upload (`.SLDDRW`, `.STEP`, `.STP`) |
+
+**No Onshape API calls** — this module is pure logic; API interaction stays in the pdmSync scripts.
+
+---
+
 ## Property ID Reference
 
 Common property IDs used across scripts (from `propertyIdMap` in `unifiedUpload.js`):

@@ -1,0 +1,885 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Features-Patterns",
+    "description": "Pattern and copy — circular, linear, curve patterns, mirror, transform copy",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Features-Patterns",
+  "modules": {
+    "circularPattern.fs": {
+      "name": "circularPattern",
+      "importPath": "onshape/std/circularPattern.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "circularPattern",
+          "kind": "function",
+          "id": "circularPattern-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Performs a body, face, or feature circular pattern. Internally, performs an `applyPattern`, which in turn performs an `opPattern` or, for a feature pattern, calls the feature function.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "patternType",
+                  "type": "PatternType",
+                  "typeRef": "#PatternType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies a `PART`, `FEATURE`, or `FACE` pattern. Default is `PART`."
+                },
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is PART",
+                  "description": "Required if `patternType` is `PART`The parts to pattern. \n Example: \n`qCreatedBy(id + \"extrude1\", EntityType.BODY)`"
+                },
+                {
+                  "name": "faces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is FACE",
+                  "description": "Required if `patternType` is `FACE`The faces to pattern."
+                },
+                {
+                  "name": "instanceFunction",
+                  "type": "FeatureList",
+                  "typeRef": "#FeatureList",
+                  "required": false,
+                  "requiredIf": "patternType is FEATURE",
+                  "description": "Required if `patternType` is `FEATURE`The `FeatureList` of the features to pattern."
+                },
+                {
+                  "name": "axis",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The axis of the pattern."
+                },
+                {
+                  "name": "angle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The angle between each pattern instance, or the total angle spanned by the pattern if `equalSpace` is `true`. \n Example: \n`360 * degree`"
+                },
+                {
+                  "name": "instanceCount",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The resulting number of pattern entities, unless `isCentered` is `true`. \n Example: \n`4 to have 4 resulting pattern entities (including the seed).`"
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to switch the direction of the pattern around the axis.`"
+                },
+                {
+                  "name": "equalSpace",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true for the entire pattern to lie within angle` Example: \n`false for there to be angle between each pattern instance (default)`"
+                },
+                {
+                  "name": "isCentered",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to center the pattern on the seed. When set to `true`, `instanceCount - 1` pattern entities are created in each direction around the axis. Default is `false`."
+                },
+                {
+                  "name": "operationType",
+                  "type": "NewBodyOperationType",
+                  "typeRef": "#NewBodyOperationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies how the newly created body will be merged with existing bodies."
+                },
+                {
+                  "name": "defaultScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to merge with all other bodies` Example: \n`false to merge with booleanScope`"
+                },
+                {
+                  "name": "booleanScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "defaultScope is false",
+                  "description": "Required if `defaultScope` is `false`The specified bodies to merge with."
+                },
+                {
+                  "name": "skipInstances",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to exclude certain instances of the pattern."
+                },
+                {
+                  "name": "skippedInstances",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": false,
+                  "requiredIf": "skipInstances is true",
+                  "description": "Required if `skipInstances` is `true`Which instances of the pattern to skip. Each is denoted by a single index, which may be negative if `isCentered` is `true`. \n Example: \n`[{ index: -3 }, { index: 2 }, { index: 5 }]`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "PatternType",
+            "Query",
+            "FeatureList",
+            "ValueWithUnits",
+            "NewBodyOperationType"
+          ]
+        }
+      ]
+    },
+    "curvePattern.fs": {
+      "name": "curvePattern",
+      "importPath": "onshape/std/curvePattern.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurvePatternSpacingType",
+          "kind": "enum",
+          "id": "CurvePatternSpacingType",
+          "returnType": null,
+          "description": "Specifies the type of spacing between pattern instances.",
+          "values": [
+            {
+              "name": "EQUAL",
+              "description": "Equal-spaced instances along the length of curve"
+            },
+            {
+              "name": "DISTANCE",
+              "description": "Instances spaced by custom distance"
+            }
+          ]
+        },
+        {
+          "name": "curvePattern",
+          "kind": "function",
+          "id": "curvePattern-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Performs a body, face, or feature curve pattern. Internally, performs an `applyPattern`, which in turn performs an `opPattern` or, for a feature pattern, calls the feature function.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "patternType",
+                  "type": "PatternType",
+                  "typeRef": "#PatternType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies a `PART`, `FEATURE`, or `FACE` pattern. Default is `PART`."
+                },
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is PART",
+                  "description": "Required if `patternType` is `PART`The parts to pattern. \n Example: \n`qCreatedBy(id + \"extrude1\", EntityType.BODY)`"
+                },
+                {
+                  "name": "faces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is FACE",
+                  "description": "Required if `patternType` is `FACE`The faces to pattern."
+                },
+                {
+                  "name": "instanceFunction",
+                  "type": "FeatureList",
+                  "typeRef": "#FeatureList",
+                  "required": false,
+                  "requiredIf": "patternType is FEATURE",
+                  "description": "Required if `patternType` is `FEATURE`The `FeatureList` of the features to pattern."
+                },
+                {
+                  "name": "edges",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "A `Query` for a set of edges to pattern along. The edges must form a continuous path."
+                },
+                {
+                  "name": "spacingType",
+                  "type": "CurvePatternSpacingType",
+                  "typeRef": "#CurvePatternSpacingType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Specifies the type of spacing between pattern entities. Default is `EQUAL`."
+                },
+                {
+                  "name": "distance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "spacingType is DISTANCE",
+                  "description": "Required if `spacingType` is `DISTANCE`The distance between each pattern entity. \n Example: \n`1.0 * inch to space the pattern entities 1 inch apart.`"
+                },
+                {
+                  "name": "instanceCount",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The resulting number of pattern entities. \n Example: \n`2 to have 2 resulting pattern entities (including the seed).`"
+                },
+                {
+                  "name": "keepOrientation",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true for the pattern entities to keep the orientation of the seed` Example: \n`false for the pattern entities to reorient along the path (default)`"
+                },
+                {
+                  "name": "operationType",
+                  "type": "NewBodyOperationType",
+                  "typeRef": "#NewBodyOperationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies how the newly created body will be merged with existing bodies."
+                },
+                {
+                  "name": "defaultScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to merge with all other bodies` Example: \n`false to merge with booleanScope`"
+                },
+                {
+                  "name": "booleanScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "defaultScope is false",
+                  "description": "Required if `defaultScope` is `false`The specified bodies to merge with."
+                },
+                {
+                  "name": "skipInstances",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to exclude certain instances of the pattern."
+                },
+                {
+                  "name": "skippedInstances",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": false,
+                  "requiredIf": "skipInstances is true",
+                  "description": "Required if `skipInstances` is `true`Which instances of the pattern to skip. Each is denoted by a single positive index. \n Example: \n`[{ index: 2 }, { index: 5 }]`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "PatternType",
+            "Query",
+            "FeatureList",
+            "CurvePatternSpacingType",
+            "ValueWithUnits",
+            "NewBodyOperationType"
+          ]
+        }
+      ]
+    },
+    "linearPattern.fs": {
+      "name": "linearPattern",
+      "importPath": "onshape/std/linearPattern.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "linearPattern",
+          "kind": "function",
+          "id": "linearPattern-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Performs a body, face, or feature linear pattern. Internally, performs an `applyPattern`, which in turn performs an `opPattern` or, for a feature pattern, calls the feature function.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "patternType",
+                  "type": "PatternType",
+                  "typeRef": "#PatternType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies a `PART`, `FEATURE`, or `FACE` pattern. Default is `PART`."
+                },
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is PART",
+                  "description": "Required if `patternType` is `PART`The parts to pattern. \n Example: \n`qCreatedBy(id + \"extrude1\", EntityType.BODY)`"
+                },
+                {
+                  "name": "faces",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "patternType is FACE",
+                  "description": "Required if `patternType` is `FACE`The faces to pattern."
+                },
+                {
+                  "name": "instanceFunction",
+                  "type": "FeatureList",
+                  "typeRef": "#FeatureList",
+                  "required": false,
+                  "requiredIf": "patternType is FEATURE",
+                  "description": "Required if `patternType` is `FEATURE`The `FeatureList` of the features to pattern."
+                },
+                {
+                  "name": "directionOne",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The direction of the pattern. \n Example: \n`qCreatedBy(newId() + \"Right\", EntityType.FACE)`"
+                },
+                {
+                  "name": "distance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The distance between each pattern entity. \n Example: \n`1.0 * inch to space the pattern entities 1 inch apart.`"
+                },
+                {
+                  "name": "instanceCount",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The resulting number of pattern entities, unless `isCentered` is `true`. \n Example: \n`2 to have 2 resulting pattern entities (including the seed).`"
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to switch the direction of the pattern along directionOne.`"
+                },
+                {
+                  "name": "isCentered",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to center the pattern on the seed. When set to `true`, `instanceCount - 1` pattern entities are created along each direction of `directionOne`. Default is `false`."
+                },
+                {
+                  "name": "hasSecondDir",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true if the pattern should extend in two directions rather than one, creating a grid of pattern entities.`"
+                },
+                {
+                  "name": "directionTwo",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "hasSecondDir is true",
+                  "description": "Required if `hasSecondDir` is `true`The second direction of the pattern."
+                },
+                {
+                  "name": "distanceTwo",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "hasSecondDir is true",
+                  "description": "Required if `hasSecondDir` is `true`The distance between each pattern entity in the second direction."
+                },
+                {
+                  "name": "instanceCountTwo",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "hasSecondDir is true",
+                  "description": "Required if `hasSecondDir` is `true`The resulting number of pattern entities in the second direction, unless `isCentered` is `true`."
+                },
+                {
+                  "name": "oppositeDirectionTwo",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to switch the direction of the pattern along directionTwo.`"
+                },
+                {
+                  "name": "isCenteredTwo",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to center the second direction of the pattern on the seed. When set to `true`, `instanceCount - 1` pattern entities are created along each direction of `directionTwo`. Default is `false`."
+                },
+                {
+                  "name": "operationType",
+                  "type": "NewBodyOperationType",
+                  "typeRef": "#NewBodyOperationType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalSpecifies how the newly created body will be merged with existing bodies."
+                },
+                {
+                  "name": "defaultScope",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional Example: \n`true to merge with all other bodies` Example: \n`false to merge with booleanScope`"
+                },
+                {
+                  "name": "booleanScope",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "defaultScope is false",
+                  "description": "Required if `defaultScope` is `false`The specified bodies to merge with."
+                },
+                {
+                  "name": "skipInstances",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalWhether to exclude certain instances of the pattern."
+                },
+                {
+                  "name": "skippedInstances",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": false,
+                  "requiredIf": "skipInstances is true",
+                  "description": "Required if `skipInstances` is `true`Which instances of the pattern to skip. Each is denoted by one index for each direction, either of which may be negative if `isCentered` or `isCenteredTwo` respectively is `true`. \n Example: \n`[{ index1: -3, index2: 1 }, { index1: 0, index2: -2 }, { index1: 5, index2: 0 }]`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "PatternType",
+            "Query",
+            "FeatureList",
+            "ValueWithUnits",
+            "NewBodyOperationType"
+          ]
+        }
+      ]
+    },
+    "mirror.fs": {
+      "name": "mirror",
+      "importPath": "onshape/std/mirror.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "mirror",
+          "kind": "function",
+          "id": "mirror-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature creating a single copy of some features, bodies, or faces, mirrored about a given entity. Internally, performs an `applyPattern`, which in turn performs an `opPattern` or, for a feature mirror, calls the feature function."
+        }
+      ]
+    },
+    "transformCopy.fs": {
+      "name": "transformCopy",
+      "importPath": "onshape/std/transformCopy.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "TransformType",
+          "kind": "enum",
+          "id": "TransformType",
+          "returnType": null,
+          "description": "Defines how a the transform for a `transform` feature should be specified. SCALE_UNIFORMLY actually also supports non-uniform scaling.",
+          "values": [
+            {
+              "name": "TRANSLATION_ENTITY",
+              "description": null
+            },
+            {
+              "name": "TRANSLATION_DISTANCE",
+              "description": null
+            },
+            {
+              "name": "TRANSLATION_3D",
+              "description": null
+            },
+            {
+              "name": "TRANSFORM_MATE_CONNECTORS",
+              "description": null
+            },
+            {
+              "name": "ROTATION",
+              "description": null
+            },
+            {
+              "name": "COPY",
+              "description": null
+            },
+            {
+              "name": "SCALE_UNIFORMLY",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "transform",
+          "kind": "function",
+          "id": "transform-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Move and/or rotate bodies or mate connectors with a single `Transform`, constructed with input according to the selected `TransformType`.\nInternally, performs an `opTransform` when not copying, and an `opPattern` when copying. For simple transforms, prefer calling `opTransform` or `opPattern` directly.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entities",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "The bodies or mate connectors to transform. An error is thrown if anything else is included. \n Example: \n`qCreatedBy(id + \"extrude1\", EntityType.BODY)`"
+                },
+                {
+                  "name": "transformType",
+                  "type": "TransformType",
+                  "typeRef": "#TransformType",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Defines how the transform type should be specified. \n Example: \n`TransformType.TRANSLATION_3D`"
+                },
+                {
+                  "name": "dx",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_3D",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_3D`A value with length units specifying the distance to move in the world `x` direction. \n Example: \n`1 * inch`"
+                },
+                {
+                  "name": "dy",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_3D",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_3D`A value with length units specifying the distance to move in the world `y` direction. \n Example: \n`1 * inch`"
+                },
+                {
+                  "name": "dz",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_3D",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_3D`A value with length units specifying the distance to move in the world `z` direction. \n Example: \n`1 * inch`"
+                },
+                {
+                  "name": "transformLine",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_ENTITY",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_ENTITY`A `Query` for either a single line or a pair of points, specifying the direction and distance to transform."
+                },
+                {
+                  "name": "oppositeDirectionEntity",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_ENTITY",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_ENTITY` Example: \n`true to flip the transform direction.`"
+                },
+                {
+                  "name": "transformAxis",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.ROTATION",
+                  "description": "Required if `transformType` is `TransformType.ROTATION`A `Query` for a line, cylinder, etc. to specify the transform direction."
+                },
+                {
+                  "name": "angle",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.ROTATION",
+                  "description": "Required if `transformType` is `TransformType.ROTATION`A value with angle units specifying the angle to rotate."
+                },
+                {
+                  "name": "transformDirection",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_DISTANCE",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_DISTANCE`A `Query` for either a single line or a pair of points, specifying the direction to transform."
+                },
+                {
+                  "name": "distance",
+                  "type": "ValueWithUnits",
+                  "typeRef": "#ValueWithUnits",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_DISTANCE",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_DISTANCE`A value with length units specifying the distance to move."
+                },
+                {
+                  "name": "oppositeDirection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSLATION_DISTANCE or TransformType.ROTATION",
+                  "description": "Required if `transformType` is `TransformType.TRANSLATION_DISTANCE` or `TransformType.ROTATION` Example: \n`true to transform in the opposite direction.`"
+                },
+                {
+                  "name": "uniform",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "OptionalTrue if the scale is uniform in all directions (default)"
+                },
+                {
+                  "name": "scale",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.SCALE_UNIFORMLY and uniform is true",
+                  "description": "Required if `transformType` is `TransformType.SCALE_UNIFORMLY` and `uniform` is trueA positive real number specifying the scale factor."
+                },
+                {
+                  "name": "scalePoint",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.SCALE_UNIFORMLY",
+                  "description": "Required if `transformType` is `TransformType.SCALE_UNIFORMLY`A point specifying the center of the scale or a mate connector specifying the coordinate system for a non-uniform scale."
+                },
+                {
+                  "name": "scaleX",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.SCALE_UNIFORMLY and uniform is false",
+                  "description": "Required if `transformType` is `TransformType.SCALE_UNIFORMLY` and `uniform` is false"
+                },
+                {
+                  "name": "scaleY",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.SCALE_UNIFORMLY and uniform is false",
+                  "description": "Required if `transformType` is `TransformType.SCALE_UNIFORMLY` and `uniform` is false"
+                },
+                {
+                  "name": "scaleZ",
+                  "type": "number",
+                  "typeRef": "builtin:number",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.SCALE_UNIFORMLY and uniform is false",
+                  "description": "Required if `transformType` is `TransformType.SCALE_UNIFORMLY` and `uniform` is false"
+                },
+                {
+                  "name": "baseConnector",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSFORM_MATE_CONNECTORS",
+                  "description": "Required if `transformType` is `TransformType.TRANSFORM_MATE_CONNECTORS`The mate connector to transform from."
+                },
+                {
+                  "name": "destinationConnector",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSFORM_MATE_CONNECTORS",
+                  "description": "Required if `transformType` is `TransformType.TRANSFORM_MATE_CONNECTORS`The mate connector to transform to."
+                },
+                {
+                  "name": "oppositeDirectionMateAxis",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSFORM_MATE_CONNECTORS",
+                  "description": "Required if `transformType` is `TransformType.TRANSFORM_MATE_CONNECTORS`"
+                },
+                {
+                  "name": "secondaryAxisType",
+                  "type": "MateConnectorAxisType",
+                  "typeRef": "#MateConnectorAxisType",
+                  "required": false,
+                  "requiredIf": "transformType is TransformType.TRANSFORM_MATE_CONNECTORS",
+                  "description": "Required if `transformType` is `TransformType.TRANSFORM_MATE_CONNECTORS`"
+                },
+                {
+                  "name": "makeCopy",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": false,
+                  "requiredIf": "transformType is not TransformType.COPY",
+                  "description": "Required if `transformType` is not `TransformType.COPY` Example: \n`true to keep the original bodies.`"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Transform",
+            "TransformType",
+            "Query",
+            "ValueWithUnits",
+            "MateConnectorAxisType"
+          ]
+        },
+        {
+          "name": "copyPart",
+          "kind": "function",
+          "id": "copyPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Deprecated: Use `opPattern`, or the `transform` feature instead."
+        }
+      ]
+    }
+  }
+}

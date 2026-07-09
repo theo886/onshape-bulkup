@@ -6,6 +6,9 @@
   "author": {
     "name": "Onshape Partner-API Team"
   },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.73.0",
     "adm-zip": "^0.5.16",

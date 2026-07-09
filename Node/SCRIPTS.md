@@ -72,6 +72,8 @@ Complete catalog of all scripts in the migration toolkit. Before writing a new s
 | `apiTest.js` | Test API connectivity and HMAC auth | `test` |
 | `findBlankPartNumbers.js` | Find elements with blank part numbers | — |
 | `rebuildDocumentCache.js` | Rebuild document cache from API folder scan | — |
+| `checkPNsExist.js` | Check if part numbers from Excel exist in Onshape | — |
+| `checkReleasedDates.js` | Write latest release date/rev for part numbers back to Excel | — |
 
 ### Assembly Reference (ASMREF)
 
@@ -119,6 +121,9 @@ Complete catalog of all scripts in the migration toolkit. Before writing a new s
 | `test_relink_module.js` | Verify relink module exports |
 | `test_relink.js` | Test relink module function signatures |
 | `splitApiDocs.js` | Split Onshape OpenAPI spec into category files |
+| `test/pdmSyncUtils.test.js` | Unit tests for `lib/pdmSyncUtils.js` (run via `npm test`) |
+| `test/pdmSync.dryrun.test.js` | Dry-run smoke tests for the pdmSync pipeline |
+| `test/createFixtures.js` | Generate Excel/CSV fixtures used by the tests |
 
 ### One-Off Analysis (`one-off/`)
 
@@ -139,6 +144,8 @@ Scripts with hardcoded paths used for specific migration analysis. Kept for refe
 | `mergeStatus.js` | Merge revision IDs between status files |
 | `parseNotifications.js` | Parse Onshape notification text into structured data |
 | `showAtRiskItems.js` | Display at-risk items grouped by document |
+| `checkSheet3.js` | Populate Sheet3 with derived PNs, query release dates |
+| `retrySheet3.js` | Retry NOT-FOUND Sheet3 rows with alternate PN derivations |
 
 ### Python Scripts
 
@@ -1050,3 +1057,50 @@ node pdmSync4-release.js -i pdm_releases_s3.xlsx [-o pdm_releases_s4.xlsx] [-s p
 - Processes in `sync:level` order
 
 **Output columns added**: `sync:versionId`, `sync:releaseStatus`, `sync:releaseError`
+
+---
+
+## checkPNsExist.js
+
+**Purpose**: Check whether part numbers from an Excel file already exist in Onshape, via released-revision lookup.
+
+**Usage**:
+```bash
+node checkPNsExist.js -i <input.xlsx>
+```
+
+**Options**:
+| Flag | Description |
+|------|-------------|
+| `-i <path>` | Input Excel file (required, first sheet is read) |
+
+**Required Excel columns**:
+| Column | Description |
+|--------|-------------|
+| `property:Name` | Part number to look up |
+
+**Behavior**: Queries `getRevisionByPartNumber` (`/api/v10/revisions/c/{cid}/partnumber/{pn}`) for each unique part number with a 300ms delay between calls, then prints a FOUND (revision + workflow state) / NOT FOUND summary to the console. No output file.
+
+---
+
+## checkReleasedDates.js
+
+**Purpose**: For each part number in an Excel file (all sheets), look up the latest Onshape release and write the result back to new columns.
+
+**Usage**:
+```bash
+node checkReleasedDates.js -i <input.xlsx> [-o <output.xlsx>]
+```
+
+**Options**:
+| Flag | Description |
+|------|-------------|
+| `-i <path>` | Input Excel file (required, all sheets processed) |
+| `-o <path>` | Output Excel (default: `<input>_checked.xlsx`) |
+
+**Required Excel columns**:
+| Column | Description |
+|--------|-------------|
+| `partNumber` | Part number to look up |
+
+**Output columns added**: `In Onshape` (`YES`/`NO`/`ERROR`), `Last Upload` (release date), `Last Release Rev`, `Onshape Doc`

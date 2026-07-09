@@ -1,0 +1,3369 @@
+{
+  "featureScriptDocs": "1.0",
+  "info": {
+    "title": "FeatureScript Standard Library - Enums",
+    "description": "All auto-generated enum types used by features and operations",
+    "sourceVersion": "2026.01"
+  },
+  "category": "Enums",
+  "modules": {
+    "annotationdimensiondirection.gen.fs": {
+      "name": "annotationdimensiondirection",
+      "importPath": "onshape/std/annotationdimensiondirection.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "AnnotationDimensionDirection",
+          "kind": "enum",
+          "id": "AnnotationDimensionDirection",
+          "returnType": null,
+          "description": "Used to specify the measurement direction for annotation dimensions.",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": null
+            },
+            {
+              "name": "GLOBAL_X",
+              "description": null
+            },
+            {
+              "name": "GLOBAL_Y",
+              "description": null
+            },
+            {
+              "name": "SPECIFIC",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "blendcontroltype.gen.fs": {
+      "name": "blendcontroltype",
+      "importPath": "onshape/std/blendcontroltype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BlendControlType",
+          "kind": "enum",
+          "id": "BlendControlType",
+          "returnType": null,
+          "description": "Specifies the controlled quantitiy for fillet operation.",
+          "values": [
+            {
+              "name": "RADIUS",
+              "description": null
+            },
+            {
+              "name": "WIDTH",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "bodydraftconcaverepairtype.gen.fs": {
+      "name": "bodydraftconcaverepairtype",
+      "importPath": "onshape/std/bodydraftconcaverepairtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BodyDraftConcaveRepairType",
+          "kind": "enum",
+          "id": "BodyDraftConcaveRepairType",
+          "returnType": null,
+          "description": "Specifies how to repair miter at concave corners.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "RADIUS",
+              "description": null
+            },
+            {
+              "name": "MIX",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "bodydraftcornertype.gen.fs": {
+      "name": "bodydraftcornertype",
+      "importPath": "onshape/std/bodydraftcornertype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BodyDraftCornerType",
+          "kind": "enum",
+          "id": "BodyDraftCornerType",
+          "returnType": null,
+          "description": "Specifies how to fill the gap between adjacent tapered faces.",
+          "values": [
+            {
+              "name": "EXTEND",
+              "description": null
+            },
+            {
+              "name": "PLANE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "bodydraftmatchfacetype.gen.fs": {
+      "name": "bodydraftmatchfacetype",
+      "importPath": "onshape/std/bodydraftmatchfacetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BodyDraftMatchFaceType",
+          "kind": "enum",
+          "id": "BodyDraftMatchFaceType",
+          "returnType": null,
+          "description": "Specifies how to match drafted faces.",
+          "values": [
+            {
+              "name": "TANGENT_TO_FACE",
+              "description": null
+            },
+            {
+              "name": "REFERENCE_EDGE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "bodydraftselectiontype.gen.fs": {
+      "name": "bodydraftselectiontype",
+      "importPath": "onshape/std/bodydraftselectiontype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BodyDraftSelectionType",
+          "kind": "enum",
+          "id": "BodyDraftSelectionType",
+          "returnType": null,
+          "description": "Specifies the topology type for body draft.",
+          "values": [
+            {
+              "name": "PARTS",
+              "description": null
+            },
+            {
+              "name": "FACES",
+              "description": null
+            },
+            {
+              "name": "EDGES",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "booleanoperationtype.gen.fs": {
+      "name": "booleanoperationtype",
+      "importPath": "onshape/std/booleanoperationtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BooleanOperationType",
+          "kind": "enum",
+          "id": "BooleanOperationType",
+          "returnType": null,
+          "description": "See `opBoolean`.",
+          "values": [
+            {
+              "name": "UNION",
+              "description": null
+            },
+            {
+              "name": "SUBTRACTION",
+              "description": null
+            },
+            {
+              "name": "INTERSECTION",
+              "description": null
+            },
+            {
+              "name": "SUBTRACT_COMPLEMENT",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "boundingtype.gen.fs": {
+      "name": "boundingtype",
+      "importPath": "onshape/std/boundingtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "BoundingType",
+          "kind": "enum",
+          "id": "BoundingType",
+          "returnType": null,
+          "description": "Specifies how an extrude should terminate.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": "Extrude a specific distance."
+            },
+            {
+              "name": "UP_TO_NEXT",
+              "description": "Extrude up to the next solid body or surface body in the context."
+            },
+            {
+              "name": "UP_TO_SURFACE",
+              "description": "Extrude up to the specified face, construction plane, or surface body."
+            },
+            {
+              "name": "UP_TO_BODY",
+              "description": "Extrude up to the specified solid body."
+            },
+            {
+              "name": "UP_TO_VERTEX",
+              "description": "Extrude up to the specified vertex."
+            },
+            {
+              "name": "THROUGH_ALL",
+              "description": "Extrude an unspecified distance, guaranteed to be further in the extrude direction than any other solid or surface in the context."
+            },
+            {
+              "name": "UP_TO_FACE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "chamfermethod.gen.fs": {
+      "name": "chamfermethod",
+      "importPath": "onshape/std/chamfermethod.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ChamferMethod",
+          "kind": "enum",
+          "id": "ChamferMethod",
+          "returnType": null,
+          "description": "See `opChamfer`.",
+          "values": [
+            {
+              "name": "FACE_OFFSET",
+              "description": null
+            },
+            {
+              "name": "APEX_RANGE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "chamfertype.gen.fs": {
+      "name": "chamfertype",
+      "importPath": "onshape/std/chamfertype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ChamferType",
+          "kind": "enum",
+          "id": "ChamferType",
+          "returnType": null,
+          "description": "See `opChamfer`.",
+          "values": [
+            {
+              "name": "EQUAL_OFFSETS",
+              "description": null
+            },
+            {
+              "name": "TWO_OFFSETS",
+              "description": null
+            },
+            {
+              "name": "OFFSET_ANGLE",
+              "description": null
+            },
+            {
+              "name": "RAW_OFFSET",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "clashtype.gen.fs": {
+      "name": "clashtype",
+      "importPath": "onshape/std/clashtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ClashType",
+          "kind": "enum",
+          "id": "ClashType",
+          "returnType": null,
+          "description": "Specifies the class of intersection between two bodies. \n See also: `evCollision`",
+          "values": [
+            {
+              "name": "NONE",
+              "description": "No intersection."
+            },
+            {
+              "name": "INTERFERE",
+              "description": "Bounding topologies interfere."
+            },
+            {
+              "name": "EXISTS",
+              "description": "Vertex or edge intersection. Returned only during collisions between two (1-dimensional) curves."
+            },
+            {
+              "name": "ABUT_NO_CLASS",
+              "description": "Bounding topologies abut."
+            },
+            {
+              "name": "ABUT_TOOL_IN_TARGET",
+              "description": "Bounding tool abuts bounding target on inside."
+            },
+            {
+              "name": "ABUT_TOOL_OUT_TARGET",
+              "description": "Bounding tool abuts bounding target on outside."
+            },
+            {
+              "name": "TARGET_IN_TOOL",
+              "description": "Target completely inside tool."
+            },
+            {
+              "name": "TOOL_IN_TARGET",
+              "description": "Tool completely inside target."
+            }
+          ]
+        }
+      ]
+    },
+    "constrainttype.gen.fs": {
+      "name": "constrainttype",
+      "importPath": "onshape/std/constrainttype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ConstraintType",
+          "kind": "enum",
+          "id": "ConstraintType",
+          "returnType": null,
+          "description": "Specifies a type of sketch constraint. \n See also: `skConstraint`",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "COINCIDENT",
+              "description": null
+            },
+            {
+              "name": "PARALLEL",
+              "description": null
+            },
+            {
+              "name": "VERTICAL",
+              "description": null
+            },
+            {
+              "name": "HORIZONTAL",
+              "description": null
+            },
+            {
+              "name": "PERPENDICULAR",
+              "description": null
+            },
+            {
+              "name": "CONCENTRIC",
+              "description": null
+            },
+            {
+              "name": "MIRROR",
+              "description": null
+            },
+            {
+              "name": "MIDPOINT",
+              "description": null
+            },
+            {
+              "name": "TANGENT",
+              "description": null
+            },
+            {
+              "name": "EQUAL",
+              "description": null
+            },
+            {
+              "name": "LENGTH",
+              "description": null
+            },
+            {
+              "name": "DISTANCE",
+              "description": null
+            },
+            {
+              "name": "ANGLE",
+              "description": null
+            },
+            {
+              "name": "RADIUS",
+              "description": null
+            },
+            {
+              "name": "NORMAL",
+              "description": null
+            },
+            {
+              "name": "FIX",
+              "description": null
+            },
+            {
+              "name": "PROJECTED",
+              "description": null
+            },
+            {
+              "name": "OFFSET",
+              "description": null
+            },
+            {
+              "name": "CIRCULAR_PATTERN",
+              "description": null
+            },
+            {
+              "name": "PIERCE",
+              "description": null
+            },
+            {
+              "name": "LINEAR_PATTERN",
+              "description": null
+            },
+            {
+              "name": "MAJOR_DIAMETER",
+              "description": null
+            },
+            {
+              "name": "MINOR_DIAMETER",
+              "description": null
+            },
+            {
+              "name": "QUADRANT",
+              "description": null
+            },
+            {
+              "name": "DIAMETER",
+              "description": null
+            },
+            {
+              "name": "SILHOUETTED",
+              "description": null
+            },
+            {
+              "name": "CENTERLINE_DIMENSION",
+              "description": null
+            },
+            {
+              "name": "INTERSECTED",
+              "description": null
+            },
+            {
+              "name": "RHO",
+              "description": null
+            },
+            {
+              "name": "EQUAL_CURVATURE",
+              "description": null
+            },
+            {
+              "name": "BEZIER_DEGREE",
+              "description": null
+            },
+            {
+              "name": "FREEZE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "coordinatesysteminferenceselectionfilter.gen.fs": {
+      "name": "coordinatesysteminferenceselectionfilter",
+      "importPath": "onshape/std/coordinatesysteminferenceselectionfilter.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CoordinateSystemInferenceSelectionFilter",
+          "kind": "enum",
+          "id": "CoordinateSystemInferenceSelectionFilter",
+          "returnType": null,
+          "description": "Specifies the filter type when requesting inference mate connectors.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "HOLE_GEOMETRY",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "curveextensionendcondition.gen.fs": {
+      "name": "curveextensionendcondition",
+      "importPath": "onshape/std/curveextensionendcondition.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurveExtensionEndCondition",
+          "kind": "enum",
+          "id": "CurveExtensionEndCondition",
+          "returnType": null,
+          "description": "Specifies the end condition for curve extension.",
+          "values": [
+            {
+              "name": "BLIND",
+              "description": null
+            },
+            {
+              "name": "UP_TO_ENTITY",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "curveextensionshape.gen.fs": {
+      "name": "curveextensionshape",
+      "importPath": "onshape/std/curveextensionshape.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurveExtensionShape",
+          "kind": "enum",
+          "id": "CurveExtensionShape",
+          "returnType": null,
+          "description": "Specifies the shape of curve extension.",
+          "values": [
+            {
+              "name": "CURVATURE",
+              "description": null
+            },
+            {
+              "name": "TANGENT",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "curvepatternorientationtype.gen.fs": {
+      "name": "curvepatternorientationtype",
+      "importPath": "onshape/std/curvepatternorientationtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurvePatternOrientationType",
+          "kind": "enum",
+          "id": "CurvePatternOrientationType",
+          "returnType": null,
+          "description": "Specifies the orientation type of patterned entities in curve pattern.",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": "Patterned entities will be reoriented tangent to curve (default orientation)."
+            },
+            {
+              "name": "LOCK_FACES",
+              "description": "Lock the orientation of patterned entities normal to a set of faces."
+            },
+            {
+              "name": "KEEP_ORIENTATION",
+              "description": "Match the orientation of patterned entities with the seed entity orientation."
+            }
+          ]
+        }
+      ]
+    },
+    "curvetype.gen.fs": {
+      "name": "curvetype",
+      "importPath": "onshape/std/curvetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "CurveType",
+          "kind": "enum",
+          "id": "CurveType",
+          "returnType": null,
+          "description": "The subset of `GeometryType` which applies to 1-dimensional entities.",
+          "values": [
+            {
+              "name": "CIRCLE",
+              "description": null
+            },
+            {
+              "name": "LINE",
+              "description": null
+            },
+            {
+              "name": "OTHER",
+              "description": null
+            },
+            {
+              "name": "ELLIPSE",
+              "description": null
+            },
+            {
+              "name": "SPLINE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "debugcolor.gen.fs": {
+      "name": "debugcolor",
+      "importPath": "onshape/std/debugcolor.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DebugColor",
+          "kind": "enum",
+          "id": "DebugColor",
+          "returnType": null,
+          "description": "Color choices for the `debug` function",
+          "values": [
+            {
+              "name": "RED",
+              "description": null
+            },
+            {
+              "name": "GREEN",
+              "description": null
+            },
+            {
+              "name": "BLUE",
+              "description": null
+            },
+            {
+              "name": "CYAN",
+              "description": null
+            },
+            {
+              "name": "MAGENTA",
+              "description": null
+            },
+            {
+              "name": "YELLOW",
+              "description": null
+            },
+            {
+              "name": "BLACK",
+              "description": null
+            },
+            {
+              "name": "ORANGE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "dimensionalignment.gen.fs": {
+      "name": "dimensionalignment",
+      "importPath": "onshape/std/dimensionalignment.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DimensionAlignment",
+          "kind": "enum",
+          "id": "DimensionAlignment",
+          "returnType": null,
+          "description": "Specifies how a constraint between lines or axes (such as parallel or coincident) should align the two constrained axes.",
+          "values": [
+            {
+              "name": "UNSPECIFIED",
+              "description": null
+            },
+            {
+              "name": "ALIGNED",
+              "description": null
+            },
+            {
+              "name": "ANTI_ALIGNED",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "drafttype.gen.fs": {
+      "name": "drafttype",
+      "importPath": "onshape/std/drafttype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "DraftType",
+          "kind": "enum",
+          "id": "DraftType",
+          "returnType": null,
+          "description": "Specifies the type of draft to execute.",
+          "values": [
+            {
+              "name": "REFERENCE_ENTITY",
+              "description": "Draft faces holding a specific reference entity constant for each face."
+            },
+            {
+              "name": "REFERENCE_SURFACE",
+              "description": "Draft faces relative to a single neutral surface."
+            }
+          ]
+        }
+      ]
+    },
+    "edgeconvexitytype.gen.fs": {
+      "name": "edgeconvexitytype",
+      "importPath": "onshape/std/edgeconvexitytype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "EdgeConvexityType",
+          "kind": "enum",
+          "id": "EdgeConvexityType",
+          "returnType": null,
+          "description": "Specifies how two faces join at a given edge. This is a function of the interior angle between the adjoining surfaces, measured inside the owner body.",
+          "values": [
+            {
+              "name": "CONVEX",
+              "description": "The interior angle is less than 180 degrees along the whole edge."
+            },
+            {
+              "name": "CONCAVE",
+              "description": "The interior angle is greater than 180 degrees along the whole edge."
+            },
+            {
+              "name": "SMOOTH",
+              "description": "The interior angle is equal to 180 degrees along the whole edge."
+            },
+            {
+              "name": "VARIABLE",
+              "description": "None of the above, i.e. the edge convexity varies along the edge."
+            }
+          ]
+        }
+      ]
+    },
+    "edgetopology.gen.fs": {
+      "name": "edgetopology",
+      "importPath": "onshape/std/edgetopology.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "EdgeTopology",
+          "kind": "enum",
+          "id": "EdgeTopology",
+          "returnType": null,
+          "description": "Specifies the topology of an edge entity.\nCan be used in a filter on a query parameter to only allow certain selections: \n\n```\nannotation { \"Name\" : \"Surface edges\", \"Filter\" : EntityType.EDGE &amp;&amp; EdgeTopology.ONE_SIDED } definition.edges is Query;\n```\n\n See also: `qEdgeTopologyFilter`",
+          "values": [
+            {
+              "name": "WIRE",
+              "description": "edge without adjacent faces, belonging to a wire body."
+            },
+            {
+              "name": "ONE_SIDED",
+              "description": "An edge adjacent to one face (e.g. the edge of a surface extrude)."
+            },
+            {
+              "name": "TWO_SIDED",
+              "description": "An edge which joins two faces (e.g. the edge of a cube)."
+            }
+          ]
+        }
+      ]
+    },
+    "entityinferencetype.gen.fs": {
+      "name": "entityinferencetype",
+      "importPath": "onshape/std/entityinferencetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "EntityInferenceType",
+          "kind": "enum",
+          "id": "EntityInferenceType",
+          "returnType": null,
+          "description": "Specifies how a mate connector's coordinate system is defined with respect to an entity. \n See also: `mateConnector`",
+          "values": [
+            {
+              "name": "POINT",
+              "description": "Place a mate connector at a vertex with the world coordinate system, or at the tip of a conical face with its Z-axis along the cone axis."
+            },
+            {
+              "name": "CENTROID",
+              "description": "Place a mate connector at the centroid of a face, with its Z-axis along the face normal at that point."
+            },
+            {
+              "name": "CENTER",
+              "description": "Place a mate connector at the center of a circular or elliptical edge with its Z-axis along the normal of the plane which the edge lies on, or at the center of a sphere with the world coordinate system."
+            },
+            {
+              "name": "MID_POINT",
+              "description": "Place a mate connector at the midpoint of an edge, with its Z-axis along the edge."
+            },
+            {
+              "name": "TOP_AXIS_POINT",
+              "description": "Place a mate connector at the projection of the top extreme of a cylindrical or other revolved face onto the central axis of that face, with its Z-axis along the central axis."
+            },
+            {
+              "name": "MID_AXIS_POINT",
+              "description": "Place a mate connector at the projection of the point midway betwen the top and bottom extremes of a cylindrical or other revolved face onto the central axis of that face, with its Z-axis along the central axis."
+            },
+            {
+              "name": "BOTTOM_AXIS_POINT",
+              "description": "Place a mate connector at the projection of the bottom extreme of a cylindrical or other revolved face onto the central axis of that face, with"
+            },
+            {
+              "name": "LOOP_CENTER",
+              "description": "Place a mate connector at the center of a loop of planar edges, with its Z-axis along the normal of the plane. Only one edge of the loop needs to be selected for this inference."
+            },
+            {
+              "name": "VIRTUAL_SHARP",
+              "description": "Place a mate connector at locations along a loop of planar edges where a single nonlinear edge sits between two nonparallel lines and is tangent to both. The mate origin will be the projected intersection of the two lines, with its Z-axis along the normal of the plane."
+            }
+          ]
+        }
+      ]
+    },
+    "extendendtype.gen.fs": {
+      "name": "extendendtype",
+      "importPath": "onshape/std/extendendtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ExtendEndType",
+          "kind": "enum",
+          "id": "ExtendEndType",
+          "returnType": null,
+          "description": "See `opExtendSheetBody`.",
+          "values": [
+            {
+              "name": "EXTEND_BLIND",
+              "description": null
+            },
+            {
+              "name": "EXTEND_TO_TARGET",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "extendsheetshapetype.gen.fs": {
+      "name": "extendsheetshapetype",
+      "importPath": "onshape/std/extendsheetshapetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ExtendSheetShapeType",
+          "kind": "enum",
+          "id": "ExtendSheetShapeType",
+          "returnType": null,
+          "description": "See `opExtendSheetBody`.",
+          "values": [
+            {
+              "name": "LINEAR",
+              "description": null
+            },
+            {
+              "name": "SOFT",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "faceblendcrosssection.gen.fs": {
+      "name": "faceblendcrosssection",
+      "importPath": "onshape/std/faceblendcrosssection.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaceBlendCrossSection",
+          "kind": "enum",
+          "id": "FaceBlendCrossSection",
+          "returnType": null,
+          "description": "Specifies the type of cross section of the blend.",
+          "values": [
+            {
+              "name": "ROLLING_BALL",
+              "description": null
+            },
+            {
+              "name": "SWEPT_PROFILE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "faceblendcrosssectionshape.gen.fs": {
+      "name": "faceblendcrosssectionshape",
+      "importPath": "onshape/std/faceblendcrosssectionshape.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaceBlendCrossSectionShape",
+          "kind": "enum",
+          "id": "FaceBlendCrossSectionShape",
+          "returnType": null,
+          "description": "Specifies the cross sectional control for a fillet operation.",
+          "values": [
+            {
+              "name": "CIRCULAR",
+              "description": null
+            },
+            {
+              "name": "CONIC",
+              "description": null
+            },
+            {
+              "name": "CURVATURE",
+              "description": null
+            },
+            {
+              "name": "CHAMFER",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "faceblendpropagation.gen.fs": {
+      "name": "faceblendpropagation",
+      "importPath": "onshape/std/faceblendpropagation.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaceBlendPropagation",
+          "kind": "enum",
+          "id": "FaceBlendPropagation",
+          "returnType": null,
+          "description": "Specifies the propagation type of the blend.",
+          "values": [
+            {
+              "name": "TANGENT",
+              "description": null
+            },
+            {
+              "name": "ADJACENT",
+              "description": null
+            },
+            {
+              "name": "CUSTOM",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "faceblendtrimtype.gen.fs": {
+      "name": "faceblendtrimtype",
+      "importPath": "onshape/std/faceblendtrimtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaceBlendTrimType",
+          "kind": "enum",
+          "id": "FaceBlendTrimType",
+          "returnType": null,
+          "description": "Specifies how to trim the created blend.",
+          "values": [
+            {
+              "name": "WALLS",
+              "description": null
+            },
+            {
+              "name": "SHORT",
+              "description": null
+            },
+            {
+              "name": "LONG",
+              "description": null
+            },
+            {
+              "name": "NO_TRIM",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "facecurvecreationtype.gen.fs": {
+      "name": "facecurvecreationtype",
+      "importPath": "onshape/std/facecurvecreationtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaceCurveCreationType",
+          "kind": "enum",
+          "id": "FaceCurveCreationType",
+          "returnType": null,
+          "description": "Specifies type of curve on face. \n See also: `opCreateCurvesOnFace`",
+          "values": [
+            {
+              "name": "DIR1_ISO",
+              "description": "Iso-parameter curves in primary direction"
+            },
+            {
+              "name": "DIR2_ISO",
+              "description": "Iso-parameter curves in secondary direction."
+            },
+            {
+              "name": "DIR1_AUTO_SPACED_ISO",
+              "description": "Equally spaced iso-parameter curves in primary direction."
+            },
+            {
+              "name": "DIR2_AUTO_SPACED_ISO",
+              "description": "Equally spaced iso-parameter curves in secondary direction."
+            }
+          ]
+        }
+      ]
+    },
+    "faulttype.gen.fs": {
+      "name": "faulttype",
+      "importPath": "onshape/std/faulttype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FaultType",
+          "kind": "enum",
+          "id": "FaultType",
+          "returnType": null,
+          "description": "Description of possible faults.",
+          "values": [
+            {
+              "name": "NO_FAULT",
+              "description": null
+            },
+            {
+              "name": "CORRUPT_ENTITY",
+              "description": null
+            },
+            {
+              "name": "BODY_INVALID_IDENTIFIERS",
+              "description": null
+            },
+            {
+              "name": "BODY_INSIDE_OUT",
+              "description": null
+            },
+            {
+              "name": "EDGE_OPEN",
+              "description": null
+            },
+            {
+              "name": "EDGE_BAD_VERTEX",
+              "description": null
+            },
+            {
+              "name": "EDGE_REVERSED",
+              "description": null
+            },
+            {
+              "name": "VERTICES_TOUCH",
+              "description": null
+            },
+            {
+              "name": "WIRE_INTERSECT",
+              "description": null
+            },
+            {
+              "name": "ENTITY_INVALID",
+              "description": null
+            },
+            {
+              "name": "FACE_BAD_VERTEX",
+              "description": null
+            },
+            {
+              "name": "FACE_BAD_EDGE",
+              "description": null
+            },
+            {
+              "name": "FACE_INTERSECTS_EDGE",
+              "description": null
+            },
+            {
+              "name": "CHECKING_FAILED",
+              "description": null
+            },
+            {
+              "name": "FACE_FACE_INTERSECTION",
+              "description": null
+            },
+            {
+              "name": "SELF_INTERSECTION",
+              "description": null
+            },
+            {
+              "name": "ENTITY_NOT_G1",
+              "description": null
+            },
+            {
+              "name": "BOUNDING_BOX_VIOLATION",
+              "description": null
+            },
+            {
+              "name": "NO_GEOMETRY",
+              "description": null
+            },
+            {
+              "name": "UNDEFINED_FACE_SENSE",
+              "description": null
+            },
+            {
+              "name": "TOLERANCE_TOO_SMALL",
+              "description": null
+            },
+            {
+              "name": "EDGES_TOUCH",
+              "description": null
+            },
+            {
+              "name": "DEGENERATE_GEOMETRY",
+              "description": null
+            },
+            {
+              "name": "GENERAL_FAULT",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "featuredimensiontype.gen.fs": {
+      "name": "featuredimensiontype",
+      "importPath": "onshape/std/featuredimensiontype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FeatureDimensionType",
+          "kind": "enum",
+          "id": "FeatureDimensionType",
+          "returnType": null,
+          "description": "Used to specify the type of a feature dimension, as in `setDimensionedEntities`.",
+          "values": [
+            {
+              "name": "DISTANCE",
+              "description": "Indicates the distance between two faces."
+            },
+            {
+              "name": "ANGLE",
+              "description": "Indicates the angle between two planar faces."
+            },
+            {
+              "name": "RADIUS",
+              "description": "Indicates the radius of a face with a circular cross-section of consistent radius, e.g. cylinder, torus."
+            },
+            {
+              "name": "DIAMETER",
+              "description": "Indicates the diameter of a face with a circular cross-section of consistent radius."
+            },
+            {
+              "name": "AXIS_DISTANCE",
+              "description": "Indicates the distance between the axes of two faces (cones or cylinders), or the distance between one such face and a planar face."
+            }
+          ]
+        }
+      ]
+    },
+    "fieldweldflag.gen.fs": {
+      "name": "fieldweldflag",
+      "importPath": "onshape/std/fieldweldflag.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FieldWeldFlag",
+          "kind": "enum",
+          "id": "FieldWeldFlag",
+          "returnType": null,
+          "description": "Enum to determine whether we should display no flag, upper flag or lower flag.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "UPPER",
+              "description": null
+            },
+            {
+              "name": "LOWER",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "filletcrosssection.gen.fs": {
+      "name": "filletcrosssection",
+      "importPath": "onshape/std/filletcrosssection.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FilletCrossSection",
+          "kind": "enum",
+          "id": "FilletCrossSection",
+          "returnType": null,
+          "description": "Specifies the cross sectional control for a fillet operation.",
+          "values": [
+            {
+              "name": "CIRCULAR",
+              "description": null
+            },
+            {
+              "name": "CONIC",
+              "description": null
+            },
+            {
+              "name": "CURVATURE",
+              "description": null
+            },
+            {
+              "name": "CHAMFER",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "fittolerancetables.gen.fs": {
+      "name": "fittolerancetables",
+      "importPath": "onshape/std/fittolerancetables.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "getFitToleranceLimits",
+          "kind": "function",
+          "id": "getFitToleranceLimits-ValueWithUnits-string-string-boolean",
+          "signature": "(nominalSize is ValueWithUnits, standard is string, toleranceClass is string, isHoleBasis is boolean)",
+          "signatureParams": [
+            {
+              "name": "nominalSize",
+              "type": "ValueWithUnits"
+            },
+            {
+              "name": "standard",
+              "type": "string"
+            },
+            {
+              "name": "toleranceClass",
+              "type": "string"
+            },
+            {
+              "name": "isHoleBasis",
+              "type": "boolean"
+            }
+          ],
+          "returnType": "map",
+          "returnTypeRef": "builtin:map",
+          "description": "Retrieves fit tolerance limits for a given nominal size, tolerance class, and basis.",
+          "parameters": [
+            {
+              "name": "nominalSize",
+              "type": "ValueWithUnits",
+              "typeRef": "#ValueWithUnits",
+              "required": true,
+              "requiredIf": null,
+              "description": "The nominal size with units for which the fit tolerance limits are required."
+            },
+            {
+              "name": "standard",
+              "type": "string",
+              "typeRef": "builtin:string",
+              "required": true,
+              "requiredIf": null,
+              "description": "The standard of the fit tolerance table (\"ANSI\" or \"ISO\")."
+            },
+            {
+              "name": "toleranceClass",
+              "type": "string",
+              "typeRef": "builtin:string",
+              "required": true,
+              "requiredIf": null,
+              "description": "The tolerance class as a string."
+            },
+            {
+              "name": "isHoleBasis",
+              "type": "boolean",
+              "typeRef": "builtin:boolean",
+              "required": true,
+              "requiredIf": null,
+              "description": "Indicates whether the basis of the tolerance class is hole or shaft."
+            }
+          ],
+          "returnInfo": {
+            "type": "map",
+            "typeRef": "builtin:map",
+            "description": "A map containing the fit tolerance limits. Returns an empty map if no suitable tolerance limits are found."
+          },
+          "references": [
+            "ValueWithUnits"
+          ]
+        }
+      ]
+    },
+    "fixedparameterposition.gen.fs": {
+      "name": "fixedparameterposition",
+      "importPath": "onshape/std/fixedparameterposition.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "FixedParameterPosition",
+          "kind": "enum",
+          "id": "FixedParameterPosition",
+          "returnType": null,
+          "description": "Specifies where a constraint should be resolved FIXED_AT_START or FIXED_AT_END will fix the constraint to coincide with the start or end of parametric curves. FIXED_ON_CURVE will fix the help point.",
+          "values": [
+            {
+              "name": "FIXED_AT_START",
+              "description": null
+            },
+            {
+              "name": "FIXED_AT_END",
+              "description": null
+            },
+            {
+              "name": "FIXED_ON_CURVE",
+              "description": null
+            },
+            {
+              "name": "FREE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "geometriccontinuity.gen.fs": {
+      "name": "geometriccontinuity",
+      "importPath": "onshape/std/geometriccontinuity.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "GeometricContinuity",
+          "kind": "enum",
+          "id": "GeometricContinuity",
+          "returnType": null,
+          "description": "Specifies the level of geometric continuity.",
+          "values": [
+            {
+              "name": "G0",
+              "description": null
+            },
+            {
+              "name": "G1",
+              "description": null
+            },
+            {
+              "name": "G2",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "holepositionreference.gen.fs": {
+      "name": "holepositionreference",
+      "importPath": "onshape/std/holepositionreference.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "HolePositionReference",
+          "kind": "enum",
+          "id": "HolePositionReference",
+          "returnType": null,
+          "description": "For a `HoleProfile`, a reference point along the hole axis to which the `position` of the profile is relative. To calculate these references, the cylinder of the hole is intersected with the `targets` of the hole. If the hole cylinder encounters a slanted or otherwise irregular face at the intersection with the target, the reference may by a range rather than a single point. Users may specify that they want the end of this range by using a `holeProfile`, or the beginning of this range by using a `holeProfileBeforeReference`; or they may control this behavior directly by setting the `beforeReference` flag of the `HoleProfile`.\nTypically, the beginning of the reference range should be used for the first profile of the hole, and the end of the reference range should be used for the rest of the profiles of the hole. Using the beginning of the reference range for the first profile ensures that when the hole tool is cut from a target with a slanted or otherwise irregular entrance face, the first profile is far back enough to ensure that no undesirable overhang is left behind on the target, preventing the fastener from entering the hole. Using the end of the reference range for the rest of the profiles ensures that any nominal distances are measured from where the hole cylinder fully enters the part. As an example of both of these concepts, set the first two profiles of a `HoleDefinition` as a `holeProfileBeforeReference` referencing `TARGET_START` with a `position` of 0 inches, and a `holeProfile` referencing `TARGET_START` with a `position` of 2 inches, respectively. If this layout of profiles is used against a target that has a slanted entrance face, the first profile will be placed right where the cylinder first intersects the part, ensuring that there is no overhang when the hole tool is subtracted from the target. The second profile will be placed 2 inches from where the hole cylinder fully enters the target, such that the request for the hole to be 2 inches deep is understood as the hole having a full two inches of depth in the target, exluding the area where the hole is only partially cut into the target. Notably, to accomplish this the first and second profiles are placed more than two inches apart.\nWhen calculating references, any intersection which is fully behind the `origin` of the axis `Line` (i.e. the axis point) is always ignored. Range intersections where the end of the range is ahead of the axis point but the start of the range is behind the axis point are not ignored.",
+          "values": [
+            {
+              "name": "AXIS_POINT",
+              "description": "When calling `opHole`, the user will supply one or more `axes` defining where the holes are to be placed. When using this reference, the `position` of the profile will be in reference to the `origin` of the axis `Line` of the hole."
+            },
+            {
+              "name": "TARGET_START",
+              "description": "When using this reference, the `position` of the profile will be in reference to the closest intersection of the hole cylinder with any target."
+            },
+            {
+              "name": "LAST_TARGET_START",
+              "description": "For each target, find the first intersection of the hole cylinder into the target. When using this reference, the `position` of the profile will be in reference to the furthest of those intersections. Notably, this means that if certain targets are geometrically constructed such that the hole cylinder enters and exits the target multiple times, only the first of the entrances into the target is considered."
+            },
+            {
+              "name": "LAST_TARGET_END",
+              "description": "When using this reference, the `position` of the profile will be in reference to the furthest exit of the hole cylinder from any target."
+            },
+            {
+              "name": "UP_TO_ENTITY",
+              "description": null
+            },
+            {
+              "name": "UP_TO_NEXT",
+              "description": null
+            },
+            {
+              "name": "LAST_TARGET_START_IN_DEPTH",
+              "description": "For each target, find the first intersection of the hole cylinder into the target. When using this reference, the `position` of the profile will be in reference to the furthest of those intersections within the hole depth."
+            }
+          ],
+          "references": [
+            "HoleProfile",
+            "HoleDefinition",
+            "Line"
+          ]
+        }
+      ]
+    },
+    "holeprofiletype.gen.fs": {
+      "name": "holeprofiletype",
+      "importPath": "onshape/std/holeprofiletype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "HoleProfileType",
+          "kind": "enum",
+          "id": "HoleProfileType",
+          "returnType": null,
+          "description": "Describes how a `HoleProfile` is constructed in relation to its `HolePositionReference`.",
+          "values": [
+            {
+              "name": "POSITIONED",
+              "description": "See `holeProfile`."
+            },
+            {
+              "name": "MATCHED",
+              "description": "See `matchedHoleProfile`."
+            }
+          ],
+          "references": [
+            "HoleProfile",
+            "HolePositionReference"
+          ]
+        }
+      ]
+    },
+    "icon.gen.fs": {
+      "name": "icon",
+      "importPath": "onshape/std/icon.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "Icon",
+          "kind": "enum",
+          "id": "Icon",
+          "returnType": null,
+          "description": "Specifies an icon resource available in Onshape.",
+          "values": [
+            {
+              "name": "X_LINEAR_LIMIT_MIN",
+              "description": "Minimum X linear limit."
+            },
+            {
+              "name": "X_LINEAR_LIMIT_MAX",
+              "description": "Maximum X linear limit."
+            },
+            {
+              "name": "Y_LINEAR_LIMIT_MIN",
+              "description": "Minimum Y linear limit."
+            },
+            {
+              "name": "Y_LINEAR_LIMIT_MAX",
+              "description": "Maximum Y linear limit."
+            },
+            {
+              "name": "Z_LINEAR_LIMIT_MIN",
+              "description": "Minimum Z linear limit."
+            },
+            {
+              "name": "Z_LINEAR_LIMIT_MAX",
+              "description": "Maximum Z linear limit."
+            },
+            {
+              "name": "X_ROTATION_LIMIT_MIN",
+              "description": "Minimum X rotation limit."
+            },
+            {
+              "name": "X_ROTATION_LIMIT_MAX",
+              "description": "Maximum X rotation limit."
+            },
+            {
+              "name": "Y_ROTATION_LIMIT_MIN",
+              "description": "Minimum Y rotation limit."
+            },
+            {
+              "name": "Y_ROTATION_LIMIT_MAX",
+              "description": "Maximum Y rotation limit."
+            },
+            {
+              "name": "Z_ROTATION_LIMIT_MIN",
+              "description": "Minimum Z rotation limit."
+            },
+            {
+              "name": "Z_ROTATION_LIMIT_MAX",
+              "description": "Maximum Z rotation limit."
+            },
+            {
+              "name": "CONE_ANGLE_LIMIT",
+              "description": "Cone angle limit."
+            },
+            {
+              "name": "HOLE_DIAMETER",
+              "description": "Hole diameter."
+            },
+            {
+              "name": "HOLE_DEPTH",
+              "description": "Hole depth."
+            },
+            {
+              "name": "HOLE_DRILL_ANGLE",
+              "description": "Hole drill angle."
+            },
+            {
+              "name": "HOLE_COUNTERBORE_DIAMETER",
+              "description": "Hole counterbore diameter."
+            },
+            {
+              "name": "HOLE_COUNTERBORE_DEPTH",
+              "description": "Hole counterbore depth."
+            },
+            {
+              "name": "HOLE_COUNTERSINK_DIAMETER",
+              "description": "Hole countersink diameter."
+            },
+            {
+              "name": "HOLE_TAP_DIAMETER",
+              "description": "Hole tap diameter."
+            },
+            {
+              "name": "HOLE_COUNTERSINK_ANGLE",
+              "description": "Hole countersink angle."
+            },
+            {
+              "name": "HOLE_TAPPED_DEPTH",
+              "description": "Hole tapped depth."
+            },
+            {
+              "name": "HOLE_TAP_CLEARANCE",
+              "description": "Hole tap clearance."
+            },
+            {
+              "name": "ALONG_X",
+              "description": "Along the X-axis."
+            },
+            {
+              "name": "ALONG_Y",
+              "description": "Along the Y-axis."
+            },
+            {
+              "name": "ALONG_Z",
+              "description": "Along the Z-axis."
+            },
+            {
+              "name": "DOF_TRANSLATION",
+              "description": "Degrees of freedom translation."
+            },
+            {
+              "name": "DOF_ROTATION",
+              "description": "Degrees of freedom rotation."
+            },
+            {
+              "name": "DIHEDRAL_LOW",
+              "description": "Dihedral low."
+            },
+            {
+              "name": "DIHEDRAL_HIGH",
+              "description": "Dihedral high."
+            }
+          ]
+        }
+      ]
+    },
+    "lofttopology.gen.fs": {
+      "name": "lofttopology",
+      "importPath": "onshape/std/lofttopology.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "LoftTopology",
+          "kind": "enum",
+          "id": "LoftTopology",
+          "returnType": null,
+          "description": "Specifies topology option for opLoft.",
+          "values": [
+            {
+              "name": "MINIMAL",
+              "description": "Minimal number of faces created."
+            },
+            {
+              "name": "COLUMNS",
+              "description": "One face is created for each matching set of profile segments."
+            },
+            {
+              "name": "GRID",
+              "description": "Faces created for COLUMNS option are split at each profile."
+            }
+          ]
+        }
+      ]
+    },
+    "lookupTablePath.fs": {
+      "name": "lookupTablePath",
+      "importPath": "onshape/std/lookupTablePath.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "LookupTablePath",
+          "kind": "type",
+          "id": "LookupTablePath",
+          "returnType": null,
+          "description": "A `LookupTablePath` identifies a map of keys into a multi-level table.\nThe fields on a LookupTablePath depend on its related LookupTable.",
+          "parameters": [
+            {
+              "name": "LookupTablePath",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "entityType",
+                  "type": "EntityType",
+                  "typeRef": "#EntityType",
+                  "required": false,
+                  "requiredIf": null,
+                  "description": "Optional"
+                }
+              ]
+            }
+          ],
+          "references": [
+            "EntityType"
+          ]
+        },
+        {
+          "name": "canBeLookupTablePath",
+          "kind": "predicate",
+          "id": "canBeLookupTablePath-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": null,
+          "description": "Typecheck for `LookupTablePath`",
+          "references": [
+            "LookupTablePath"
+          ]
+        },
+        {
+          "name": "lookupTablePath",
+          "kind": "function",
+          "id": "lookupTablePath-map",
+          "signature": "(source is map)",
+          "signatureParams": [
+            {
+              "name": "source",
+              "type": "map"
+            }
+          ],
+          "returnType": "LookupTablePath",
+          "returnTypeRef": "#LookupTablePath",
+          "description": "Creates a `lookupTablePath`."
+        },
+        {
+          "name": "lookupTableEvaluate",
+          "kind": "function",
+          "id": "lookupTableEvaluate-string",
+          "signature": "(expression is string)",
+          "signatureParams": [
+            {
+              "name": "expression",
+              "type": "string"
+            }
+          ],
+          "returnType": "ValueWithUnits",
+          "returnTypeRef": "#ValueWithUnits",
+          "description": "Convert a table expression in string form into a ValueWithUnits.",
+          "parameters": [
+            {
+              "name": "expression",
+              "type": "string",
+              "typeRef": "builtin:string",
+              "required": true,
+              "requiredIf": null,
+              "description": "Currently the following forms are supported: \n Example: \n`{number} &lt;*&gt; {units}` Example: \n`{number}/{number} &lt;*&gt; {units}` Example: \n`{number} &lt;+&gt; {number}/{number} &lt;*&gt; {units} Where {number} is &lt;-&gt;&lt;.&gt;nnn&gt; or &lt;-&gt;inf` Example: \n`{} indicate an entity, &lt;&gt; indicate the contents are optional spaces between entities are optional unless they are required to separate entities.`"
+            }
+          ]
+        },
+        {
+          "name": "lookupTableFixExpression",
+          "kind": "function",
+          "id": "lookupTableFixExpression-string",
+          "signature": "(expression is string)",
+          "signatureParams": [
+            {
+              "name": "expression",
+              "type": "string"
+            }
+          ],
+          "returnType": "string",
+          "returnTypeRef": "builtin:string",
+          "description": "insert plus sign and parenthesis as needed to make a valid expression"
+        },
+        {
+          "name": "getLookupTable",
+          "kind": "function",
+          "id": "getLookupTable-map-LookupTablePath",
+          "signature": "(table is map, path is LookupTablePath)",
+          "signatureParams": [
+            {
+              "name": "table",
+              "type": "map"
+            },
+            {
+              "name": "path",
+              "type": "LookupTablePath"
+            }
+          ],
+          "returnType": null,
+          "description": "Find a terminal/content table from a path and convert into expression/value form"
+        },
+        {
+          "name": "lookupTableGetValue",
+          "kind": "function",
+          "id": "lookupTableGetValue-",
+          "signature": "(value)",
+          "signatureParams": [
+            {
+              "name": "value",
+              "type": null
+            }
+          ],
+          "returnType": "ValueWithUnits",
+          "returnTypeRef": "#ValueWithUnits",
+          "description": "Extract the value portion of expression/value maps or evaluate expressions. value maybe an expression or a value with units"
+        },
+        {
+          "name": "isLookupTableViolated",
+          "kind": "function",
+          "id": "isLookupTableViolated-map-map",
+          "signature": "(definition is map, table is map)",
+          "signatureParams": [
+            {
+              "name": "definition",
+              "type": "map"
+            },
+            {
+              "name": "table",
+              "type": "map"
+            }
+          ],
+          "returnType": "boolean",
+          "returnTypeRef": "builtin:boolean",
+          "description": "Test if the current definition violates the table."
+        }
+      ]
+    },
+    "manipulatordragtypeenum.gen.fs": {
+      "name": "manipulatordragtypeenum",
+      "importPath": "onshape/std/manipulatordragtypeenum.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ManipulatorDragTypeEnum",
+          "kind": "enum",
+          "id": "ManipulatorDragTypeEnum",
+          "returnType": null,
+          "description": "Specifies the type of manipulator being dragged.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "LINEAR_X",
+              "description": null
+            },
+            {
+              "name": "LINEAR_Y",
+              "description": null
+            },
+            {
+              "name": "LINEAR_Z",
+              "description": null
+            },
+            {
+              "name": "PLANAR_XY",
+              "description": null
+            },
+            {
+              "name": "PLANAR_XZ",
+              "description": null
+            },
+            {
+              "name": "PLANAR_YZ",
+              "description": null
+            },
+            {
+              "name": "ROTATION_X",
+              "description": null
+            },
+            {
+              "name": "ROTATION_Y",
+              "description": null
+            },
+            {
+              "name": "ROTATION_Z",
+              "description": null
+            },
+            {
+              "name": "REPOSITION",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "manipulatorstyleenum.gen.fs": {
+      "name": "manipulatorstyleenum",
+      "importPath": "onshape/std/manipulatorstyleenum.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ManipulatorStyleEnum",
+          "kind": "enum",
+          "id": "ManipulatorStyleEnum",
+          "returnType": null,
+          "description": "Specifies the style of a manipulator intended to look unique. \n See also: `addManipulators`",
+          "values": [
+            {
+              "name": "DEFAULT",
+              "description": "the standard display of the manipulator. *"
+            },
+            {
+              "name": "SECONDARY",
+              "description": "the angular or linear manipulator has two arrow heads. *"
+            },
+            {
+              "name": "SIMPLE",
+              "description": "the display of the angular or linear manipulator is simpler. *"
+            },
+            {
+              "name": "TANGENTIAL",
+              "description": "the linear manipulator has two smaller arrows around a circular base."
+            }
+          ]
+        }
+      ]
+    },
+    "manipulatortype.gen.fs": {
+      "name": "manipulatortype",
+      "importPath": "onshape/std/manipulatortype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ManipulatorType",
+          "kind": "enum",
+          "id": "ManipulatorType",
+          "returnType": null,
+          "description": "Specifies a specific type of interactive manipulator.",
+          "values": [
+            {
+              "name": "LINEAR_1D",
+              "description": "A single arrow which can move along a single axis. See `extrude` for an example."
+            },
+            {
+              "name": "LINEAR_3D",
+              "description": "A triad of perpendicular arrows which specify a 3D position. See `transformCopy` for an example."
+            },
+            {
+              "name": "ANGULAR",
+              "description": "A curved arrow, with two radii, which can move along a circumference to specify an angle. See `revolve` for an example."
+            },
+            {
+              "name": "FLIP",
+              "description": "A static arrow which can be clicked to toggle a flip direction. See `extrude` (with BoundingType.THROUGH_ALL) for an example."
+            },
+            {
+              "name": "POINTS",
+              "description": "A series of points which can be selected one at a time."
+            },
+            {
+              "name": "TOGGLE_POINTS",
+              "description": "A series of points which can each be selected individually."
+            },
+            {
+              "name": "TRIAD_FULL",
+              "description": "A triad of perpendicular arrows, planar and angular manipulators."
+            }
+          ]
+        }
+      ]
+    },
+    "mateconnectoraxistype.gen.fs": {
+      "name": "mateconnectoraxistype",
+      "importPath": "onshape/std/mateconnectoraxistype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "MateConnectorAxisType",
+          "kind": "enum",
+          "id": "MateConnectorAxisType",
+          "returnType": null,
+          "description": "Defines what direction the X-axis of a mate connector should face, relative to the reference defined. Thus, a mate connector defined with `PLUS_Y` will differ from the selected coordinate system by a 90-degree rotation about that coordinate system's Z-axis.",
+          "values": [
+            {
+              "name": "PLUS_X",
+              "description": null
+            },
+            {
+              "name": "PLUS_Y",
+              "description": null
+            },
+            {
+              "name": "MINUS_X",
+              "description": null
+            },
+            {
+              "name": "MINUS_Y",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "matedoftype.gen.fs": {
+      "name": "matedoftype",
+      "importPath": "onshape/std/matedoftype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "MateDOFType",
+          "kind": "enum",
+          "id": "MateDOFType",
+          "returnType": null,
+          "description": "Specifies a single degree of freedom of a mate.",
+          "values": [
+            {
+              "name": "Tx",
+              "description": "Translation along the X axis."
+            },
+            {
+              "name": "Ty",
+              "description": "Translation along the Y axis."
+            },
+            {
+              "name": "Tz",
+              "description": "Translation along the Z axis."
+            },
+            {
+              "name": "Rz",
+              "description": "Rotation around the Z axis."
+            },
+            {
+              "name": "Ryp",
+              "description": "Rotation around the transformed Y axis from previous transform sequence."
+            },
+            {
+              "name": "Rzp",
+              "description": "Rotation around the transformed z axis from previous transform sequence ."
+            }
+          ]
+        }
+      ]
+    },
+    "movecurveboundarytype.gen.fs": {
+      "name": "movecurveboundarytype",
+      "importPath": "onshape/std/movecurveboundarytype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "MoveCurveBoundaryType",
+          "kind": "enum",
+          "id": "MoveCurveBoundaryType",
+          "returnType": null,
+          "description": "Specifies whether to trim or extend the curve.",
+          "values": [
+            {
+              "name": "TRIM",
+              "description": null
+            },
+            {
+              "name": "EXTEND",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "offsetcurvetype.gen.fs": {
+      "name": "offsetcurvetype",
+      "importPath": "onshape/std/offsetcurvetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "OffsetCurveType",
+          "kind": "enum",
+          "id": "OffsetCurveType",
+          "returnType": null,
+          "description": "Defines what kind of offset distance is used in offset curve on face.",
+          "values": [
+            {
+              "name": "GEODESIC",
+              "description": "The distance is calculated along the faces of the body in which the selected edges lie in."
+            },
+            {
+              "name": "EUCLIDEAN",
+              "description": "The distance is the distance in world coordinates."
+            }
+          ]
+        }
+      ]
+    },
+    "origincreationtype.gen.fs": {
+      "name": "origincreationtype",
+      "importPath": "onshape/std/origincreationtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "OriginCreationType",
+          "kind": "enum",
+          "id": "OriginCreationType",
+          "returnType": null,
+          "description": "Specifies how a mate connector origin is defined, and how many entities define it.",
+          "values": [
+            {
+              "name": "ON_ENTITY",
+              "description": null
+            },
+            {
+              "name": "BETWEEN_ENTITIES",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "partstudioitemtype.gen.fs": {
+      "name": "partstudioitemtype",
+      "importPath": "onshape/std/partstudioitemtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "PartStudioItemType",
+          "kind": "enum",
+          "id": "PartStudioItemType",
+          "returnType": null,
+          "description": "Enumeration of the types of items that can be selected inside a Part Studio reference parameter. By default this parameter allows selecting all of the item types below. It can be filtered by specifying a union of any number of PartStudioItemTypes (e.g. `\"Filter\" : PartStudioItemType.SOLID || PartStudioItemType.ENTIRE_PART_STUDIO`) in the parameter's annotation.",
+          "values": [
+            {
+              "name": "SOLID",
+              "description": "A body with `BodyType.SOLID` (i.e. a part in the parts list)"
+            },
+            {
+              "name": "SURFACE",
+              "description": "A non-sketch body with `BodyType.SURFACE` (i.e. a surface in the parts list)"
+            },
+            {
+              "name": "WIRE",
+              "description": "A non-sketch body with `BodyType.WIRE` (i.e. a curve in the parts list)"
+            },
+            {
+              "name": "MESH",
+              "description": "An imported mesh (i.e. a mesh in the parts list)"
+            },
+            {
+              "name": "SKETCH",
+              "description": "An entire sketch feature (i.e. all `POINT`, `WIRE`, and `SURFACE` bodies created by the sketch)"
+            },
+            {
+              "name": "FLATTENED_SHEET_METAL",
+              "description": "A flattened sheet metal part (available from any Part Studio with sheet metal features)"
+            },
+            {
+              "name": "ENTIRE_PART_STUDIO",
+              "description": "The entire Part Studio. Setting this option allows clicking the top item (with the full Part Studio's tumbnail and name), which sets the `partQuery` to `qEverything(EntityType.BODY)`."
+            },
+            {
+              "name": "CONSTRUCTION_PLANE",
+              "description": "A plane created with Plane feature or with `opPlane`"
+            },
+            {
+              "name": "COMPOSITE_PART",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "profilecontrolmode.gen.fs": {
+      "name": "profilecontrolmode",
+      "importPath": "onshape/std/profilecontrolmode.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ProfileControlMode",
+          "kind": "enum",
+          "id": "ProfileControlMode",
+          "returnType": null,
+          "description": "Specifies how a profile should be controlled while sweeping.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": "No additional profile control."
+            },
+            {
+              "name": "KEEP_ORIENTATION",
+              "description": "Keep the orientation constant."
+            },
+            {
+              "name": "LOCK_FACES",
+              "description": "Lock the sweep operation to a set of faces."
+            },
+            {
+              "name": "LOCK_DIRECTION",
+              "description": "Lock the sweep operation to a direction.:"
+            }
+          ]
+        }
+      ]
+    },
+    "projectiontype.gen.fs": {
+      "name": "projectiontype",
+      "importPath": "onshape/std/projectiontype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ProjectionType",
+          "kind": "enum",
+          "id": "ProjectionType",
+          "returnType": null,
+          "description": "See `opDropCurve`.",
+          "values": [
+            {
+              "name": "DIRECTION",
+              "description": null
+            },
+            {
+              "name": "NORMAL_TO_TARGET",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "propertytype.gen.fs": {
+      "name": "propertytype",
+      "importPath": "onshape/std/propertytype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "PropertyType",
+          "kind": "enum",
+          "id": "PropertyType",
+          "returnType": null,
+          "description": "Defines the type of property that is being applied to a part.",
+          "values": [
+            {
+              "name": "NAME",
+              "description": null
+            },
+            {
+              "name": "MATERIAL",
+              "description": null
+            },
+            {
+              "name": "APPEARANCE",
+              "description": null
+            },
+            {
+              "name": "DESCRIPTION",
+              "description": null
+            },
+            {
+              "name": "PART_NUMBER",
+              "description": null
+            },
+            {
+              "name": "VENDOR",
+              "description": null
+            },
+            {
+              "name": "PROJECT",
+              "description": null
+            },
+            {
+              "name": "PRODUCT_LINE",
+              "description": null
+            },
+            {
+              "name": "TITLE_1",
+              "description": null
+            },
+            {
+              "name": "TITLE_2",
+              "description": null
+            },
+            {
+              "name": "TITLE_3",
+              "description": null
+            },
+            {
+              "name": "EXCLUDE_FROM_BOM",
+              "description": null
+            },
+            {
+              "name": "CUSTOM",
+              "description": "Requires a custom property id to specify fully."
+            },
+            {
+              "name": "MASS_OVERRIDE",
+              "description": null
+            },
+            {
+              "name": "REVISION",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "recordpatterntype.gen.fs": {
+      "name": "recordpatterntype",
+      "importPath": "onshape/std/recordpatterntype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RecordPatternType",
+          "kind": "enum",
+          "id": "RecordPatternType",
+          "returnType": null,
+          "description": "Allows differentiation of patterns in computed data",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "LINEAR",
+              "description": null
+            },
+            {
+              "name": "CIRCULAR",
+              "description": null
+            },
+            {
+              "name": "CURVE",
+              "description": null
+            },
+            {
+              "name": "TRANSFORM",
+              "description": null
+            },
+            {
+              "name": "MIRROR",
+              "description": null
+            },
+            {
+              "name": "INSTANTIATED",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "rotationtype.gen.fs": {
+      "name": "rotationtype",
+      "importPath": "onshape/std/rotationtype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RotationType",
+          "kind": "enum",
+          "id": "RotationType",
+          "returnType": null,
+          "description": "Specifies an axis for rotation.",
+          "values": [
+            {
+              "name": "ABOUT_X",
+              "description": null
+            },
+            {
+              "name": "ABOUT_Y",
+              "description": null
+            },
+            {
+              "name": "ABOUT_Z",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "ruledsurfacecornertype.gen.fs": {
+      "name": "ruledsurfacecornertype",
+      "importPath": "onshape/std/ruledsurfacecornertype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RuledSurfaceCornerType",
+          "kind": "enum",
+          "id": "RuledSurfaceCornerType",
+          "returnType": null,
+          "description": "Describes how a Ruled Surface creates corners.",
+          "values": [
+            {
+              "name": "SPUN",
+              "description": "Conical corners are created by spinning an edge."
+            },
+            {
+              "name": "EXTENDED",
+              "description": "Ruled surfaces are altered so that they meet at corners."
+            },
+            {
+              "name": "LOFTED",
+              "description": "Curvature continuous lofts are created patching corners."
+            },
+            {
+              "name": "NO_CORNER",
+              "description": "Leave corners open."
+            }
+          ]
+        }
+      ]
+    },
+    "ruledsurfacetype.gen.fs": {
+      "name": "ruledsurfacetype",
+      "importPath": "onshape/std/ruledsurfacetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "RuledSurfaceType",
+          "kind": "enum",
+          "id": "RuledSurfaceType",
+          "returnType": null,
+          "description": "Describes how a Ruled Surface is defined.",
+          "values": [
+            {
+              "name": "ANGLE_FROM_FACE",
+              "description": "Ruled surface is perpendicular to reference faces."
+            },
+            {
+              "name": "ALIGNED_WITH_VECTOR",
+              "description": "Ruled surface is in direction of reference direction."
+            },
+            {
+              "name": "ANGLE_FROM_VECTOR",
+              "description": "Ruled surface will meet a reference direction at an angle when viewed from the path tangent direction."
+            }
+          ]
+        }
+      ]
+    },
+    "sectionpart.fs": {
+      "name": "sectionpart",
+      "importPath": "onshape/std/sectionpart.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "sectionPart",
+          "kind": "function",
+          "id": "sectionPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Feature creating a section of a part behind a plane. Internally, performs an `opSplitPart` followed by an `opDeleteBodies`.\nNot exposed in the Part Studio UI."
+        },
+        {
+          "name": "planeSectionPart",
+          "kind": "function",
+          "id": "planeSectionPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Split a set of parts with a plane and delete all bodies in front of the face. Unlike sectionPart, bodies which are entirely behind the split plane are retained. Any bodies not included in the target query are deleted.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "target",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Bodies to be split."
+                },
+                {
+                  "name": "plane",
+                  "type": "Plane",
+                  "typeRef": "#Plane",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Plane that splits the bodies. Everything on the positive z side of the plane will be removed."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "Plane"
+          ]
+        },
+        {
+          "name": "multiplePlaneSectionPart",
+          "kind": "function",
+          "id": "multiplePlaneSectionPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Split a set of parts with multiple planes and delete all bodies in front of the faces.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "target",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Bodies to be split."
+                },
+                {
+                  "name": "sketchPlanes",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Planes that splits the bodies. Everything on the positive z side of the planes will be removed."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query"
+          ]
+        },
+        {
+          "name": "multiplePlanesSectionTransformedParts",
+          "kind": "function",
+          "id": "multiplePlanesSectionTransformedParts-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "method for processing all part studio parts for assembly for multiple planes section",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "targets",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Bodies to be split."
+                },
+                {
+                  "name": "planes",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Planes that splits the bodies. Everything on the positive z side of the planes will be removed."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "jogSectionPart",
+          "kind": "function",
+          "id": "jogSectionPart-Context-Id-map",
+          "signature": "(context is Context, id is Id, definition is map)",
+          "signatureParams": [
+            {
+              "name": "context",
+              "type": "Context"
+            },
+            {
+              "name": "id",
+              "type": "Id"
+            },
+            {
+              "name": "definition",
+              "type": "map"
+            }
+          ],
+          "returnType": null,
+          "description": "Split a part down a jogged section line and delete all back bodies. Used by drawings. Needs to be a feature so that drawings created by queries can resolve. Any bodies not included in the target query are deleted.",
+          "parameters": [
+            {
+              "name": "definition",
+              "type": "map",
+              "typeRef": "builtin:map",
+              "required": true,
+              "requiredIf": null,
+              "description": null,
+              "subfields": [
+                {
+                  "name": "target",
+                  "type": "Query",
+                  "typeRef": "#Query",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Bodies to be split."
+                },
+                {
+                  "name": "sketchPlane",
+                  "type": "Plane",
+                  "typeRef": "#Plane",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Plane that the jog line will be drawn in and extruded normal to. Everything on the positive x side of the jog line will be removed."
+                },
+                {
+                  "name": "jogPoints",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Points that the cutting line goes through in world coordinates."
+                },
+                {
+                  "name": "isPartialSection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether or not it is a partial section cut."
+                },
+                {
+                  "name": "keepSketches",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether or not sketches will be kept in the section cut results."
+                },
+                {
+                  "name": "isBrokenOut",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether or not it is a broken-out section cut."
+                },
+                {
+                  "name": "isCropView",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether or not it is a crop section cut."
+                },
+                {
+                  "name": "brokenOutPointNumbers",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Array of the number of spline points of each broken-out section cut."
+                },
+                {
+                  "name": "brokenOutEndConditions",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Array of end conditions of each broken-out section cut."
+                },
+                {
+                  "name": "offsetPoints",
+                  "type": "array",
+                  "typeRef": "builtin:array",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Array of points for offsetting the section lines."
+                },
+                {
+                  "name": "isAlignedSection",
+                  "type": "boolean",
+                  "typeRef": "builtin:boolean",
+                  "required": true,
+                  "requiredIf": null,
+                  "description": "Whether or not it is an aligned section cut."
+                }
+              ]
+            }
+          ],
+          "references": [
+            "Query",
+            "Plane"
+          ]
+        }
+      ]
+    },
+    "sidegeometryrule.gen.fs": {
+      "name": "sidegeometryrule",
+      "importPath": "onshape/std/sidegeometryrule.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SideGeometryRule",
+          "kind": "enum",
+          "id": "SideGeometryRule",
+          "returnType": null,
+          "description": "See `opThicken`.",
+          "values": [
+            {
+              "name": "REVOLVED",
+              "description": null
+            },
+            {
+              "name": "SUPPLIED",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "smcornertype.gen.fs": {
+      "name": "smcornertype",
+      "importPath": "onshape/std/smcornertype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SMCornerType",
+          "kind": "enum",
+          "id": "SMCornerType",
+          "returnType": null,
+          "description": "Specifies the type of corner at a vertex of a sheet metal model.",
+          "values": [
+            {
+              "name": "OPEN_CORNER",
+              "description": "The corner has more than two bends or, when folded the edges of the metal do not meet."
+            },
+            {
+              "name": "CLOSED_CORNER",
+              "description": "The corner has two bends and when folded the edge of the metal meet."
+            },
+            {
+              "name": "BEND_END",
+              "description": "The 'corner' is the end of a bend and there may be bend relief."
+            },
+            {
+              "name": "NOT_A_CORNER",
+              "description": "The vertex is not associated with a corner"
+            }
+          ]
+        }
+      ]
+    },
+    "splitoperationkeeptype.gen.fs": {
+      "name": "splitoperationkeeptype",
+      "importPath": "onshape/std/splitoperationkeeptype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SplitOperationKeepType",
+          "kind": "enum",
+          "id": "SplitOperationKeepType",
+          "returnType": null,
+          "description": "See `opSplitPart`.",
+          "values": [
+            {
+              "name": "KEEP_ALL",
+              "description": null
+            },
+            {
+              "name": "KEEP_FRONT",
+              "description": null
+            },
+            {
+              "name": "KEEP_BACK",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "surfacetype.gen.fs": {
+      "name": "surfacetype",
+      "importPath": "onshape/std/surfacetype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "SurfaceType",
+          "kind": "enum",
+          "id": "SurfaceType",
+          "returnType": null,
+          "description": "The subset of `GeometryType` which applies to 2-dimensional entities",
+          "values": [
+            {
+              "name": "PLANE",
+              "description": null
+            },
+            {
+              "name": "CYLINDER",
+              "description": null
+            },
+            {
+              "name": "CONE",
+              "description": null
+            },
+            {
+              "name": "SPHERE",
+              "description": null
+            },
+            {
+              "name": "TORUS",
+              "description": null
+            },
+            {
+              "name": "OTHER",
+              "description": null
+            },
+            {
+              "name": "REVOLVED",
+              "description": null
+            },
+            {
+              "name": "EXTRUDED",
+              "description": null
+            },
+            {
+              "name": "MESH",
+              "description": null
+            },
+            {
+              "name": "SPLINE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "tabletextalignment.gen.fs": {
+      "name": "tabletextalignment",
+      "importPath": "onshape/std/tabletextalignment.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "TableTextAlignment",
+          "kind": "enum",
+          "id": "TableTextAlignment",
+          "returnType": null,
+          "description": "How text in a table column should be aligned",
+          "values": [
+            {
+              "name": "LEFT",
+              "description": null
+            },
+            {
+              "name": "CENTER",
+              "description": null
+            },
+            {
+              "name": "RIGHT",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "tessellatedloftreturnstatus.gen.fs": {
+      "name": "tessellatedloftreturnstatus",
+      "importPath": "onshape/std/tessellatedloftreturnstatus.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "TessellatedLoftReturnStatus",
+          "kind": "enum",
+          "id": "TessellatedLoftReturnStatus",
+          "returnType": null,
+          "description": "Enumerates failure modes for tessellated loft.",
+          "values": [
+            {
+              "name": "OK",
+              "description": "No error."
+            },
+            {
+              "name": "CRISS_CROSSED_MATCHES",
+              "description": "At least two matches cross each other."
+            },
+            {
+              "name": "UNDERNOURISHED_MATCHES",
+              "description": "At least one match consists of fewer than 2 match points."
+            },
+            {
+              "name": "NON_CONSECUTIVE_MATCHES",
+              "description": "A match jumps across a profile without specifying a match point."
+            },
+            {
+              "name": "MATCHING_CYLINDER_CREATION_FAILED",
+              "description": "Most likely due to two profiles touching."
+            },
+            {
+              "name": "NON_CURVE_INPUT",
+              "description": "Only curves are allowed within profiles."
+            },
+            {
+              "name": "UNIDENTIFIED",
+              "description": "Some unknown error occurred."
+            },
+            {
+              "name": "INVALID_MATCH_POINT_INDEX",
+              "description": "At least one of the match indices points to a non-existent match point."
+            },
+            {
+              "name": "INVALID_MATCH_POINT",
+              "description": "At least one match point is specified on non-profile topology."
+            }
+          ]
+        }
+      ]
+    },
+    "toleranceschemaclass.gen.fs": {
+      "name": "toleranceschemaclass",
+      "importPath": "onshape/std/toleranceschemaclass.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "ToleranceSchemaClass",
+          "kind": "enum",
+          "id": "ToleranceSchemaClass",
+          "returnType": null,
+          "description": "Used to specify the Onshape standard schema class for a dimension, as in `setDimensionedEntities`.",
+          "values": [
+            {
+              "name": "FILLET_RADIUS",
+              "description": null
+            },
+            {
+              "name": "CHAMFER_DISTANCE",
+              "description": null
+            },
+            {
+              "name": "CHAMFER_ANGLE",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "tool.fs": {
+      "name": "tool",
+      "importPath": "onshape/std/tool.fs",
+      "description": "The tool.fs module contains enum types shared by multiple features.",
+      "symbols": [
+        {
+          "name": "MoveFaceType",
+          "kind": "enum",
+          "id": "MoveFaceType",
+          "returnType": null,
+          "description": "Defines how face should be transformed in a `moveFace` feature.\nAlso used by `boolean`.",
+          "values": [
+            {
+              "name": "OFFSET",
+              "description": null
+            },
+            {
+              "name": "TRANSLATE",
+              "description": null
+            },
+            {
+              "name": "ROTATE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "ToolBodyType",
+          "kind": "enum",
+          "id": "ToolBodyType",
+          "returnType": null,
+          "description": "Defines what type of body a body-creating feature (extrude, revolve, etc.) should create.",
+          "values": [
+            {
+              "name": "SOLID",
+              "description": null
+            },
+            {
+              "name": "SURFACE",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "ExtendedToolBodyType",
+          "kind": "enum",
+          "id": "ExtendedToolBodyType",
+          "returnType": null,
+          "description": "Defines what type of body a body-creating feature (extrude, revolve, etc.) should create.",
+          "values": [
+            {
+              "name": "SOLID",
+              "description": null
+            },
+            {
+              "name": "SURFACE",
+              "description": null
+            },
+            {
+              "name": "THIN",
+              "description": null
+            }
+          ]
+        },
+        {
+          "name": "NewBodyOperationType",
+          "kind": "enum",
+          "id": "NewBodyOperationType",
+          "returnType": null,
+          "description": "Defines how a new body from a body-creating feature (extrude, revolve, etc.) should be merged with other bodies in the context.\nTo include this enum with the same styling as the extrude dialog (and others), use `booleanStepTypePredicate(definition)`.",
+          "values": [
+            {
+              "name": "NEW",
+              "description": "Creates a new body in the context with the geometry resulting from the operation."
+            },
+            {
+              "name": "ADD",
+              "description": "Performs a boolean union between the new body and all bodies in the merge scope."
+            },
+            {
+              "name": "REMOVE",
+              "description": "Performs a boolean subtraction of the new body from all bodies in the merge scope."
+            },
+            {
+              "name": "INTERSECT",
+              "description": "Performs a boolean intersection between each new body and each body in the merge scope."
+            }
+          ]
+        },
+        {
+          "name": "NewSurfaceOperationType",
+          "kind": "enum",
+          "id": "NewSurfaceOperationType",
+          "returnType": null,
+          "description": "Defines how a new surface from a surface-creating feature (sweep, loft, revolve, etc.) should be merged with other surfaces in the context.\nTo include this enum with the same styling as the extrude dialog (and others), use `booleanStepTypePredicate(definition)`.",
+          "values": [
+            {
+              "name": "NEW",
+              "description": "Creates a new surface in the context with the geometry resulting from the operation."
+            },
+            {
+              "name": "ADD",
+              "description": "Performs a surface union between the new surface and all surfaces used as input."
+            }
+          ]
+        }
+      ]
+    },
+    "uihint.gen.fs": {
+      "name": "uihint",
+      "importPath": "onshape/std/uihint.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "UIHint",
+          "kind": "enum",
+          "id": "UIHint",
+          "returnType": null,
+          "description": "List of available UI Hints, which control how a parameter input is displayed in the feature dialog.\n Example: \n\n```\nannotation { \"Name\" : \"Flip\", \"UIHint\" : UIHint.OPPOSITE_DIRECTION }\ndefinition.isFlipped is boolean;\n```\n\nMultiple `UIHint`s can be specified in an array (e.g. `[ UIHint.OPPOSITE_DIRECTION, UIHint.REMEMBER_PREVIOUS_VALUE ]`).\nRaw strings (e.g. \"OPPOSITE_DIRECTION\") may be used in place of the enum access (e.g. UIHint.OPPOSITE_DIRECTION) for the same result.\n`OPPOSITE_DIRECTION` and `ALWAYS_HIDDEN` behaviors are considered stable. Other `UIHint`s can be used, but their behaviors may change in future versions of Onshape.",
+          "values": [
+            {
+              "name": "OPPOSITE_DIRECTION",
+              "description": "For a boolean parameter, display as a toggle button with arrow next to the previous parameter."
+            },
+            {
+              "name": "ALWAYS_HIDDEN",
+              "description": "Do not display this parameter or allow a user to edit it (useful for parameters changed only in editing logic or manipulator change functions)."
+            },
+            {
+              "name": "SHOW_CREATE_SELECTION",
+              "description": "For a query parameter, include a button to open the \"Create selection\" dialog."
+            },
+            {
+              "name": "CONTROL_VISIBILITY",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "NO_PREVIEW_PROVIDED",
+              "description": "For a feature, hide the preview slider which controls before/after transparency, and only show the final version."
+            },
+            {
+              "name": "REMEMBER_PREVIOUS_VALUE",
+              "description": "When a user makes a new instance of this feature, set this parameter's default value to the value they set the last time they used this feature."
+            },
+            {
+              "name": "DISPLAY_SHORT",
+              "description": "Two consecutive boolean or quantity parameters marked as DISPLAY_SHORT may be placed on the same line."
+            },
+            {
+              "name": "ALLOW_FEATURE_SELECTION",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "MATE_CONNECTOR_AXIS_TYPE",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "PRIMARY_AXIS",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "SHOW_EXPRESSION",
+              "description": "If an expression (like #foo or 1/4 in) is entered, always show the expression, and never the resulting value."
+            },
+            {
+              "name": "OPPOSITE_DIRECTION_CIRCULAR",
+              "description": "Like `OPPOSITE_DIRECTION`, but with circular arrows."
+            },
+            {
+              "name": "SHOW_LABEL",
+              "description": "Show a label above an enum parameter."
+            },
+            {
+              "name": "HORIZONTAL_ENUM",
+              "description": "Display an enum as a horizontal list of clickable text, rather than the default select control"
+            },
+            {
+              "name": "UNCONFIGURABLE",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "MATCH_LAST_ARRAY_ITEM",
+              "description": "Inside an array parameter, set the default value on a new item to match what is set on the last item."
+            },
+            {
+              "name": "COLLAPSE_ARRAY_ITEMS",
+              "description": "For an array parameter, create new items (and items in a newly opened dialog) as collapsed by default."
+            },
+            {
+              "name": "INITIAL_FOCUS_ON_EDIT",
+              "description": "When an existing feature is edited, the first visible parameter with this UI hint will get focus."
+            },
+            {
+              "name": "INITIAL_FOCUS",
+              "description": "When creating or editing, the first visible parameter with this UI hint will get focus (but when editing, a parameter with INITIAL_FOCUS_ON_EDIT takes precedence)."
+            },
+            {
+              "name": "DISPLAY_CURRENT_VALUE_ONLY",
+              "description": "For Onshape internal use."
+            },
+            {
+              "name": "READ_ONLY",
+              "description": "Prevent changes to the parameter from the feature dialog. A read-only parameter can be modified by the editing logic function."
+            },
+            {
+              "name": "PREVENT_CREATING_NEW_MATE_CONNECTORS",
+              "description": "For a query parameter allowing BodyType.MATE_CONNECTOR, only allow preexisting mate connectors, and don't provide a button to allow creating new mate connectors specificaly for this parameter."
+            },
+            {
+              "name": "FIRST_IN_ROW",
+              "description": "Guarantee that, regardless of other layout requirements, this parameter will always be the first parameter in its displayed row."
+            },
+            {
+              "name": "ALLOW_QUERY_ORDER",
+              "description": "Enable reordering of queries in a query parameter."
+            },
+            {
+              "name": "PREVENT_ARRAY_REORDER",
+              "description": "Disable reordering of items in an array parameter."
+            },
+            {
+              "name": "FOCUS_INNER_QUERY",
+              "description": "When adding a new item to an array parameter, focus the driving inner QLV if the parameter is selection-driven, and focus the first inner QLV otherwise."
+            },
+            {
+              "name": "SHOW_TOLERANCE",
+              "description": "For a boolean parameter, display as a toggle button with tolerance icon next to the previous parameter."
+            },
+            {
+              "name": "ALLOW_ARRAY_FOCUS",
+              "description": "Allow focusing an array parameter with no driving or inner QLV, as if it were selection-driven."
+            },
+            {
+              "name": "SHOW_INLINE_CONFIG_INPUTS",
+              "description": "Inline the configuration parameters in the configure dialog for the feature."
+            },
+            {
+              "name": "FOCUS_ON_VISIBLE",
+              "description": "For a query parameter, selects it when it becomes visible during editing."
+            },
+            {
+              "name": "CAN_BE_TOLERANT",
+              "description": "For a quantity parameter, specifies that the quantity can be tolerant."
+            },
+            {
+              "name": "CAN_BE_TOLERANT_DIAMETER",
+              "description": "For a quantity parameter that represents a diameter, specifies that the quantity can be tolerant and should display options to specify hole or shaft fit classes."
+            },
+            {
+              "name": "PLUS_MINUS",
+              "description": "Like `OPPOSITE_DIRECTION` but indicating whether the associated quantity is positive or negative."
+            },
+            {
+              "name": "ALWAYS_USE_DEPENDENCIES",
+              "description": "Always use the content of this parameter to determine feature dependencies."
+            },
+            {
+              "name": "NO_QUERY_VARIABLE",
+              "description": "Hides the query variable dropdown for the associated query parameter."
+            },
+            {
+              "name": "ALLOW_FLAT_SKETCH_SELECTION",
+              "description": "Allows a feature list parameter to select sketches defined on flat views."
+            }
+          ]
+        }
+      ]
+    },
+    "variabletype.gen.fs": {
+      "name": "variabletype",
+      "importPath": "onshape/std/variabletype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "VariableType",
+          "kind": "enum",
+          "id": "VariableType",
+          "returnType": null,
+          "description": "See `assignVariable`.",
+          "values": [
+            {
+              "name": "LENGTH",
+              "description": null
+            },
+            {
+              "name": "ANGLE",
+              "description": null
+            },
+            {
+              "name": "NUMBER",
+              "description": null
+            },
+            {
+              "name": "ANY",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "volumeaccuracy.gen.fs": {
+      "name": "volumeaccuracy",
+      "importPath": "onshape/std/volumeaccuracy.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "VolumeAccuracy",
+          "kind": "enum",
+          "id": "VolumeAccuracy",
+          "returnType": null,
+          "description": "Level of accuracy to use for computing the volume of a solid body. The values are:  LOW: fastest, least accurate, good for approximations MEDIUM: moderately fast, moderately accurate HIGH: slowest, most accurate, required for regeneration",
+          "values": [
+            {
+              "name": "LOW",
+              "description": null
+            },
+            {
+              "name": "MEDIUM",
+              "description": null
+            },
+            {
+              "name": "HIGH",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "weldfinishing.gen.fs": {
+      "name": "weldfinishing",
+      "importPath": "onshape/std/weldfinishing.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "WeldFinishing",
+          "kind": "enum",
+          "id": "WeldFinishing",
+          "returnType": null,
+          "description": "Enum to determine the weld finishing in ANSI standard.",
+          "values": [
+            {
+              "name": "NONE",
+              "description": null
+            },
+            {
+              "name": "CHIPPING",
+              "description": null
+            },
+            {
+              "name": "GRINDING",
+              "description": null
+            },
+            {
+              "name": "HAMMERING",
+              "description": null
+            },
+            {
+              "name": "MACHINING",
+              "description": null
+            },
+            {
+              "name": "ROLLING",
+              "description": null
+            },
+            {
+              "name": "UNSPECIFIED",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "weldstandard.gen.fs": {
+      "name": "weldstandard",
+      "importPath": "onshape/std/weldstandard.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "WeldStandard",
+          "kind": "enum",
+          "id": "WeldStandard",
+          "returnType": null,
+          "description": "Enum to switch the weld symbol representation between ANSI and ISO standard.",
+          "values": [
+            {
+              "name": "ANSI",
+              "description": null
+            },
+            {
+              "name": "ISO",
+              "description": null
+            }
+          ]
+        }
+      ]
+    },
+    "wraptype.gen.fs": {
+      "name": "wraptype",
+      "importPath": "onshape/std/wraptype.gen.fs",
+      "description": "",
+      "symbols": [
+        {
+          "name": "WrapType",
+          "kind": "enum",
+          "id": "WrapType",
+          "returnType": null,
+          "description": "Specifies the type of wrap to execute.",
+          "values": [
+            {
+              "name": "SIMPLE",
+              "description": "Wrap around the infinite definition of the destination surface."
+            },
+            {
+              "name": "TRIM",
+              "description": "Wrap around a defined destination face, and trim anything that falls off of it."
+            },
+            {
+              "name": "IMPRINT",
+              "description": "Imprint edges onto a defined destination face."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

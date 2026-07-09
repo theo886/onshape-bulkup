@@ -19,7 +19,15 @@ const pathModule = require('path');
 const minimist = require('minimist');
 const onshape = require('./lib/onshape.js');
 const app = require('./lib/app.js');
-const { COMPANY_ID } = require('./unifiedUpload.js');
+const { extractError } = require('./lib/pdmSyncUtils');
+
+// Lazy-load unifiedUpload.js — it pulls in relink.js → adm-zip which
+// may not be available on all platforms. Only loaded when actually needed.
+let _unifiedUpload = null;
+function getCOMPANY_ID() {
+  if (!_unifiedUpload) _unifiedUpload = require('./unifiedUpload.js');
+  return _unifiedUpload.COMPANY_ID;
+}
 
 const OBSOLETION_WORKFLOW_ID = '59fb015cbd51842cc4706f59';
 
@@ -104,15 +112,6 @@ function apiPost(apiPath, body, query) {
   });
 }
 
-function extractError(err) {
-  if (!err) return '';
-  if (err.body) {
-    try { const p = JSON.parse(err.body); return p.message || p.error || err.body; }
-    catch (e) { return String(err.body); }
-  }
-  return err.statusCode ? `HTTP ${err.statusCode}` : String(err);
-}
-
 // ─── Status sidecar ───────────────────────────────────────────────────────────
 
 let status = { fileStatus: {} };
@@ -138,7 +137,7 @@ let workflowId = null;
 
 async function getWorkflowId() {
   return new Promise((resolve, reject) => {
-    app.getCompanyPolicies(COMPANY_ID, (data, err) => {
+    app.getCompanyPolicies(getCOMPANY_ID(), (data, err) => {
       if (err) {
         console.warn(`Warning: Could not get workflow ID: ${extractError(err)}`);
         resolve(null);
@@ -173,7 +172,7 @@ async function obsoleteRevision(partNumber) {
     // Get revision info
     await delay(currentDelay);
     const revision = await apiGet(
-      `/api/v10/revisions/c/${COMPANY_ID}/partnumber/${encodeURIComponent(partNumber)}`
+      `/api/v10/revisions/c/${getCOMPANY_ID()}/partnumber/${encodeURIComponent(partNumber)}`
     );
 
     if (!revision || !revision.id) {
@@ -231,7 +230,7 @@ async function obsoleteRevision(partNumber) {
       console.log(`  Revision already obsoleted — checking re-releasable status...`);
       try {
         const rev = await apiGet(
-          `/api/v10/revisions/c/${COMPANY_ID}/partnumber/${encodeURIComponent(partNumber)}`
+          `/api/v10/revisions/c/${getCOMPANY_ID()}/partnumber/${encodeURIComponent(partNumber)}`
         );
         if (rev && rev.isRereleasable) {
           console.log(`  Confirmed re-releasable — OK`);
@@ -289,7 +288,7 @@ async function releaseElement(docId, workId, elementId, partNumber, revision) {
     pkg = await apiPost(
       '/api/releasepackages/release/' + workflowId,
       { items: releaseItems },
-      { cid: COMPANY_ID }
+      { cid: getCOMPANY_ID() }
     );
   } catch (e) {
     console.error(`  Failed to create release package: ${extractError(e)}`);

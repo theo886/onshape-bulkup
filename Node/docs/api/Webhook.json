@@ -1,0 +1,1736 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Webhook",
+    "description": "Create and manage [webhooks](https://onshape-public.github.io/docs/app-dev/webhook/).",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Webhook",
+      "description": "Create and manage [webhooks](https://onshape-public.github.io/docs/app-dev/webhook/)."
+    }
+  ],
+  "paths": {
+    "/webhooks": {
+      "get": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Get a list of all webhooks registered by a user or company.",
+        "description": "See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "getWebhooks",
+        "parameters": [
+          {
+            "name": "company",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "maximum": 20,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTListResponseBTWebhookInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Create a new webhook.",
+        "description": "Click **Callbacks** below for a list of events your app can subscribe to. See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "createWebhook",
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTWebhookParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTWebhookInfo"
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "onshape.user.lifecycle.updateappsettings": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when user application settings are modified.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTUserAppMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.changed": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a change to a model has been made.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.translation.complete": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a translation request is completed.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.metadata": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when part or element metadata is modified.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.createversion": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a new version of a document is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.createworkspace": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a new workspace is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkspaceMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.deleteworkspace": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a workspace is deleted.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkspaceMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.mergeworkspace": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a version or workspace is merged.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkspaceMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.restoreworkspace": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a workspace is restored to a previous version or microversion.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkspaceMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.updateworkspaceunits": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when workspace units or precisions are changed.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkspaceMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.createelement": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a new element is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.deleteelement": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when an element is deleted.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.document.lifecycle.statechange": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when an document changes state.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.document.lifecycle.shared": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a resource is shared.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.changed.externalreferences": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when an external reference changes.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.model.lifecycle.changed.namedviews": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when the element's named views change.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.document.lifecycle.created": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a document is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.revision.created": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occursˇ when a revision is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTRevisionMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.comment.create": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a comment is created in a document.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.comment.update": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a comment is updated in a document.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.comment.delete": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a comment is deleted in a document.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTDocumentMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.workflow.transition": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a revision or release package transitions through workflow states.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWorkflowMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.plm.job.created": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when a PLM background job is created.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTPLMMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "onshape.plm.settings.changed": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs when PLM integration settings are modified or disabled.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTPLMMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "webhook.ping": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs either in response to a request by an application to call a registered webhook, or as a post-registration validation initiated by Onshape.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWebhookLifecycleMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "webhook.register": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs in response to a notification registration API call.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWebhookLifecycleMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "webhook.unregister": {
+            "{$request.body#/url}": {
+              "get": {
+                "summary": "Occurs in response to a notification deregistation API call.",
+                "requestBody": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BTWebhookLifecycleMessageBody"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/webhooks/{webhookid}": {
+      "get": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Get webhook info by webhook ID.",
+        "description": "See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "getWebhook",
+        "parameters": [
+          {
+            "name": "webhookid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTWebhookInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Update a webhook.",
+        "description": "See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "updateWebhook",
+        "parameters": [
+          {
+            "name": "webhookid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTWebhookParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTWebhookInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "delete": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Unregister a webhook.",
+        "description": "See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "unregisterWebhook",
+        "parameters": [
+          {
+            "name": "webhookid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "blockNotification",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/webhooks/{webhookid}/ping": {
+      "post": {
+        "tags": [
+          "Webhook"
+        ],
+        "summary": "Ping a webhook.",
+        "description": "See [API Guide: Webhooks](https://onshape-public.github.io/docs/app-dev/webhook/) for implementation details.",
+        "operationId": "pingWebhook",
+        "parameters": [
+          {
+            "name": "webhookid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTListResponseBTWebhookInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI for current page of resources.",
+            "format": "uri"
+          },
+          "items": {
+            "type": "array",
+            "description": "Array of items in the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BTWebhookInfo"
+            }
+          },
+          "next": {
+            "type": "string",
+            "description": "URI for next page of the resources if more are available.",
+            "format": "uri"
+          },
+          "previous": {
+            "type": "string",
+            "description": "URI for previous page of the resources.",
+            "format": "uri"
+          }
+        },
+        "description": "A list of resources that typically supports paging."
+      },
+      "BTWebhookParams": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string"
+          },
+          "companyId": {
+            "type": "string",
+            "description": "Company admins can register webhooks to listen to all company events."
+          },
+          "data": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "Webhook description."
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "description": "List of events for which webhook callback is invoked.",
+            "items": {
+              "type": "string",
+              "description": "List of events for which webhook callback is invoked."
+            }
+          },
+          "externalSessionId": {
+            "type": "string",
+            "description": "Applications can pass this parameter as X-Session-ID with every REST call to distinguish webhooks triggered by self."
+          },
+          "filter": {
+            "type": "string"
+          },
+          "folderId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "isTransient": {
+            "type": "boolean",
+            "description": "Transient webhooks are automatically cleaned up after a period of inactivity.",
+            "default": true
+          },
+          "linkDocumentId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Webhook name."
+          },
+          "options": {
+            "$ref": "#/components/schemas/BTWebhookOptions"
+          },
+          "partId": {
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWebhookInfo": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "description": "Company admins can register webhooks to listen to all company events."
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/BTUserSummaryInfo"
+          },
+          "data": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "droppedEventCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "events": {
+            "type": "array",
+            "description": "List of events for which webhook callback is invoked.",
+            "items": {
+              "type": "string",
+              "description": "List of events for which webhook callback is invoked."
+            }
+          },
+          "externalSessionId": {
+            "type": "string",
+            "description": "Applications can pass this parameter as X-Session-ID with every REST call to distinguish webhooks triggered by self."
+          },
+          "filter": {
+            "type": "string"
+          },
+          "folderId": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "isTransient": {
+            "type": "boolean",
+            "description": "Transient webhooks are automatically cleaned up after a period of inactivity.",
+            "default": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "options": {
+            "$ref": "#/components/schemas/BTWebhookOptions"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "BTUserAppMessageBody": {
+        "type": "object",
+        "properties": {
+          "appElementSessionId": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "identityId": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "settingType": {
+            "$ref": "#/components/schemas/BTApplicationSettingsType"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "webhookId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDocumentMessageBody": {
+        "type": "object",
+        "properties": {
+          "appElementSessionId": {
+            "type": "string"
+          },
+          "commentId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "documentState": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "entryId": {
+            "type": "string"
+          },
+          "entryType": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "metadataObjectType": {
+            "type": "string"
+          },
+          "newPermissionSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "oldPermissionSet": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "partId": {
+            "type": "string"
+          },
+          "partIdentity": {
+            "type": "string"
+          },
+          "partNumber": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "shareAction": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "translationId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "webhookId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWorkspaceMessageBody": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTDocumentMessageBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentMicroversionId": {
+                "type": "string",
+                "description": "The resultant document microverion if applicable created due to workspace modification."
+              }
+            }
+          }
+        ]
+      },
+      "BTRevisionMessageBody": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTReleaseItemMessageBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "revisionId": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTWorkflowMessageBody": {
+        "type": "object",
+        "properties": {
+          "appElementSessionId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "objectId": {
+            "type": "string"
+          },
+          "objectType": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transitionName": {
+            "type": "string"
+          },
+          "webhookId": {
+            "type": "string"
+          },
+          "workflowId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTPLMMessageBody": {
+        "type": "object",
+        "properties": {
+          "appElementSessionId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string",
+            "description": "Background PLM job's document ID."
+          },
+          "event": {
+            "type": "string"
+          },
+          "jobId": {
+            "type": "string",
+            "description": "ID of the background PLM job that was created."
+          },
+          "jobType": {
+            "$ref": "#/components/schemas/JobType"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "settingsDisabled": {
+            "type": "boolean",
+            "description": "Whether PLM integration was disabled."
+          },
+          "settingsModified": {
+            "type": "boolean",
+            "description": "Whether PLM integration settings parameters were modified."
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "webhookId": {
+            "type": "string"
+          }
+        },
+        "description": "Webhook notification payload for all PLM related notifications."
+      },
+      "BTWebhookLifecycleMessageBody": {
+        "type": "object",
+        "properties": {
+          "appElementSessionId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "messageId": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "webhookId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTWebhookOptions": {
+        "type": "object",
+        "properties": {
+          "collapseEvents": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTUserSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserSummaryInfo",
+            "companyuser": "#/components/schemas/BTCompanyUserSummaryInfo",
+            "BTUserAdminSummaryInfo": "#/components/schemas/BTUserAdminSummaryInfo",
+            "userinfo": "#/components/schemas/BTUserInfo",
+            "BTUserOAuth2SummaryInfo": "#/components/schemas/BTUserOAuth2SummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserDetailSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/BTCompanySummaryInfo"
+              },
+              "documentationNameOverride": {
+                "type": "string"
+              },
+              "globalPermissions": {
+                "$ref": "#/components/schemas/GlobalPermissionInfo"
+              },
+              "invitationState": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isExternal": {
+                "type": "boolean"
+              },
+              "isGuest": {
+                "type": "boolean"
+              },
+              "isLight": {
+                "type": "boolean"
+              },
+              "lastLoginTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "personalMessageAllowed": {
+                "type": "boolean"
+              },
+              "source": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      },
+      "BTApplicationSettingsType": {
+        "type": "string",
+        "enum": [
+          "USER",
+          "COMPANY",
+          "TEAM"
+        ]
+      },
+      "BTReleaseItemMessageBody": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTDocumentMessageBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "elementType": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "isFromInitialState": {
+                "type": "boolean"
+              },
+              "isToTerminalState": {
+                "type": "boolean"
+              },
+              "releaseId": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "transitionName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "JobType": {
+        "type": "string",
+        "description": "All types of PLM background jobs",
+        "enum": [
+          "SYNC_ITEM",
+          "SYNC_BOM",
+          "SYNC_RELEASE_CANDIDATE"
+        ]
+      },
+      "BTUserDetailSummaryInfo": {
+        "type": "object",
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo",
+            "user-summary": "#/components/schemas/BTUserSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTUserBasicSummaryInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "documentationName": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "BTCompanySummaryInfo": {
+        "type": "object",
+        "properties": {
+          "admin": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "enterpriseBaseUrl": {
+            "type": "string"
+          },
+          "enterpriseSubtype": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "noPublicDocuments": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "secondaryDomainPrefixes": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "state": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      },
+      "GlobalPermissionInfo": {
+        "type": "object",
+        "properties": {
+          "accessReports": {
+            "type": "boolean"
+          },
+          "adminEnterprise": {
+            "type": "boolean"
+          },
+          "allowAppStoreAccess": {
+            "type": "boolean"
+          },
+          "allowPublicDocumentsAccess": {
+            "type": "boolean"
+          },
+          "approveReleases": {
+            "type": "boolean"
+          },
+          "branchLockPermissions": {
+            "type": "boolean"
+          },
+          "createDocumentsInRoot": {
+            "type": "boolean"
+          },
+          "createProject": {
+            "type": "boolean"
+          },
+          "createReleases": {
+            "type": "boolean"
+          },
+          "createTasks": {
+            "type": "boolean"
+          },
+          "deletePermanently": {
+            "type": "boolean"
+          },
+          "exportFiles": {
+            "type": "boolean"
+          },
+          "importFiles": {
+            "type": "boolean"
+          },
+          "manageGuestUsers": {
+            "type": "boolean"
+          },
+          "manageNonGeometricItems": {
+            "type": "boolean"
+          },
+          "manageRbac": {
+            "type": "boolean"
+          },
+          "manageStandardContentMetadata": {
+            "type": "boolean"
+          },
+          "manageUsers": {
+            "type": "boolean"
+          },
+          "manageWorkflows": {
+            "type": "boolean"
+          },
+          "shareForAnonymousAccess": {
+            "type": "boolean"
+          },
+          "transferDocumentsFromEnterprise": {
+            "type": "boolean"
+          },
+          "useRevisionTools": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BTUserBasicSummaryInfo": {
+        "required": [
+          "jsonType"
+        ],
+        "type": "object",
+        "properties": {
+          "jsonType": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "jsonType",
+          "mapping": {
+            "user-summary": "#/components/schemas/BTUserBasicSummaryInfo",
+            "user-detail-summary": "#/components/schemas/BTUserDetailSummaryInfo"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTBaseInfo"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "href": {
+                "type": "string",
+                "description": "URI to fetch complete information of the resource.",
+                "format": "uri"
+              },
+              "id": {
+                "type": "string",
+                "description": "Id of the resource."
+              },
+              "image": {
+                "type": "string"
+              },
+              "isOnshapeSupport": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the resource."
+              },
+              "state": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "viewRef": {
+                "type": "string",
+                "description": "URI to visualize the resource in a webclient if applicable.",
+                "format": "uri"
+              }
+            }
+          }
+        ]
+      },
+      "BTBaseInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "description": "URI to fetch complete information of the resource.",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string",
+            "description": "Id of the resource."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the resource."
+          },
+          "viewRef": {
+            "type": "string",
+            "description": "URI to visualize the resource in a webclient if applicable.",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -44,3 +44,9 @@ publication_status.json
 # temp Excel lock files
 ~$*.xlsx
 firebase-debug.log
+
+# working data spreadsheets (company migration data, keep local)
+# note: files already tracked in git are unaffected by these rules
+Current/
+/*.xlsx
+Node/PDM Releases.xlsx

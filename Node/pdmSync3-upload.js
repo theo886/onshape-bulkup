@@ -25,8 +25,23 @@ const minimist = require('minimist');
 const mimeTypes = require('mime-types');
 const onshape = require('./lib/onshape.js');
 const app = require('./lib/app.js');
-const relink = require('./lib/relink.js');
-const { pollTranslation, propertyIdMap, COMPANY_ID } = require('./unifiedUpload.js');
+const { extractError, getDocumentName, buildProperties: buildPropertiesUtil } = require('./lib/pdmSyncUtils');
+
+// Lazy-load relink.js and unifiedUpload.js — they pull in adm-zip which
+// may not be available on all platforms. Only loaded when actually needed.
+let _relink = null;
+let _unifiedUpload = null;
+function getRelink() {
+  if (!_relink) _relink = require('./lib/relink.js');
+  return _relink;
+}
+function getUnifiedUpload() {
+  if (!_unifiedUpload) _unifiedUpload = require('./unifiedUpload.js');
+  return _unifiedUpload;
+}
+function getPollTranslation() { return getUnifiedUpload().pollTranslation; }
+function getPropertyIdMap() { return getUnifiedUpload().propertyIdMap; }
+function getCOMPANY_ID() { return getUnifiedUpload().COMPANY_ID; }
 
 // ─── CLI ──────────────────────────────────────────────────────────────────────
 
@@ -144,20 +159,11 @@ function apiGetElements(docId, workId) {
   });
 }
 
-function extractError(err) {
-  if (!err) return '';
-  if (err.body) {
-    try { const p = JSON.parse(err.body); return p.message || p.error || err.body; }
-    catch (e) { return String(err.body); }
-  }
-  return err.statusCode ? `HTTP ${err.statusCode}` : String(err);
-}
-
 // ─── Poll translation (Promise wrapper) ───────────────────────────────────────
 
 function pollTranslationAsync(translationId) {
   return new Promise((resolve, reject) => {
-    pollTranslation(translationId, (success, data, failureReason) => {
+    getPollTranslation()(translationId, (success, data, failureReason) => {
       if (success) resolve(data);
       else reject(new Error(failureReason || 'Translation failed'));
     });
@@ -202,9 +208,9 @@ async function ensureDocument(docName, folderId) {
   await delay(currentDelay);
   try {
     const docs = await apiGet('/api/documents', {
-      q: docName, filter: 7, owner: COMPANY_ID, ownerType: 1
+      q: docName, filter: 7, owner: getCOMPANY_ID(), ownerType: 1
     });
-    const existing = docs.items?.find(d => d.name === docName && d.owner?.id === COMPANY_ID);
+    const existing = docs.items?.find(d => d.name === docName && d.owner?.id === getCOMPANY_ID());
     if (existing) {
       console.log(`  Found existing document: ${docName} -> ${existing.id}`);
       const result = { documentId: existing.id, workspaceId: existing.defaultWorkspace.id };
@@ -271,16 +277,7 @@ async function findAssemblyElement(docId, workId, elementIds) {
 // ─── Properties ───────────────────────────────────────────────────────────────
 
 function buildProperties(row) {
-  const props = [];
-  const partNumber = pathModule.parse(String(row['Name'] || '')).name;
-  const revision = String(row['sync:pdmRevision'] || row['Revision'] || '00').padStart(2, '0');
-  const description = row['Description'] || '';
-
-  if (partNumber) props.push({ propertyId: propertyIdMap['Part number'], value: partNumber });
-  if (revision) props.push({ propertyId: propertyIdMap['Revision'], value: revision });
-  if (description) props.push({ propertyId: propertyIdMap['Description'], value: String(description) });
-
-  return props;
+  return buildPropertiesUtil(row, getPropertyIdMap());
 }
 
 async function setProperties(row, docId, workId, elementId) {
@@ -292,7 +289,7 @@ async function setProperties(row, docId, workId, elementId) {
 
   if (level === 1) {
     // SLDPRT: set Description on Part Studio element, then set all props on parts
-    const descProp = properties.find(p => p.propertyId === propertyIdMap['Description']);
+    const descProp = properties.find(p => p.propertyId === getPropertyIdMap()['Description']);
     if (descProp) {
       try {
         await new Promise((resolve, reject) => {
@@ -439,7 +436,7 @@ async function uploadNewAssembly(row, docId, workId) {
     console.log(`  Starting relink (${Object.keys(combinedPartMapping).length} parts in mapping)...`);
     try {
       await new Promise((resolve, reject) => {
-        relink.relinkAssembly(
+        getRelink().relinkAssembly(
           {
             documentId: docId,
             workspaceId: workId,
@@ -664,7 +661,7 @@ async function lookupExternalPart(partNumber) {
   try {
     await delay(currentDelay);
     const rev = await apiGet(
-      `/api/v10/revisions/c/${COMPANY_ID}/partnumber/${encodeURIComponent(partNumber)}`,
+      `/api/v10/revisions/c/${getCOMPANY_ID()}/partnumber/${encodeURIComponent(partNumber)}`,
       { elementType: 0 }
     );
     if (rev && rev.documentId && rev.elementId) {
@@ -840,12 +837,6 @@ async function main() {
   if (dryRun) console.log('(DRY RUN — nothing was changed)');
   console.log(`\nOutput: ${outputFile}`);
   console.log(`Sidecar: ${statusFile}`);
-}
-
-// Helper in case getDocumentName is needed before ensureDocument
-function getDocumentName(filename) {
-  const base = pathModule.parse(filename).name;
-  return base.substring(0, 5) + ' SRC';
 }
 
 main().catch(e => {

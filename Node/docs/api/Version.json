@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Version",
+    "description": "Get all versions of the Onshape REST APIs.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Version",
+      "description": "Get all versions of the Onshape REST APIs."
+    }
+  ],
+  "paths": {
+    "/versions": {
+      "get": {
+        "tags": [
+          "Version"
+        ],
+        "summary": "Get all versions of the Onshape REST APIs.",
+        "operationId": "getAllVersions",
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/Versions"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Versions": {
+        "type": "object",
+        "properties": {
+          "availableVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTApiVersion"
+            }
+          },
+          "specifiedVersion": {
+            "$ref": "#/components/schemas/BTApiVersion"
+          }
+        }
+      },
+      "BTApiVersion": {
+        "type": "string",
+        "enum": [
+          "UNDEFINED",
+          "V1_START",
+          "V2_SERIALIZATION_UNIFICATION",
+          "V3_NEW_BOM_FORMAT",
+          "V4_TRANSACTIONS_NO_NEW",
+          "V5_BODY_DETAILS_COMPOSITE_REFERENCE",
+          "V6_JSON_EDIT_RESPONSE_BUGFIX",
+          "V7_SKETCH_ENDPOINT_INCLUDES_SOLVE_STATUS",
+          "V8_RESTORE_NOOP_NO_NEW_MICROVERSION",
+          "V9_INCLUDE_DETERMINISTIC_IDS_TO_QUERY_RESPONSES",
+          "V10_VALIDATE_VISIBILTY_CONDITIONS_FOR_PS_CONFIG_PARAMS",
+          "V11_EXCLUDE_ZIP_CONTENTS_BY_DEFAULT",
+          "V12_VALIDATE_ELEMENT_TYPE_FOR_TRANSLATIONS",
+          "V13_SOURCE_TARGET_DOCUMENT_VERSIONS_TO_MOVE"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

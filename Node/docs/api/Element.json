@@ -1,0 +1,1381 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Onshape API - Element",
+    "description": "Access and manage Elements. Every Element in an Onshape document is represented by a tab.",
+    "version": "1.210.71816-ae322898e27a"
+  },
+  "servers": [
+    {
+      "url": "https://energyrecovery.onshape.com/api/v13",
+      "description": "Current"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Element",
+      "description": "Access and manage Elements. Every Element in an Onshape document is represented by a tab."
+    }
+  ],
+  "paths": {
+    "/elements/copyelement/{did}/workspace/{wid}": {
+      "post": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Copy an element from a source document.",
+        "description": "Specify the target document and workspace in the URL. Specify the source document, workspace, and element in the request body. \nIf `anchorElementId` is specified, the copied element will be inserted after the anchor element. If not specified, the copied element will be inserted at the end of the tab list. \n",
+        "operationId": "copyElementFromSourceDocument",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTCopyElementParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTDocumentElementInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/d/{did}/e/{eid}/configurationencodings": {
+      "post": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Encode a configuration option for use in other API calls.",
+        "description": "Returns a configuration string in the following form: \n`configuration=parameterId%3DparameterValue` \nThe configuration string can be used in other Onshape API calls to specify which configuration option to use. See the [Configuration API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for additional details. \n",
+        "operationId": "encodeConfigurationMap",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTConfigurationParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTEncodedConfigurationInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/d/{did}/w/{wid}/e/{eid}": {
+      "delete": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Delete an element from a document.",
+        "description": "Attempting to delete the last element in a document will result in an error.",
+        "operationId": "deleteElement",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Delete"
+            ],
+            "BasicAuth": [
+              "OAuth2Delete"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/d/{did}/w/{wid}/e/{eid}/updatereferences": {
+      "post": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Update or replace references in an element.",
+        "operationId": "updateReferences",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTUpdateReferenceParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read",
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Read",
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/d/{did}/{wvm}/{wvmid}/e/{eid}/configuration": {
+      "get": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Get the configuration definition for a Part Studio, Variable Studio, or Assembly.",
+        "description": "Use Configurations to create variations of elements. You can configure feature and parameter values, part properties, custom part properties, face and part appearances, and sketch text. Each Part Studio can have only one Configuration, but it can contain multiple Configuration inputs. \nSee the [Configuration API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for additional details. ",
+        "operationId": "getConfiguration",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "description": "Indicates which of workspace (w), version (v), or document microversion (m) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v",
+                "m"
+              ]
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "description": "The id of the workspace, version or document microversion in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTConfigurationResponse-2019"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      },
+      "post": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Update the configuration definition for a Part Studio, Variable Studio, or Assembly.",
+        "description": "See the [Configuration API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for additional details",
+        "operationId": "updateConfiguration",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json;charset=UTF-8; qs=0.09": {
+              "schema": {
+                "$ref": "#/components/schemas/BTConfigurationUpdateCall-2933"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTConfigurationResponse-2019"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Write"
+            ],
+            "BasicAuth": [
+              "OAuth2Write"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/d/{did}/{wvm}/{wvmid}/e/{eid}/configurationencodings/{cid}": {
+      "get": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Decode a configuration string.",
+        "description": "Decode a configuration string into its original JSON form to obtain configuration parameter ID and value. See the [Configuration API Guide](https://onshape-public.github.io/docs/api-adv/configs/) for additional details.  ",
+        "operationId": "decodeConfiguration",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvm",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wvmid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeDisplay",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "configurationIsId",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "$ref": "#/components/schemas/BTConfigurationInfo"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "OAuth2": [
+              "OAuth2Read"
+            ],
+            "BasicAuth": [
+              "OAuth2Read"
+            ]
+          }
+        ],
+        "x-BTVisibility": "PRODUCTION"
+      }
+    },
+    "/elements/translatorFormats/{did}/{wv}/{wvid}/{eid}": {
+      "get": {
+        "tags": [
+          "Element"
+        ],
+        "summary": "Gets the list of formats an element can be translated to or from.",
+        "description": "See the [Translation API Guide](https://onshape-public.github.io/docs/api-adv/translation/) for additional details. ",
+        "operationId": "getElementTranslatorFormatsByVersionOrWorkspace",
+        "parameters": [
+          {
+            "name": "did",
+            "in": "path",
+            "description": "The id of the document in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkDocumentId",
+            "in": "query",
+            "description": "The id of the document through which the above document should be accessed; only applicable when accessing a version of the document. This allows a user who has access to document a to see data from document b, as long as document b has been linked to document a by a user who has permission to both.",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "wv",
+            "in": "path",
+            "description": "Indicates which of workspace (w) or version (v) id is specified below.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "w",
+                "v"
+              ]
+            }
+          },
+          {
+            "name": "wvid",
+            "in": "path",
+            "description": "The id of the workspace, version in which the operation should be performed.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eid",
+            "in": "path",
+            "description": "The id of the element in which to perform the operation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkContent",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "configuration",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "default response",
+            "content": {
+              "application/json;charset=UTF-8; qs=0.09": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BTModelFormatInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-BTVisibility": "PRODUCTION"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BTCopyElementParams": {
+        "type": "object",
+        "properties": {
+          "anchorElementId": {
+            "type": "string"
+          },
+          "documentIdSource": {
+            "type": "string"
+          },
+          "elementIdSource": {
+            "type": "string"
+          },
+          "isGroupAnchor": {
+            "type": "boolean"
+          },
+          "workspaceIdSource": {
+            "type": "string"
+          }
+        }
+      },
+      "BTDocumentElementInfo": {
+        "type": "object",
+        "properties": {
+          "accelerationUnits": {
+            "type": "string"
+          },
+          "angleUnits": {
+            "type": "string"
+          },
+          "angularVelocityUnits": {
+            "type": "string"
+          },
+          "applicationTarget": {
+            "$ref": "#/components/schemas/BTApplicationTargetInfo"
+          },
+          "areaUnits": {
+            "type": "string"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "densityUnits": {
+            "type": "string"
+          },
+          "elementType": {
+            "$ref": "#/components/schemas/GBTElementType"
+          },
+          "energyUnits": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "forceUnits": {
+            "type": "string"
+          },
+          "foreignDataId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "lengthUnits": {
+            "type": "string"
+          },
+          "massUnits": {
+            "type": "string"
+          },
+          "microversionId": {
+            "type": "string"
+          },
+          "momentUnits": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pressureUnits": {
+            "type": "string"
+          },
+          "prettyType": {
+            "type": "string"
+          },
+          "safeToShow": {
+            "type": "boolean"
+          },
+          "specifiedUnit": {
+            "type": "string"
+          },
+          "thumbnailInfo": {
+            "$ref": "#/components/schemas/BTThumbnailInfo"
+          },
+          "thumbnails": {
+            "type": "string",
+            "format": "uri"
+          },
+          "timeUnits": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "unupdatable": {
+            "type": "boolean"
+          },
+          "volumeUnits": {
+            "type": "string"
+          },
+          "zip": {
+            "$ref": "#/components/schemas/BTZipFileInfo"
+          }
+        }
+      },
+      "BTConfigurationParams": {
+        "type": "object",
+        "properties": {
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConfigurationEntry"
+            }
+          },
+          "standardContentParametersId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTEncodedConfigurationInfo": {
+        "type": "object",
+        "properties": {
+          "encodedId": {
+            "type": "string"
+          },
+          "queryParam": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUpdateReferenceParams": {
+        "type": "object",
+        "properties": {
+          "connectionId": {
+            "type": "string"
+          },
+          "editDescription": {
+            "type": "string"
+          },
+          "referenceUpdates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateParams"
+            }
+          }
+        }
+      },
+      "BTConfigurationResponse-2019": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "configurationParameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMConfigurationParameter-819"
+            }
+          },
+          "currentConfiguration": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMParameter-1"
+            }
+          },
+          "libraryVersion": {
+            "type": "integer",
+            "description": "FeatureScript version used in the Part Studio. Do not modify.",
+            "format": "int32"
+          },
+          "microversionSkew": {
+            "type": "boolean",
+            "description": "On output, `true` indicates a microversion mismatch was encountered."
+          },
+          "rejectMicroversionSkew": {
+            "type": "boolean",
+            "description": "If `true`, the call will refuse to make the addition if the current microversion for the document does not match the source microversion. If `false`, a best-effort attempt is made to re-interpret the feature addition in the context of a newer document microversion."
+          },
+          "serializationVersion": {
+            "type": "string",
+            "description": "Version of the structure serialization rules used to encode the output. This enables incompatibility detection during software updates."
+          },
+          "sourceMicroversion": {
+            "type": "string",
+            "description": "The state from which the result was extracted. Geometry ID interpretation is dependent on this document microversion."
+          }
+        }
+      },
+      "BTConfigurationUpdateCall-2933": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "configurationParameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMConfigurationParameter-819"
+            }
+          },
+          "currentConfiguration": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTMParameter-1"
+            }
+          },
+          "libraryVersion": {
+            "type": "integer",
+            "description": "FeatureScript version used in the Part Studio. Do not modify.",
+            "format": "int32"
+          },
+          "microversionSkew": {
+            "type": "boolean",
+            "description": "On output, `true` indicates a microversion mismatch was encountered."
+          },
+          "rejectMicroversionSkew": {
+            "type": "boolean",
+            "description": "If `true`, the call will refuse to make the addition if the current microversion for the document does not match the source microversion. If `false`, a best-effort attempt is made to re-interpret the feature addition in the context of a newer document microversion."
+          },
+          "serializationVersion": {
+            "type": "string",
+            "description": "Version of the structure serialization rules used to encode the output. This enables incompatibility detection during software updates."
+          },
+          "sourceMicroversion": {
+            "type": "string",
+            "description": "The state from which the result was extracted. Geometry ID interpretation is dependent on this document microversion."
+          }
+        }
+      },
+      "BTConfigurationInfo": {
+        "type": "object",
+        "properties": {
+          "isStandardContent": {
+            "type": "boolean"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConfigurationInfoEntry"
+            }
+          }
+        }
+      },
+      "BTModelFormatInfo": {
+        "type": "object",
+        "properties": {
+          "couldBeAssembly": {
+            "type": "boolean",
+            "description": "Indicates if this format could be an assembly.",
+            "example": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the format.",
+            "example": "STEP"
+          },
+          "translatorName": {
+            "type": "string",
+            "description": "The name of the translator for the format.",
+            "example": "step"
+          }
+        }
+      },
+      "BTApplicationTargetInfo": {
+        "type": "object",
+        "properties": {
+          "baseHref": {
+            "type": "string",
+            "format": "uri"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "supportsCollaboration": {
+            "type": "boolean"
+          },
+          "tabIconHref": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "GBTElementType": {
+        "type": "string",
+        "enum": [
+          "PARTSTUDIO",
+          "ASSEMBLY",
+          "DRAWING",
+          "FEATURESTUDIO",
+          "BLOB",
+          "APPLICATION",
+          "TABLE",
+          "BILLOFMATERIALS",
+          "VARIABLESTUDIO",
+          "PUBLICATIONITEM",
+          "UNKNOWN"
+        ]
+      },
+      "BTThumbnailInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secondarySizes": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+              }
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BTThumbnailSizeInfo"
+            }
+          }
+        }
+      },
+      "BTZipFileInfo": {
+        "type": "object",
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ConfigurationEntry": {
+        "type": "object",
+        "properties": {
+          "parameterId": {
+            "type": "string"
+          },
+          "parameterValue": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateParams": {
+        "type": "object",
+        "properties": {
+          "fromReference": {
+            "$ref": "#/components/schemas/BTUniqueDocumentItemParams"
+          },
+          "idsToUpdate": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ignoreChildren": {
+            "type": "boolean"
+          },
+          "toReference": {
+            "$ref": "#/components/schemas/BTUniqueDocumentItemParams"
+          }
+        }
+      },
+      "BTMConfigurationParameter-819": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTMConfigurationParameterBoolean-2550": "#/components/schemas/BTMConfigurationParameterBoolean-2550",
+            "BTMConfigurationParameterEnum-105": "#/components/schemas/BTMConfigurationParameterEnum-105",
+            "BTMConfigurationParameterQuantity-1826": "#/components/schemas/BTMConfigurationParameterQuantity-1826",
+            "BTMConfigurationParameterString-872": "#/components/schemas/BTMConfigurationParameterString-872"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BTMNode-19"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "btType": {
+                "type": "string"
+              },
+              "enumOptionIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "generatedParameterId": {
+                "$ref": "#/components/schemas/BTTreeNode-20"
+              },
+              "isCosmetic": {
+                "type": "boolean"
+              },
+              "parameterId": {
+                "type": "string"
+              },
+              "parameterName": {
+                "type": "string"
+              },
+              "parameterType": {
+                "$ref": "#/components/schemas/GBTConfigurationParameterType"
+              },
+              "valid": {
+                "type": "boolean"
+              },
+              "visibilityCondition": {
+                "$ref": "#/components/schemas/BTParameterVisibilityCondition-177"
+              }
+            }
+          }
+        ]
+      },
+      "BTMParameter-1": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "importMicroversion": {
+            "type": "string",
+            "description": "Microversion that resulted from the import.",
+            "writeOnly": true
+          },
+          "libraryRelationType": {
+            "$ref": "#/components/schemas/GBTParameterLibraryRelationType"
+          },
+          "nodeId": {
+            "type": "string",
+            "description": "ID of the parameter's node."
+          },
+          "parameterId": {
+            "type": "string",
+            "description": "Unique ID of the parameter."
+          },
+          "parameterName": {
+            "type": "string"
+          },
+          "valueString": {
+            "type": "string"
+          }
+        },
+        "description": "A list of parameter values for instantiation of the feature spec. Parameters are present for all defined parameters, even if not used in a specific instantiation.",
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTMDatabaseParameter-2229": "#/components/schemas/BTMDatabaseParameter-2229",
+            "BTMParameterAppearance-627": "#/components/schemas/BTMParameterAppearance-627",
+            "BTMParameterArray-2025": "#/components/schemas/BTMParameterArray-2025",
+            "BTMParameterBlobReference-1679": "#/components/schemas/BTMParameterBlobReference-1679",
+            "BTMParameterBoolean-144": "#/components/schemas/BTMParameterBoolean-144",
+            "BTMParameterButton-5169": "#/components/schemas/BTMParameterButton-5169",
+            "BTMParameterConfigured-2222": "#/components/schemas/BTMParameterConfigured-2222",
+            "BTMParameterDerived-864": "#/components/schemas/BTMParameterDerived-864",
+            "BTMParameterEnum-145": "#/components/schemas/BTMParameterEnum-145",
+            "BTMParameterFeatureList-1749": "#/components/schemas/BTMParameterFeatureList-1749",
+            "BTMParameterForeignId-146": "#/components/schemas/BTMParameterForeignId-146",
+            "BTMParameterInvalid-1664": "#/components/schemas/BTMParameterInvalid-1664",
+            "BTMParameterLookupTablePath-1419": "#/components/schemas/BTMParameterLookupTablePath-1419",
+            "BTMParameterMaterial-1388": "#/components/schemas/BTMParameterMaterial-1388",
+            "BTMParameterMultiEnum-3411": "#/components/schemas/BTMParameterMultiEnum-3411",
+            "BTMParameterQuantity-147": "#/components/schemas/BTMParameterQuantity-147",
+            "BTMParameterQueryList-148": "#/components/schemas/BTMParameterQueryList-148",
+            "BTMParameterQueryWithOccurrenceList-67": "#/components/schemas/BTMParameterQueryWithOccurrenceList-67",
+            "BTMParameterReference-2434": "#/components/schemas/BTMParameterReference-2434",
+            "BTMParameterString-149": "#/components/schemas/BTMParameterString-149",
+            "BTMReadOnlyParameter-3800": "#/components/schemas/BTMReadOnlyParameter-3800"
+          }
+        }
+      },
+      "ConfigurationInfoEntry": {
+        "type": "object",
+        "properties": {
+          "explicit": {
+            "type": "boolean"
+          },
+          "isCosmetic": {
+            "type": "boolean"
+          },
+          "isVisible": {
+            "type": "boolean"
+          },
+          "parameterAbbreviatedDisplayValue": {
+            "type": "string"
+          },
+          "parameterDisplayValue": {
+            "type": "string"
+          },
+          "parameterId": {
+            "type": "string"
+          },
+          "parameterName": {
+            "type": "string"
+          },
+          "parameterType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parameterValue": {
+            "type": "string"
+          }
+        }
+      },
+      "BTThumbnailSizeInfo": {
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "uri"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "renderMode": {
+            "type": "string"
+          },
+          "sheetName": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "viewOrientation": {
+            "type": "string"
+          }
+        }
+      },
+      "BTUniqueDocumentItemParams": {
+        "type": "object",
+        "properties": {
+          "apiConfiguration": {
+            "type": "string"
+          },
+          "documentId": {
+            "type": "string"
+          },
+          "elementId": {
+            "type": "string"
+          },
+          "elementType": {
+            "type": "string"
+          },
+          "partId": {
+            "type": "string"
+          },
+          "partNumber": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "string"
+          },
+          "versionId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          }
+        }
+      },
+      "BTMNode-19": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "importMicroversion": {
+            "type": "string",
+            "description": "Microversion that resulted from the import.",
+            "writeOnly": true
+          },
+          "nodeId": {
+            "type": "string"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTAssemblySimulationData-978": "#/components/schemas/BTAssemblySimulationData-978",
+            "BTInstanceBase-2263": "#/components/schemas/BTInstanceBase-2263",
+            "BTInstanceControlNode-750": "#/components/schemas/BTInstanceControlNode-750",
+            "BTMAnnotation-4664": "#/components/schemas/BTMAnnotation-4664",
+            "BTMArrayParameterItem-1843": "#/components/schemas/BTMArrayParameterItem-1843",
+            "BTMConfigurationData-1560": "#/components/schemas/BTMConfigurationData-1560",
+            "BTMConfigurationParameter-819": "#/components/schemas/BTMConfigurationParameter-819",
+            "BTMConfigurationParameterList-5548": "#/components/schemas/BTMConfigurationParameterList-5548",
+            "BTMConfiguredValue-1341": "#/components/schemas/BTMConfiguredValue-1341",
+            "BTMEnumOption-592": "#/components/schemas/BTMEnumOption-592",
+            "BTMFeature-134": "#/components/schemas/BTMFeature-134",
+            "BTMFolder-3208": "#/components/schemas/BTMFolder-3208",
+            "BTMImport-136": "#/components/schemas/BTMImport-136",
+            "BTMIndividualQueryBase-139": "#/components/schemas/BTMIndividualQueryBase-139",
+            "BTMModel-141": "#/components/schemas/BTMModel-141",
+            "BTMNodeInvalid-1772": "#/components/schemas/BTMNodeInvalid-1772",
+            "BTMParameter-1": "#/components/schemas/BTMParameter-1",
+            "BTMRecordMetrics-1169": "#/components/schemas/BTMRecordMetrics-1169",
+            "BTMRollback-150": "#/components/schemas/BTMRollback-150",
+            "BTMSketchEntity-3": "#/components/schemas/BTMSketchEntity-3",
+            "BTMSuppressionState-1924": "#/components/schemas/BTMSuppressionState-1924",
+            "BTMUnitsDefault-160": "#/components/schemas/BTMUnitsDefault-160",
+            "BTMUserCode-161": "#/components/schemas/BTMUserCode-161",
+            "BTModelAnnotations-3945": "#/components/schemas/BTModelAnnotations-3945",
+            "BTSimulationInstance-3093": "#/components/schemas/BTSimulationInstance-3093",
+            "BTToleranceString-3274": "#/components/schemas/BTToleranceString-3274"
+          }
+        }
+      },
+      "BTTreeNode-20": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "nodeId": {
+            "type": "string"
+          }
+        }
+      },
+      "GBTConfigurationParameterType": {
+        "type": "string",
+        "enum": [
+          "ENUM",
+          "BOOLEAN",
+          "STRING",
+          "QUANTITY"
+        ]
+      },
+      "BTParameterVisibilityCondition-177": {
+        "type": "object",
+        "properties": {
+          "btType": {
+            "type": "string",
+            "description": "Type of JSON object."
+          },
+          "selfOrChildAlwaysVisible": {
+            "type": "boolean"
+          }
+        },
+        "discriminator": {
+          "propertyName": "btType",
+          "mapping": {
+            "BTParameterVisibilityAlwaysHidden-176": "#/components/schemas/BTParameterVisibilityAlwaysHidden-176",
+            "BTParameterVisibilityAlwaysShown-5487": "#/components/schemas/BTParameterVisibilityAlwaysShown-5487",
+            "BTParameterVisibilityInRange-2980": "#/components/schemas/BTParameterVisibilityInRange-2980",
+            "BTParameterVisibilityLogical-178": "#/components/schemas/BTParameterVisibilityLogical-178",
+            "BTParameterVisibilityOnEqual-180": "#/components/schemas/BTParameterVisibilityOnEqual-180"
+          }
+        }
+      },
+      "GBTParameterLibraryRelationType": {
+        "type": "string",
+        "enum": [
+          "NONE",
+          "CONTROLLED",
+          "OVERRIDE",
+          "UNKNOWN"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "Use OAuth 2.0 to authenticate requests.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/oauth/authorize",
+            "tokenUrl": "/oauth/token",
+            "refreshUrl": "/oauth/token",
+            "scopes": {
+              "OAuth2Internal": "Application is Onshape Internal",
+              "OAuth2ReadPII": "Application can read your profile information",
+              "OAuth2Read": "Application can read your documents",
+              "OAuth2Write": "Application can write to your documents",
+              "OAuth2Delete": "Application can delete your documents and workspaces",
+              "OAuth2Purchase": "Application can request purchases on your behalf",
+              "OAuth2Share": "Application can share and unshare documents on your behalf",
+              "document.create": "Atlas Application can create a document",
+              "document.edit": "Atlas Application can edit a document",
+              "document.delete": "Atlas Application can delete a document",
+              "document.read": "Atlas Application can read a document",
+              "enterprise.create": "Atlas Application can create an enterprise",
+              "enterprise.read": "Atlas Application can read from an enterprise",
+              "enterprise.edit": "Atlas Application can edit an enterprise",
+              "enterprise.delete": "Atlas Application can delete an enterprise",
+              "enterprise.member.create": "Atlas Application can create an enterprise member",
+              "enterprise.member.read": "Atlas Application can read the details of an enterprise member",
+              "enterprise.member.edit": "Atlas Application can edit the details of an enterprise member",
+              "enterprise.member.delete": "Atlas Application can delete a member from an enterprise",
+              "webhook.create": "Atlas Application can create a webhook on behalf of the logged-in user",
+              "webhook.edit": "Atlas Application can edit a webhook on behalf of the logged-in user",
+              "webhook.read": "Atlas Application can read a webhook on behalf of the logged-in user",
+              "webhook.delete": "Atlas Application can delete a webhook on behalf of the logged-in user",
+              "PLMIntegration": "PLM automation can invoke limited operations"
+            }
+          }
+        }
+      },
+      "BasicAuth": {
+        "type": "http",
+        "description": "Use Basic Authentication with API Keys (key as username and secret as password) to authenticate requests.",
+        "scheme": "basic"
+      }
+    }
+  }
+}
